@@ -1,14 +1,20 @@
-# Project name
+# Teacher Workout
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-Insert bullets description of the project if available.
+Teacher Workout [was prototyped](https://civiclabs.ro/ro/solutions/teacher-workout) in [Civic Labs](https://civiclabs.ro/ro), the research adn prototyping program in [Code for Romania](https://code4.ro/ro). 
 
-[See the project live](insert_link_here)
+Teacher Workout is an application meant to deliver shot, interactive lessons. The themes of these lessons include identifying children who manifest a difficulty in learning, handling difficult classrooms situations, integrating children with particular needs in a classroom. These micro-courses are meant to help foster positive habits for teachers and professors alike. 
 
-Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
+The Teacher Workout ecosystem is composed of:
 
-[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+* [the backend](https://github.com/code4romania/teacher-workout-backend)
+* [the web app](https://github.com/code4romania/teacher-workout-client)
+* the two mobile apps, one for Android and another one for iOS
+
+The Teacher Workout prototype and UI is available [in the Figma project](https://www.figma.com/file/uLiqrlxmOB5xCppIzmiUXV/Teacher-Workout?node-id=0%3A1). 
+
+[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code-for-romania)
 
 ## Contributing
 
