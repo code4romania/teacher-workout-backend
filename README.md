@@ -2,7 +2,9 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-repo-template.svg?style=for-the-badge)](https://github.com/code4romania/standard-repo-template/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-Teacher Workout [was prototyped](https://civiclabs.ro/ro/solutions/teacher-workout) in [Civic Labs](https://civiclabs.ro/ro), the research adn prototyping program in [Code for Romania](https://code4.ro/ro). 
+**Check out the [Wiki](https://github.com/code4romania/teacher-workout-backend/wiki)!**
+
+Teacher Workout [was prototyped](https://civiclabs.ro/ro/solutions/teacher-workout) in [Civic Labs](https://civiclabs.ro/ro), the research and prototyping program in [Code for Romania](https://code4.ro/ro). 
 
 Teacher Workout is an application meant to deliver shot, interactive lessons. The themes of these lessons include identifying children who manifest a difficulty in learning, handling difficult classrooms situations, integrating children with particular needs in a classroom. These micro-courses are meant to help foster positive habits for teachers and professors alike. 
 
