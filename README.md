@@ -12,7 +12,7 @@ The Teacher Workout ecosystem is composed of:
 
 * [the backend](https://github.com/code4romania/teacher-workout-backend)
 * [the web app](https://github.com/code4romania/teacher-workout-client)
-* the two mobile apps, one for Android and another one for iOS
+* the two mobile apps, [one for Android](https://github.com/code4romania/teacher-workout-android) and [another one for iOS](https://github.com/code4romania/teacher-workout-ios)
 
 The Teacher Workout prototype and UI is available [in the Figma project](https://www.figma.com/file/uLiqrlxmOB5xCppIzmiUXV/Teacher-Workout?node-id=0%3A1). 
 
