@@ -28,19 +28,37 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 
 ## Built With
 
+- love
+- grahpql
+
 ### Programming languages
+
+- c#
+- kotlin
+- swift
+- js
 
 ### Platforms
 
+- native mobile android and ios
+
 ### Frontend framework
+
+- react
 
 ### Package managers
 
+- npm
+
 ### Database technology & provider
+
+- postgres
 
 ## Repos and projects
 
-Mention all related repos and projects.
+- [web](https://github.com/code4romania/teacher-workout-client)
+- [android](https://github.com/code4romania/teacher-workout-android)
+- [ios](https://github.com/code4romania/teacher-workout-ios)
 
 ## Deployment
 
