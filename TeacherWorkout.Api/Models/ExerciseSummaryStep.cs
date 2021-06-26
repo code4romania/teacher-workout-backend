@@ -6,6 +6,6 @@ namespace TeacherWorkout.Api.Models
     {
         public string Id { get; set; }
 
-        public IEnumerator<AnswerResult> Results { get; set; }
+        public IEnumerable<AnswerResult> Results { get; set; }
     }
 }

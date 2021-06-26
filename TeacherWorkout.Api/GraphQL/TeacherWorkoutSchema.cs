@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
+using TeacherWorkout.Api.GraphQL.Types;
+using TeacherWorkout.Api.Models;
 
 namespace TeacherWorkout.Api.GraphQL
 {
@@ -12,6 +14,8 @@ namespace TeacherWorkout.Api.GraphQL
         {
             Query = provider.GetRequiredService<TeacherWorkoutQuery>();
             AddTypeMappings();
+            
+            RegisterTypeMapping(typeof(ILessonStep), typeof(LessonStepInterface));
         }
 
         private void AddTypeMappings()
@@ -30,6 +34,7 @@ namespace TeacherWorkout.Api.GraphQL
                     
                     if (graphType != null)
                     {
+                        RegisterType(graphType);
                         RegisterTypeMapping(clrType, graphType);
                     }
                 });
