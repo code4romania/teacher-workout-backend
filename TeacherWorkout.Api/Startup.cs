@@ -34,11 +34,11 @@ namespace TeacherWorkout.Api
             });
             
             services.AddControllers();
-            
+
             services.AddSingleton<TeacherWorkoutQuery>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
             AddGraphTypes(services);
-            
+
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
                 {
@@ -61,7 +61,7 @@ namespace TeacherWorkout.Api
             {
                 app.UseHttpsRedirection();
             }
-            
+
             app.UseGraphQL<ISchema>();
             app.UseRouting();
 

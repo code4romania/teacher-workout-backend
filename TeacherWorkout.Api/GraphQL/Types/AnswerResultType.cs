@@ -8,7 +8,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public AnswerResultType()
         {
             Name = "AnswerResult";
-            
+
             Field(x => x.Answer).Description("The actual answer.");
             Field(x => x.Status).Description("The outcome for the answer.");
         }

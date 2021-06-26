@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,13 +15,13 @@ namespace TeacherWorkout.Api.GraphQL
         {
             Query = provider.GetRequiredService<TeacherWorkoutQuery>();
             AddTypeMappings();
-            
+
             RegisterTypeMapping(typeof(ILessonStep), typeof(LessonStepInterface));
         }
 
         private void AddTypeMappings()
         {
-            var classTypes = AppDomain.CurrentDomain.GetAssemblies()
+            List<Type> classTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
                 .Where(t => t.IsClass || t.IsEnum)
                 .ToList();
@@ -29,9 +30,9 @@ namespace TeacherWorkout.Api.GraphQL
                 .ToList()
                 .ForEach(clrType =>
                 {
-                    var graphType = classTypes.Find(ct => ct.Name == $"{clrType.Name}Type") ??
-                                    classTypes.Find(ct => ct.Name == $"{clrType.Name}Enum");
-                    
+                    Type? graphType = classTypes.Find(ct => ct.Name == $"{clrType.Name}Type") ??
+                                      classTypes.Find(ct => ct.Name == $"{clrType.Name}Enum");
+
                     if (graphType != null)
                     {
                         RegisterType(graphType);
