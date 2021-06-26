@@ -13,6 +13,7 @@ namespace TeacherWorkout.Api.GraphQL
             : base(provider)
         {
             Query = provider.GetRequiredService<TeacherWorkoutQuery>();
+            Mutation = provider.GetRequiredService<TeacherWorkoutMutation>();
             AddTypeMappings();
             
             RegisterTypeMapping(typeof(ILessonStep), typeof(LessonStepInterface));
