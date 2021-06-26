@@ -27,13 +27,5 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
               
-      - name: Run .NET Code Analysis
-        uses: dotnet/code-analysis@v1
-        id: code-analysis
-        with:
-          solution: TeacherWorkout.sln
-          build-breaking: true
-          all-categories: all
-
       - name: Test
         run: dotnet test --no-restore --verbosity normal
