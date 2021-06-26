@@ -39,6 +39,7 @@ namespace TeacherWorkout.Api
             services.AddSingleton<TeacherWorkoutQuery>();
             services.AddSingleton<TeacherWorkoutMutation>();
             services.AddSingleton<LessonSaveInput>();
+            services.AddSingleton<StepCompleteInput>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
             AddGraphTypes(services);
             
