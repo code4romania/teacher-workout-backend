@@ -18,4 +18,4 @@ jobs:
           host: ${{ secrets.DEV_SERVER_IP }}
           username: ${{ secrets.DEV_SERVER_SSH_USERNAME }}
           key: ${{ secrets.DEV_SERVER_SSH_KEY }}
-          script: "/root/de-urgenta-backend/deploy/run.sh"
+          script: "/root/teacher-workout-backend/deploy/run.sh"
