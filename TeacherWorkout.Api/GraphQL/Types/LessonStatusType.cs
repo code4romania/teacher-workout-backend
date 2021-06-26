@@ -8,7 +8,8 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public LessonStatusType()
         {
             Name = "LessonStatus";
-            
+
+            Field(x => x.Lesson);
             Field(x => x.PercentCompleted);
             Field(x => x.CurrentLessonStep);
         }
