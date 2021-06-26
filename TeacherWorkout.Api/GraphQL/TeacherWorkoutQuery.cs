@@ -206,8 +206,34 @@ namespace TeacherWorkout.Api.GraphQL
                 resolve: context =>
                 {
                     return context.GetArgument<IEnumerable<string>>("lessonIds")
-                        .Select(_ => new LessonStatus
+                        .Select(lessonId => new LessonStatus
                         {
+                            Lesson = new Lesson
+                            {
+                                Id = lessonId,
+                                Title = "Lorem Ipsum",
+                                Thumbnail = new Image
+                                {
+                                    Description = "Cat Photo",
+                                    Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+
+                                },
+                                Theme = new Theme
+                                {
+                                    Id = "1",
+                                    Title = "Lorem Ipsum",
+                                    Thumbnail = new Image
+                                    {
+                                        Description = "Cat Photo",
+                                        Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+                                    }
+                                },
+                                Duration = new Duration
+                                {
+                                    Value = 45,
+                                    Unit = DurationUnit.Minutes
+                                }
+                            },
                             PercentCompleted = 10,
                             CurrentLessonStep = new SlideStep
                             {
