@@ -1,12 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using GraphQL.Server;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TeacherWorkout.Api.GraphQL;
 
 namespace TeacherWorkout.Api
 {
@@ -23,6 +24,18 @@ namespace TeacherWorkout.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddSingleton<TeacherWorkoutQuery>();
+            services.AddSingleton<ISchema, TeacherWorkoutSchema>();
+            AddGraphTypes(services);
+            
+            services.AddHttpContextAccessor();
+            services.AddGraphQL(options =>
+                {
+                    options.EnableMetrics = true;
+                })
+                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
+                .AddSystemTextJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +49,8 @@ namespace TeacherWorkout.Api
             {
                 app.UseHttpsRedirection();
             }
-
+            
+            app.UseGraphQL<ISchema>();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -45,6 +59,15 @@ namespace TeacherWorkout.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void AddGraphTypes(IServiceCollection services)
+        {
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass && t.Namespace == "TeacherWorkout.Api.GraphQL.Types")
+                .ToList()
+                .ForEach(t => services.AddSingleton(t));
         }
     }
 }
