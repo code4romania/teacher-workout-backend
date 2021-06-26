@@ -1,0 +1,16 @@
+using GraphQL.Types;
+using TeacherWorkout.Api.Models;
+
+namespace TeacherWorkout.Api.GraphQL.Types
+{
+    public class LessonStatusType : ObjectGraphType<LessonStatus>
+    {
+        public LessonStatusType()
+        {
+            Name = "LessonStatus";
+            
+            Field(x => x.PercentCompleted);
+            Field(x => x.CurrentLessonStep);
+        }
+    }
+}
