@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using GraphQL;
-using GraphQL.NewtonsoftJson;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -12,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
-using TeacherWorkout.Api.GraphQL.Types;
 
 namespace TeacherWorkout.Api
 {
@@ -31,9 +26,8 @@ namespace TeacherWorkout.Api
             services.AddControllers();
             
             services.AddSingleton<TeacherWorkoutQuery>();
-            services.AddSingleton<ThemeType>();
-            services.AddSingleton<ImageType>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
+            AddGraphTypes(services);
             
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -65,6 +59,15 @@ namespace TeacherWorkout.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void AddGraphTypes(IServiceCollection services)
+        {
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass && t.Namespace == "TeacherWorkout.Api.GraphQL.Types")
+                .ToList()
+                .ForEach(t => services.AddSingleton(t));
         }
     }
 }
