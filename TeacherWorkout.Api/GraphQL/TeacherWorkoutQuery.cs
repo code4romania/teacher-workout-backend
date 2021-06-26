@@ -13,7 +13,7 @@ namespace TeacherWorkout.Api.GraphQL
         {
             Name = "Query";
             
-            Field<ListGraphType<ThemeType>>(
+            Field<ListGraphType<NonNullGraphType<ThemeType>>>(
                 "themes",
                 resolve: context =>
                 {
@@ -32,10 +32,10 @@ namespace TeacherWorkout.Api.GraphQL
                     };
                 });
             
-            Field<ListGraphType<LessonType>>(
+            Field<ListGraphType<NonNullGraphType<LessonType>>>(
                 "lessons",
                 arguments: new QueryArguments(
-                    new QueryArgument<IdGraphType> { Name = "themeId", Description = "id of the Theme" }
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "themeId", Description = "id of the Theme" }
                 ),
                 resolve: context =>
                 {
@@ -70,10 +70,10 @@ namespace TeacherWorkout.Api.GraphQL
                     };
                 });
 
-            Field<StepUnionType>(
+            Field<NonNullGraphType<StepUnionType>>(
                 "step",
                 arguments: new QueryArguments(
-                    new QueryArgument<IdGraphType> {Name = "id", Description = "id of the step"}
+                    new QueryArgument<NonNullGraphType<IdGraphType>> {Name = "id", Description = "id of the step"}
                 ),
                 resolve: context =>
                 {
