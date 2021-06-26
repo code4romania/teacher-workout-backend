@@ -14,7 +14,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
             Field(x => x.Title).Description("The Lesson Title");
             Field(x => x.Description).Description("The Lesson Description");
             Field(x => x.Image).Description("The Lesson Image");
-            Field(x => x.PreviousStep, nullable: true).Description("The Previous Step");
+            Field(x => x.PreviousStep, true).Description("The Previous Step");
         }
     }
 }

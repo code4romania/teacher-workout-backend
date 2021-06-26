@@ -4,6 +4,8 @@ root = true
 # C# files
 [*.cs]
 
+dotnet_analyzer_diagnostic.severity = error
+
 #### Core EditorConfig Options ####
 
 # Indentation and spacing

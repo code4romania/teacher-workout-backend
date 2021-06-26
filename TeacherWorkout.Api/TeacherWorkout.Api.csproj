@@ -7,7 +7,9 @@
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+        <RunCodeAnalysis>true</RunCodeAnalysis>
     </PropertyGroup>
+
 
     <ItemGroup>
         <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.2"/>

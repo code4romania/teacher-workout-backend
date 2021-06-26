@@ -8,7 +8,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public ImageType()
         {
             Name = "Image";
-            
+
             Field(x => x.Url).Description("URL to the image.");
             Field(x => x.Description).Description("Image description for accessibility.");
         }

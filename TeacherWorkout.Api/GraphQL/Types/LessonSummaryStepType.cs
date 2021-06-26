@@ -8,7 +8,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public LessonSummaryStepType()
         {
             Name = "LessonSummaryStep";
-            
+
             Interface<LessonStepInterface>();
             Field(x => x.Id, type: typeof(IdGraphType));
             Field(x => x.ExperiencePoints).Description("Total experience points for the lesson");

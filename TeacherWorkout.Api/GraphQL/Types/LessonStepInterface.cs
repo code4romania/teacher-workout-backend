@@ -39,7 +39,6 @@ namespace TeacherWorkout.Api.GraphQL.Types
 
                 throw new ArgumentOutOfRangeException($"Could not resolve graph type for {obj.GetType().Name}");
             };
-            
         }
     }
 }

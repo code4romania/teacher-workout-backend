@@ -128,7 +128,7 @@ namespace TeacherWorkout.Api.GraphQL
                                 Answers = new[]
                                 {
                                     new Answer {Id = "1", Title = "42"}, new Answer {Id = "2", Title = "13"},
-                                    new Answer {Id = "3", Title = "There is NONE"},
+                                    new Answer {Id = "3", Title = "There is NONE"}
                                 }
                             };
                         case "4":

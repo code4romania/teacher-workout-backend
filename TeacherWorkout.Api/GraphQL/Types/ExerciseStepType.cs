@@ -8,7 +8,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public ExerciseStepType()
         {
             Name = "ExerciseStep";
-            
+
             Interface<LessonStepInterface>();
             Field(x => x.Id, type: typeof(IdGraphType));
             Field(x => x.Question).Description("The question");

@@ -8,7 +8,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public AnswerStatusEnum()
         {
             Name = "AnswerStatus";
-            
+
             AddValue("Correct", "Correct.", 1);
             AddValue("Incorrect", "Incorrect.", 2);
             AddValue("None", "None.", 3);
