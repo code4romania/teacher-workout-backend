@@ -6,6 +6,6 @@ namespace TeacherWorkout.Api.Models
         
         public DurationUnit Unit { get; set; }
 
-        public string DisplayValue { get; set; }
+        public string DisplayValue => $"{Value} {Unit}";
     }
 }

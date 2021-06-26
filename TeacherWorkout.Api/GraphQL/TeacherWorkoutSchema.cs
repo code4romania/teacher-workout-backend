@@ -18,14 +18,16 @@ namespace TeacherWorkout.Api.GraphQL
         {
             var classTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
-                .Where(t => t.IsClass)
+                .Where(t => t.IsClass || t.IsEnum)
                 .ToList();
 
             classTypes.Where(t => t.Namespace == "TeacherWorkout.Api.Models")
                 .ToList()
                 .ForEach(clrType =>
                 {
-                    var graphType = classTypes.Find(ct => ct.Name == $"{clrType.Name}Type");
+                    var graphType = classTypes.Find(ct => ct.Name == $"{clrType.Name}Type") ??
+                                    classTypes.Find(ct => ct.Name == $"{clrType.Name}Enum");
+                    
                     if (graphType != null)
                     {
                         RegisterTypeMapping(clrType, graphType);

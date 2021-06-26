@@ -28,6 +28,43 @@ namespace TeacherWorkout.Api.GraphQL
                         }
                     };
                 });
+            
+            Field<ListGraphType<LessonType>>(
+                "lessons",
+                arguments: new QueryArguments(
+                    new QueryArgument<IdGraphType> { Name = "themeId", Description = "id of the Theme" }
+                ),
+                resolve: context =>
+                {
+                    return new[]
+                    {
+                        new Lesson
+                        {
+                            Id = "1",
+                            Title = "Lorem Ipsum",
+                            Thumbnail = new Image
+                            {
+                                Description = "For Challenged People",
+                                Url = "https://example.com"
+                            },
+                            Theme = new Theme
+                            {
+                                Id = "1",
+                                Title = "Lorem Ipsum",
+                                Thumbnail = new Image
+                                {
+                                    Description = "For Challenged People",
+                                    Url = "https://example.com"
+                                }
+                            },
+                            Duration = new Duration
+                            {
+                                Value = 45,
+                                Unit = DurationUnit.Minutes
+                            }
+                        }
+                    };
+                });
         }
     }
 }

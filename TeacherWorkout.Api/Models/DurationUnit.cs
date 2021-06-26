@@ -2,7 +2,7 @@ namespace TeacherWorkout.Api.Models
 {
     public enum DurationUnit
     {
-        Hours,
-        Minutes
+        Minutes = 1,
+        Hours = 2
     }
 }
