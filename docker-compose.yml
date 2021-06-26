@@ -29,5 +29,5 @@
         ConnectionStrings__DbConnectionString: ${DB_CONNECTION_STRING}
         ConnectionStrings__IdentityDbConnectionString: ${DB_CONNECTION_STRING}
       ports:
-        - 5040:80
+        - ${EXPOSED_APP_PORT}:80
       restart: unless-stopped
