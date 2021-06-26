@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
+using TeacherWorkout.Api.GraphQL.Inputs;
 
 namespace TeacherWorkout.Api
 {
@@ -36,6 +37,8 @@ namespace TeacherWorkout.Api
             services.AddControllers();
             
             services.AddSingleton<TeacherWorkoutQuery>();
+            services.AddSingleton<TeacherWorkoutMutation>();
+            services.AddSingleton<LessonSaveInput>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
             AddGraphTypes(services);
             
