@@ -7,6 +7,16 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
 {
     public static class StepCompleteResolver
     {
+
+        public static StepCompletePayload Resolve(StepComplete stepComplete)
+        {
+            return new()
+            {
+                Step = MockStep(stepComplete.StepId),
+                LessonStatus = MockLessonStatus(stepComplete.StepId)
+            };
+        }
+        
         public static dynamic MockStep(string stepId)
         {
             return stepId switch
@@ -94,7 +104,7 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
             };
         }
 
-        public static LessonStatus MockLessonStatus(string stepId)
+        private static LessonStatus MockLessonStatus(string stepId)
         {
             return new()
             {

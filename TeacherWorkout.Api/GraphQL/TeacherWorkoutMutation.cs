@@ -32,12 +32,8 @@ namespace TeacherWorkout.Api.GraphQL
                 ),
                 resolve: context =>
                 {
-                    var stepId = context.GetArgument<StepComplete>("input").StepId;
-                    return new StepCompletePayload()
-                    {
-                        Step = StepCompleteResolver.MockStep(stepId),
-                        LessonStatus = StepCompleteResolver.MockLessonStatus(stepId)
-                    };
+                    var stepComplete = context.GetArgument<StepComplete>("input");
+                    return StepCompleteResolver.Resolve(stepComplete);
                 });
         }
     }
