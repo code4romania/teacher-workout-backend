@@ -18,9 +18,13 @@ namespace TeacherWorkout.Api.GraphQL
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<LessonSaveInput>> {Name = "input"}
                 ),
-                resolve: context => new LessonSavePayload
+                resolve: context =>
                 {
-                    Lesson = LessonSaveResolver.MockData()
+                    var lessonSave = context.GetArgument<LessonSave>("input");
+                    return new LessonSavePayload
+                    {
+                        Lesson = LessonSaveResolver.MockData(lessonSave)
+                    };
                 });
         }
     }

@@ -5,11 +5,11 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
 {
     public static class LessonSaveResolver
     {
-        public static Lesson MockData()
+        public static Lesson MockData(LessonSave lessonSave)
         {
-            var lesson = new Lesson
+            return new()
             {
-                Id = "42",
+                Id = lessonSave.LessonId,
                 Title = "Lorem Ipsum",
                 Thumbnail = new Image
                 {
@@ -32,8 +32,6 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
                     Unit = DurationUnit.Minutes
                 }
             };
-
-            return lesson;
         }
     }
 }
