@@ -35,12 +35,8 @@ namespace TeacherWorkout.Api.GraphQL
                     var stepId = context.GetArgument<StepComplete>("input").StepId;
                     return new StepCompletePayload()
                     {
-                        Step = StepCompleteResolver.MockStepComplete(stepId),
-                        LessonStatus = new LessonStatus()
-                        {
-                            PercentCompleted = 50,
-                            CurrentLessonStep = StepCompleteResolver.MockStepComplete("1")
-                        }
+                        Step = StepCompleteResolver.MockStep(stepId),
+                        LessonStatus = StepCompleteResolver.MockLessonStatus()
                     };
                 });
         }

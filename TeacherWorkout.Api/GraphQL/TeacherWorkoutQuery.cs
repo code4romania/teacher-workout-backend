@@ -80,7 +80,7 @@ namespace TeacherWorkout.Api.GraphQL
                 resolve: context =>
                 {
                     var stepId = context.GetArgument<string>("id");
-                    return StepCompleteResolver.MockStepComplete(stepId);
+                    return StepCompleteResolver.MockStep(stepId);
                 });
                 
             Field<ListGraphType<NonNullGraphType<LessonStatusType>>>(

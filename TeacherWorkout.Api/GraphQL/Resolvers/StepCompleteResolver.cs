@@ -7,7 +7,7 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
 {
     public static class StepCompleteResolver
     {
-        public static dynamic MockStepComplete(string stepId)
+        public static dynamic MockStep(string stepId)
         {
             return stepId switch
             {
@@ -91,6 +91,15 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
                 },
                 "6" => new LessonSummaryStep {Id = "6", ExperiencePoints = 100},
                 _ => throw new ArgumentException("Use an ID between 1 - 6")
+            };
+        }
+
+        public static LessonStatus MockLessonStatus()
+        {
+            return new()
+            {
+                PercentCompleted = new Random().Next(1, 101),
+                CurrentLessonStep = MockStep("1")
             };
         }
     }
