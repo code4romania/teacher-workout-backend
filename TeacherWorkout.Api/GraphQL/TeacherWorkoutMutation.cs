@@ -21,10 +21,7 @@ namespace TeacherWorkout.Api.GraphQL
                 resolve: context =>
                 {
                     var lessonSave = context.GetArgument<LessonSave>("input");
-                    return new LessonSavePayload
-                    {
-                        Lesson = LessonSaveResolver.MockData(lessonSave)
-                    };
+                    return LessonSaveResolver.Resolve(lessonSave);
                 });
         }
     }

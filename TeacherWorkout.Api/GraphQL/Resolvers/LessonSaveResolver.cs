@@ -5,7 +5,12 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
 {
     public static class LessonSaveResolver
     {
-        public static Lesson MockData(LessonSave lessonSave)
+        public static LessonSavePayload Resolve(LessonSave lessonSave)
+        {
+            return new() {Lesson = MockData(lessonSave)};
+        }
+
+        private static Lesson MockData(LessonSave lessonSave)
         {
             return new()
             {
