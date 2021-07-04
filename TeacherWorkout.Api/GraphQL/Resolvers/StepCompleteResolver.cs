@@ -94,12 +94,12 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
             };
         }
 
-        public static LessonStatus MockLessonStatus()
+        public static LessonStatus MockLessonStatus(string stepId)
         {
             return new()
             {
                 PercentCompleted = new Random().Next(1, 101),
-                CurrentLessonStep = MockStep("1")
+                CurrentLessonStep = MockStep(stepId)
             };
         }
     }

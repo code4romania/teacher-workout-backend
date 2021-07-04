@@ -36,7 +36,7 @@ namespace TeacherWorkout.Api.GraphQL
                     return new StepCompletePayload()
                     {
                         Step = StepCompleteResolver.MockStep(stepId),
-                        LessonStatus = StepCompleteResolver.MockLessonStatus()
+                        LessonStatus = StepCompleteResolver.MockLessonStatus(stepId)
                     };
                 });
         }
