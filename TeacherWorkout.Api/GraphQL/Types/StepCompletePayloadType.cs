@@ -10,7 +10,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
             Name = "StepCompletePayload";
             
             Field(x => x.Step, type: typeof(StepUnionType)).Description("The completed step.");
-            Field(x => x.LessonStatus, type: typeof(LessonStatusType)).Description("The completed step.");
+            Field(x => x.LessonStatus).Description("The status of the lesson.");
         }
     }
 }
