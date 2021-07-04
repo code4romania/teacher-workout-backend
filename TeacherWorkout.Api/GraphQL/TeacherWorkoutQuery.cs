@@ -39,38 +39,7 @@ namespace TeacherWorkout.Api.GraphQL
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "themeId", Description = "id of the Theme" }
                 ),
-                resolve: context =>
-                {
-                    return new[]
-                    {
-                        new Lesson
-                        {
-                            Id = "1",
-                            Title = "Lorem Ipsum",
-                            Thumbnail = new Image
-                            {
-                                Description = "Cat Photo",
-                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-
-                            },
-                            Theme = new Theme
-                            {
-                                Id = "1",
-                                Title = "Lorem Ipsum",
-                                Thumbnail = new Image
-                                {
-                                    Description = "Cat Photo",
-                                    Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-                                }
-                            },
-                            Duration = new Duration
-                            {
-                                Value = 45,
-                                Unit = DurationUnit.Minutes
-                            }
-                        }
-                    };
-                });
+                resolve: context => { return new[] {Lesson.BuildMock()}; });
 
             Field<NonNullGraphType<StepUnionType>>(
                 "step",
@@ -93,32 +62,7 @@ namespace TeacherWorkout.Api.GraphQL
                     return context.GetArgument<IEnumerable<string>>("lessonIds")
                         .Select(lessonId => new LessonStatus
                         {
-                            Lesson = new Lesson
-                            {
-                                Id = lessonId,
-                                Title = "Lorem Ipsum",
-                                Thumbnail = new Image
-                                {
-                                    Description = "Cat Photo",
-                                    Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-
-                                },
-                                Theme = new Theme
-                                {
-                                    Id = "1",
-                                    Title = "Lorem Ipsum",
-                                    Thumbnail = new Image
-                                    {
-                                        Description = "Cat Photo",
-                                        Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-                                    }
-                                },
-                                Duration = new Duration
-                                {
-                                    Value = 45,
-                                    Unit = DurationUnit.Minutes
-                                }
-                            },
+                            Lesson = Lesson.BuildMock(lessonId),
                             PercentCompleted = 10,
                             CurrentLessonStep = new SlideStep
                             {

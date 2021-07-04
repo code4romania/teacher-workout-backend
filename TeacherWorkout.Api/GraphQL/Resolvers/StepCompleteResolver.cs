@@ -109,7 +109,8 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
             return new()
             {
                 PercentCompleted = new Random().Next(1, 101),
-                CurrentLessonStep = MockStep(stepId)
+                CurrentLessonStep = MockStep(stepId),
+                Lesson = Lesson.BuildMock()
             };
         }
     }
