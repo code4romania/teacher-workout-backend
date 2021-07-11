@@ -1,16 +1,18 @@
 using TeacherWorkout.Api.Models;
+using TeacherWorkout.Api.Models.Inputs;
+using TeacherWorkout.Api.Models.Payloads;
 
 namespace TeacherWorkout.Api.GraphQL.Resolvers
 
 {
     public static class LessonSaveResolver
     {
-        public static LessonSavePayload Resolve(LessonSave lessonSave)
+        public static LessonSavePayload Resolve(LessonSaveInput lessonSave)
         {
             return new() {Lesson = MockData(lessonSave)};
         }
 
-        private static Lesson MockData(LessonSave lessonSave)
+        private static Lesson MockData(LessonSaveInput lessonSave)
         {
             return new()
             {

@@ -2,25 +2,27 @@ using GraphQL;
 using GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Resolvers;
 using TeacherWorkout.Api.GraphQL.Types;
+using TeacherWorkout.Api.GraphQL.Types.Inputs;
+using TeacherWorkout.Api.GraphQL.Types.Payloads;
 using TeacherWorkout.Api.Models;
-using LessonSaveInput = TeacherWorkout.Api.GraphQL.Inputs.LessonSaveInput;
+using TeacherWorkout.Api.Models.Inputs;
 
 namespace TeacherWorkout.Api.GraphQL
 {
     public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
-        public TeacherWorkoutMutation(LessonSaveInput input)
+        public TeacherWorkoutMutation()
         {
             Name = "Mutation";
 
-            Field<LessonSavePayloadType>(
+            Field<NonNullGraphType<LessonSavePayloadType>>(
                 "lessonSave",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<LessonSaveInput>> {Name = "input"}
+                    new QueryArgument<NonNullGraphType<LessonSaveInputType>> {Name = "input"}
                 ),
                 resolve: context =>
                 {
-                    var lessonSave = context.GetArgument<LessonSave>("input");
+                    var lessonSave = context.GetArgument<LessonSaveInput>("input");
                     return LessonSaveResolver.Resolve(lessonSave);
                 });
         }
