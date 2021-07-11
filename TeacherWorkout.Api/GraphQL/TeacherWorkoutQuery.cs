@@ -53,14 +53,13 @@ namespace TeacherWorkout.Api.GraphQL
                     };
                 });
             
-            Field<ListGraphType<NonNullGraphType<LessonType>>>(
-                "lessons",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "themeId", Description = "id of the Theme" }
-                ),
-                resolve: context =>
+            Connection<NonNullGraphType<LessonType>>()
+                .Name("lessons")
+                .Argument<NonNullGraphType<IdGraphType>>("themeId", "id of the Theme")
+                .ReturnAll()
+                .Resolve(context =>
                 {
-                    return new[]
+                    var lessons = new[]
                     {
                         new Lesson
                         {
@@ -87,6 +86,24 @@ namespace TeacherWorkout.Api.GraphQL
                                 Value = 45,
                                 Unit = DurationUnit.Minutes
                             }
+                        }
+                    };
+                    
+                    var edges = lessons.Select(e => new Edge<Lesson>
+                    {
+                        Cursor = e.Id,
+                        Node = e
+                    }).ToList();
+                    
+                    return new Connection<Lesson>
+                    {
+                        Edges = edges,
+                        PageInfo = new PageInfo
+                        {
+                            StartCursor = edges.FirstOrDefault()?.Cursor,
+                            EndCursor = edges.LastOrDefault()?.Cursor,
+                            HasPreviousPage = false,
+                            HasNextPage = false,
                         }
                     };
                 });
