@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
 using GraphQL.Types;
+using GraphQL.Types.Relay.DataObjects;
 using TeacherWorkout.Api.GraphQL.Types;
 using TeacherWorkout.Api.Models;
 
@@ -13,14 +14,15 @@ namespace TeacherWorkout.Api.GraphQL
         public TeacherWorkoutQuery()
         {
             Name = "Query";
-            
-            Field<ListGraphType<NonNullGraphType<ThemeType>>>(
-                "themes",
-                resolve: context =>
+         
+            Connection<NonNullGraphType<ThemeType>>()
+                .Name("themes")
+                .Bidirectional()
+                .Resolve(context =>
                 {
-                    return new[]
+                    var themes = new List<Theme>
                     {
-                        new Theme
+                        new()
                         {
                             Id = "1",
                             Title = "Lorem Ipsum",
@@ -29,6 +31,24 @@ namespace TeacherWorkout.Api.GraphQL
                                 Description = "Cat Photo",
                                 Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
                             }
+                        }
+                    };
+
+                    var edges = themes.Select(e => new Edge<Theme>
+                    {
+                        Cursor = e.Id,
+                        Node = e
+                    }).ToList();
+                    
+                    return new Connection<Theme>
+                    {
+                        Edges = edges,
+                        PageInfo = new PageInfo
+                        {
+                            StartCursor = edges.FirstOrDefault()?.Cursor,
+                            EndCursor = edges.LastOrDefault()?.Cursor,
+                            HasPreviousPage = false,
+                            HasNextPage = false,
                         }
                     };
                 });
