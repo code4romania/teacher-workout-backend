@@ -1,7 +1,6 @@
 namespace TeacherWorkout.Api.Models
 {
-    public interface ILessonStep
+    public interface ILessonStep : IIdentifiable
     {
-        public string Id { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 namespace TeacherWorkout.Api.Models
 {
-    public class Lesson
+    public class Lesson : IIdentifiable
     {
         public string Id { get; set; }
 

@@ -5,6 +5,7 @@ using GraphQL;
 using GraphQL.Types;
 using GraphQL.Types.Relay.DataObjects;
 using TeacherWorkout.Api.GraphQL.Types;
+using TeacherWorkout.Api.GraphQL.Utils;
 using TeacherWorkout.Api.Models;
 
 namespace TeacherWorkout.Api.GraphQL
@@ -18,50 +19,37 @@ namespace TeacherWorkout.Api.GraphQL
             Connection<NonNullGraphType<ThemeType>>()
                 .Name("themes")
                 .Bidirectional()
-                .Resolve(context =>
+                .Resolve(_ => new List<Theme>
                 {
-                    var themes = new List<Theme>
+                    new()
                     {
-                        new()
+                        Id = "1",
+                        Title = "Lorem Ipsum",
+                        Thumbnail = new Image
                         {
-                            Id = "1",
-                            Title = "Lorem Ipsum",
-                            Thumbnail = new Image
-                            {
-                                Description = "Cat Photo",
-                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-                            }
+                            Description = "Cat Photo",
+                            Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
                         }
-                    };
-
-                    var edges = themes.Select(e => new Edge<Theme>
-                    {
-                        Cursor = e.Id,
-                        Node = e
-                    }).ToList();
-                    
-                    return new Connection<Theme>
-                    {
-                        Edges = edges,
-                        PageInfo = new PageInfo
-                        {
-                            StartCursor = edges.FirstOrDefault()?.Cursor,
-                            EndCursor = edges.LastOrDefault()?.Cursor,
-                            HasPreviousPage = false,
-                            HasNextPage = false,
-                        }
-                    };
-                });
+                    }
+                }.ToConnection());
             
             Connection<NonNullGraphType<LessonType>>()
                 .Name("lessons")
                 .Argument<NonNullGraphType<IdGraphType>>("themeId", "id of the Theme")
                 .ReturnAll()
-                .Resolve(context =>
+                .Resolve(_ => new List<Lesson>
                 {
-                    var lessons = new[]
+                    new()
                     {
-                        new Lesson
+                        Id = "1",
+                        Title = "Lorem Ipsum",
+                        Thumbnail = new Image
+                        {
+                            Description = "Cat Photo",
+                            Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+
+                        },
+                        Theme = new Theme
                         {
                             Id = "1",
                             Title = "Lorem Ipsum",
@@ -69,44 +57,15 @@ namespace TeacherWorkout.Api.GraphQL
                             {
                                 Description = "Cat Photo",
                                 Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-
-                            },
-                            Theme = new Theme
-                            {
-                                Id = "1",
-                                Title = "Lorem Ipsum",
-                                Thumbnail = new Image
-                                {
-                                    Description = "Cat Photo",
-                                    Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-                                }
-                            },
-                            Duration = new Duration
-                            {
-                                Value = 45,
-                                Unit = DurationUnit.Minutes
                             }
-                        }
-                    };
-                    
-                    var edges = lessons.Select(e => new Edge<Lesson>
-                    {
-                        Cursor = e.Id,
-                        Node = e
-                    }).ToList();
-                    
-                    return new Connection<Lesson>
-                    {
-                        Edges = edges,
-                        PageInfo = new PageInfo
+                        },
+                        Duration = new Duration
                         {
-                            StartCursor = edges.FirstOrDefault()?.Cursor,
-                            EndCursor = edges.LastOrDefault()?.Cursor,
-                            HasPreviousPage = false,
-                            HasNextPage = false,
+                            Value = 45,
+                            Unit = DurationUnit.Minutes
                         }
-                    };
-                });
+                    }
+                }.ToConnection());
 
             Field<NonNullGraphType<StepUnionType>>(
                 "step",

@@ -1,6 +1,6 @@
 namespace TeacherWorkout.Api.Models
 {
-    public class Theme
+    public class Theme : IIdentifiable
     {
         public string Id { get; set; }
 
