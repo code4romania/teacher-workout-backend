@@ -30,6 +30,36 @@ namespace TeacherWorkout.Api.GraphQL
                             Description = "Cat Photo",
                             Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
                         }
+                    },
+                    new()
+                    {
+                        Id = "2",
+                        Title = "Dolor sit amet",
+                        Thumbnail = new Image
+                        {
+                            Description = "Another Cat Photo",
+                            Url = "https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg"
+                        }
+                    },
+                    new()
+                    {
+                        Id = "3",
+                        Title = "Consectetur adipiscing elit",
+                        Thumbnail = new Image
+                        {
+                            Description = "YACP",
+                            Url = "http://cdn.shopify.com/s/files/1/1149/5008/articles/why-cat-looking-at-wall-or-nothing.jpg?v=1551321728"
+                        }
+                    },
+                    new()
+                    {
+                        Id = "4",
+                        Title = "Fusce tempor",
+                        Thumbnail = new Image
+                        {
+                            Description = "More Cat Photos",
+                            Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReLDHsAIhgLgFpupyZg0CtevFcI2NY9WkoOQ&usqp=CAU"
+                        }
                     }
                 }.ToConnection());
             
