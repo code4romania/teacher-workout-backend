@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
 using GraphQL.Types;
+using GraphQL.Types.Relay.DataObjects;
 using TeacherWorkout.Api.GraphQL.Types;
+using TeacherWorkout.Api.GraphQL.Utils;
 using TeacherWorkout.Api.Models;
 
 namespace TeacherWorkout.Api.GraphQL
@@ -13,63 +15,162 @@ namespace TeacherWorkout.Api.GraphQL
         public TeacherWorkoutQuery()
         {
             Name = "Query";
-            
-            Field<ListGraphType<NonNullGraphType<ThemeType>>>(
-                "themes",
-                resolve: context =>
+         
+            Connection<NonNullGraphType<ThemeType>>()
+                .Name("themes")
+                .Bidirectional()
+                .Resolve(_ => new List<Theme>
                 {
-                    return new[]
+                    new()
                     {
-                        new Theme
+                        Id = "1",
+                        Title = "Lorem Ipsum",
+                        Thumbnail = new Image
                         {
-                            Id = "1",
-                            Title = "Lorem Ipsum",
-                            Thumbnail = new Image
-                            {
-                                Description = "Cat Photo",
-                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-                            }
+                            Description = "Cat Photo",
+                            Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
                         }
-                    };
-                });
-            
-            Field<ListGraphType<NonNullGraphType<LessonType>>>(
-                "lessons",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "themeId", Description = "id of the Theme" }
-                ),
-                resolve: context =>
-                {
-                    return new[]
+                    },
+                    new()
                     {
-                        new Lesson
+                        Id = "2",
+                        Title = "Dolor sit amet",
+                        Thumbnail = new Image
                         {
-                            Id = "1",
-                            Title = "Lorem Ipsum",
-                            Thumbnail = new Image
-                            {
-                                Description = "Cat Photo",
-                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+                            Description = "Another Cat Photo",
+                            Url = "https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg"
+                        }
+                    },
+                    new()
+                    {
+                        Id = "3",
+                        Title = "Consectetur adipiscing elit",
+                        Thumbnail = new Image
+                        {
+                            Description = "YACP",
+                            Url = "http://cdn.shopify.com/s/files/1/1149/5008/articles/why-cat-looking-at-wall-or-nothing.jpg?v=1551321728"
+                        }
+                    },
+                    new()
+                    {
+                        Id = "4",
+                        Title = "Fusce tempor",
+                        Thumbnail = new Image
+                        {
+                            Description = "More Cat Photos",
+                            Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReLDHsAIhgLgFpupyZg0CtevFcI2NY9WkoOQ&usqp=CAU"
+                        }
+                    }
+                }.ToConnection());
+            
+            Connection<NonNullGraphType<LessonType>>()
+                .Name("lessons")
+                .Argument<NonNullGraphType<IdGraphType>>("themeId", "id of the Theme")
+                .ReturnAll()
+                .Resolve(_ => new List<Lesson>
+                {
+                    new()
+                    {
+                        Id = "1",
+                        Title = "Lorem Ipsum",
+                        Thumbnail = new Image
+                        {
+                            Description = "Cat Photo",
+                            Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
 
-                            },
-                            Theme = new Theme
+                        },
+                        Theme = new Theme
+                        {
+                            Id = "1",
+                            Title = "Lorem Ipsum",
+                            Thumbnail = new Image
                             {
-                                Id = "1",
-                                Title = "Lorem Ipsum",
-                                Thumbnail = new Image
-                                {
-                                    Description = "Cat Photo",
-                                    Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
-                                }
-                            },
-                            Duration = new Duration
-                            {
-                                Value = 45,
-                                Unit = DurationUnit.Minutes
+                                Description = "Cat Photo",
+                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
                             }
+                        },
+                        Duration = new Duration
+                        {
+                            Value = 45,
+                            Unit = DurationUnit.Minutes
                         }
-                    };
-                });
+                    },
+                    new()
+                    {
+                        Id = "2",
+                        Title = "Dolor sit amet",
+                        Thumbnail = new Image
+                        {
+                            Description = "Another Cat Photo",
+                            Url = "https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg"
+                        },
+                        Theme = new Theme
+                        {
+                            Id = "1",
+                            Title = "Lorem Ipsum",
+                            Thumbnail = new Image
+                            {
+                                Description = "Cat Photo",
+                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+                            }
+                        },
+                        Duration = new Duration
+                        {
+                            Value = 32,
+                            Unit = DurationUnit.Minutes
+                        }
+                    },
+                    new()
+                    {
+                        Id = "3",
+                        Title = "Consectetur adipiscing elit",
+                        Thumbnail = new Image
+                        {
+                            Description = "YACP",
+                            Url = "http://cdn.shopify.com/s/files/1/1149/5008/articles/why-cat-looking-at-wall-or-nothing.jpg?v=1551321728"
+                        },
+                        Theme = new Theme
+                        {
+                            Id = "1",
+                            Title = "Lorem Ipsum",
+                            Thumbnail = new Image
+                            {
+                                Description = "Cat Photo",
+                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+                            }
+                        },
+                        Duration = new Duration
+                        {
+                            Value = 55,
+                            Unit = DurationUnit.Minutes
+                        }
+                    },
+                    new()
+                    {
+                        Id = "4",
+                        Title = "Fusce tempor",
+                        Thumbnail = new Image
+                        {
+                            Description = "More Cat Photos",
+                            Url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReLDHsAIhgLgFpupyZg0CtevFcI2NY9WkoOQ&usqp=CAU"
+                        },
+                        Theme = new Theme
+                        {
+                            Id = "1",
+                            Title = "Lorem Ipsum",
+                            Thumbnail = new Image
+                            {
+                                Description = "Cat Photo",
+                                Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+                            }
+                        },
+                        Duration = new Duration
+                        {
+                            Value = 37,
+                            Unit = DurationUnit.Minutes
+                        }
+                    }
+                }.ToConnection());
 
             Field<NonNullGraphType<StepUnionType>>(
                 "step",
