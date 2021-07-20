@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
-using TeacherWorkout.Api.GraphQL.Inputs;
 
 namespace TeacherWorkout.Api
 {
@@ -77,12 +76,10 @@ namespace TeacherWorkout.Api
 
         private static void AddGraphQLNamespaces(IServiceCollection services)
         {
-            string[] namespaces = { "Types", "Inputs" };
-            var fullNamespaces = namespaces.Select(s => "TeacherWorkout.Api.GraphQL." + s).ToArray();
-
             AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
-                .Where(t => t.IsClass && Array.Exists(fullNamespaces, _namespace => _namespace == t.Namespace))
+                .Where(t => t.IsClass)
+                .Where(t => t.Namespace != null && t.Namespace.StartsWith("TeacherWorkout.Api.GraphQL.Types"))
                 .ToList()
                 .ForEach(t => services.AddSingleton(t));
         }

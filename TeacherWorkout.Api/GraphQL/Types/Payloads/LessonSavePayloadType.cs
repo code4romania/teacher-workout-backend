@@ -1,7 +1,7 @@
 using GraphQL.Types;
-using TeacherWorkout.Api.Models;
+using TeacherWorkout.Api.Models.Payloads;
 
-namespace TeacherWorkout.Api.GraphQL.Types
+namespace TeacherWorkout.Api.GraphQL.Types.Payloads
 {
     public class LessonSavePayloadType : ObjectGraphType<LessonSavePayload>
     {

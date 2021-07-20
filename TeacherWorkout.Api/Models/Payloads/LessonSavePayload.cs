@@ -1,6 +1,4 @@
-using TeacherWorkout.Api.GraphQL.Types;
-
-namespace TeacherWorkout.Api.Models
+namespace TeacherWorkout.Api.Models.Payloads
 {
     public class LessonSavePayload
     {
