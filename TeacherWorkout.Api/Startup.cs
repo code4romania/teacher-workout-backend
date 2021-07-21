@@ -36,8 +36,9 @@ namespace TeacherWorkout.Api
             services.AddControllers();
             
             services.AddSingleton<TeacherWorkoutQuery>();
+            services.AddSingleton<TeacherWorkoutMutation>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
-            AddGraphTypes(services);
+            AddGraphQLNamespaces(services);
             
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -73,11 +74,12 @@ namespace TeacherWorkout.Api
             });
         }
 
-        private static void AddGraphTypes(IServiceCollection services)
+        private static void AddGraphQLNamespaces(IServiceCollection services)
         {
             AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
-                .Where(t => t.IsClass && t.Namespace == "TeacherWorkout.Api.GraphQL.Types")
+                .Where(t => t.IsClass)
+                .Where(t => t.Namespace != null && t.Namespace.StartsWith("TeacherWorkout.Api.GraphQL.Types"))
                 .ToList()
                 .ForEach(t => services.AddSingleton(t));
         }
