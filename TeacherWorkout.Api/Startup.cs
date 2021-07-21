@@ -1,9 +1,12 @@
 using System;
 using System.Linq;
+using dotenv.net;
+using dotenv.net.Utilities;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +19,7 @@ namespace TeacherWorkout.Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            DotEnv.Load(new DotEnvOptions(envFilePaths: new string[] {"../.env"}));
         }
 
         public IConfiguration Configuration { get; }
@@ -40,6 +44,9 @@ namespace TeacherWorkout.Api
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
             AddGraphQLNamespaces(services);
             
+            services.AddDbContext<TeacherWorkoutContext>(options =>
+                options.UseNpgsql(EnvReader.GetStringValue("DB_CONNECTION_STRING")));
+            
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
                 {
@@ -50,7 +57,7 @@ namespace TeacherWorkout.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db)
         {
             app.UseCors();
             
@@ -62,6 +69,8 @@ namespace TeacherWorkout.Api
             {
                 app.UseHttpsRedirection();
             }
+            
+            db.Database.EnsureCreated();
             
             app.UseGraphQL<ISchema>();
             app.UseRouting();

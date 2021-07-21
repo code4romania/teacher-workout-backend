@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TeacherWorkout.Api.Models
 {
     public class Lesson : IIdentifiable
@@ -9,7 +11,7 @@ namespace TeacherWorkout.Api.Models
         public Image Thumbnail { get; set; }
         
         public Theme Theme { get; set; }
-        
-        public Duration Duration { get; set; }
+
+        public IEnumerable<LessonStepBase> Steps { get; set; }
     }
 }
