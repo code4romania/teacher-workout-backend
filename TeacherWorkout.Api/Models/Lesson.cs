@@ -13,5 +13,7 @@ namespace TeacherWorkout.Api.Models
         public Theme Theme { get; set; }
 
         public IEnumerable<LessonStepBase> Steps { get; set; }
+
+        public Duration Duration { get; set; }
     }
 }
