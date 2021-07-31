@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using GraphQL;
 using GraphQL.Types;
-using GraphQL.Types.Relay.DataObjects;
 using TeacherWorkout.Api.GraphQL.Mock;
 using TeacherWorkout.Api.GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Utils;
-using TeacherWorkout.Api.Models;
 
 namespace TeacherWorkout.Api.GraphQL
 {
@@ -24,7 +18,7 @@ namespace TeacherWorkout.Api.GraphQL
 
             Connection<NonNullGraphType<LessonType>>()
                 .Name("lessons")
-                .Argument<NonNullGraphType<IdGraphType>>("themeId", "id of the Theme")
+                .Argument<IdGraphType>("themeId", "The id of the theme. Keep it null to ignore filtering.")
                 .ReturnAll()
                 .Resolve(_ => LessonFactory.MakeMany().ToConnection());
 
