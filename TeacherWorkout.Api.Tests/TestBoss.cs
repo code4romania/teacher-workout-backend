@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace TeacherWorkout.Tests
+namespace TeacherWorkout.Api.Tests
 {
     public class TestBoss
     {

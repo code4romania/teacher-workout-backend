@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherWorkout.Api", "TeacherWorkout.Api\TeacherWorkout.Api.csproj", "{BC0C6D6D-528A-4B18-BD3E-4FC863F9E3E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherWorkout.Tests", "TeacherWorkout.Tests\TeacherWorkout.Tests.csproj", "{B4739FDC-C7FB-4DE4-B207-FF40B435A8F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherWorkout.Api.Tests", "TeacherWorkout.Api.Tests\TeacherWorkout.Api.Tests.csproj", "{B4739FDC-C7FB-4DE4-B207-FF40B435A8F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
