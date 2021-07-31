@@ -6,6 +6,8 @@ namespace TeacherWorkout.Api.Models
 
         public string Title { get; set; }
 
+        public string Description { get; set; }
+
         public Image Thumbnail { get; set; }
         
         public Theme Theme { get; set; }
