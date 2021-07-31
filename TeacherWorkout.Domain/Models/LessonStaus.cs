@@ -1,4 +1,4 @@
-namespace TeacherWorkout.Api.Models
+namespace TeacherWorkout.Domain.Models
 {
     public class LessonStatus
     {

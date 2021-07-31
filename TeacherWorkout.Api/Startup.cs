@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
 using TeacherWorkout.Data;
+using TeacherWorkout.Domain.Common;
+using TeacherWorkout.Domain.Lessons;
+using TeacherWorkout.Domain.Themes;
+using TeacherWorkout.MockData.Repositories;
 
 namespace TeacherWorkout.Api
 {
@@ -36,6 +42,8 @@ namespace TeacherWorkout.Api
             services.AddSingleton<TeacherWorkoutQuery>();
             services.AddSingleton<TeacherWorkoutMutation>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
+            AddOperations(services);
+            AddRepositories(services);
 
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -70,6 +78,23 @@ namespace TeacherWorkout.Api
 
             app.UseGraphQL<ISchema>();
             app.UseGraphQLGraphiQL();
+        }
+
+        private static void AddOperations(IServiceCollection services)
+        {
+            var operationType = typeof(IOperation);
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass)
+                .Where(t => t.GetInterfaces().Contains(operationType))
+                .ToList()
+                .ForEach(t => services.AddSingleton(t));
+        }
+
+        private static void AddRepositories(IServiceCollection services)
+        {
+            services.AddSingleton<IThemeRepository, ThemeRepository>();
+            services.AddSingleton<ILessonRepository, LessonRepository>();
         }
     }
 }

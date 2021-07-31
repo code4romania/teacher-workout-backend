@@ -1,5 +1,5 @@
 using GraphQL.Types;
-using TeacherWorkout.Api.Models;
+using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Api.GraphQL.Types
 {

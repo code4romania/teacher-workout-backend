@@ -1,4 +1,4 @@
-namespace TeacherWorkout.Api.Models.Payloads
+namespace TeacherWorkout.Domain.Models.Payloads
 {
     public class LessonSavePayload
     {

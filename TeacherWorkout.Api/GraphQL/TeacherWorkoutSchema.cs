@@ -3,7 +3,7 @@ using System.Linq;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 using TeacherWorkout.Api.GraphQL.Types;
-using TeacherWorkout.Api.Models;
+using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Api.GraphQL
 {
@@ -26,7 +26,7 @@ namespace TeacherWorkout.Api.GraphQL
                 .Where(t => t.IsClass || t.IsEnum)
                 .ToList();
 
-            classTypes.Where(t => t.Namespace == "TeacherWorkout.Api.Models")
+            classTypes.Where(t => t.Namespace == "TeacherWorkout.Domain.Models")
                 .ToList()
                 .ForEach(clrType =>
                 {

@@ -1,4 +1,4 @@
-namespace TeacherWorkout.Api.Models.Inputs
+namespace TeacherWorkout.Domain.Models.Inputs
 {
     public class LessonSaveInput
     {

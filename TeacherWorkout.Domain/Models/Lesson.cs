@@ -1,4 +1,6 @@
-namespace TeacherWorkout.Api.Models
+using TeacherWorkout.Domain.Common;
+
+namespace TeacherWorkout.Domain.Models
 {
     public class Lesson : IIdentifiable
     {
