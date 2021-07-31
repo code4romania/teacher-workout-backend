@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using GraphQL;
-using TeacherWorkout.Api.Models;
+using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Api.GraphQL.Mock
 {

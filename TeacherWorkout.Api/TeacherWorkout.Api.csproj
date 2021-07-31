@@ -14,11 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers" />
-    <Folder Include="GraphQL\Mutations" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TeacherWorkout.Data\TeacherWorkout.Data.csproj" />
     <ProjectReference Include="..\TeacherWorkout.Domain\TeacherWorkout.Domain.csproj" />
     <ProjectReference Include="..\TeacherWorkout.MockData\TeacherWorkout.MockData.csproj" />
