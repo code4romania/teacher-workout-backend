@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 
 COPY ["TeacherWorkout.Api/TeacherWorkout.Api.csproj", "TeacherWorkout.Api/"]
+COPY ["TeacherWorkout.Data/TeacherWorkout.Data.csproj", "TeacherWorkout.Data/"]
 
 RUN dotnet restore "TeacherWorkout.Api/TeacherWorkout.Api.csproj"
 

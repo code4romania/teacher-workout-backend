@@ -4,10 +4,12 @@ using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
+using TeacherWorkout.Data;
 
 namespace TeacherWorkout.Api
 {
@@ -32,14 +34,14 @@ namespace TeacherWorkout.Api
                             .AllowAnyHeader();
                     });
             });
-            
+
             services.AddControllers();
-            
+
             services.AddSingleton<TeacherWorkoutQuery>();
             services.AddSingleton<TeacherWorkoutMutation>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
             AddGraphQLNamespaces(services);
-            
+
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
                 {
@@ -47,13 +49,16 @@ namespace TeacherWorkout.Api
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson();
+
+            services.AddDbContext<TeacherWorkoutContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db)
         {
             app.UseCors();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -62,7 +67,9 @@ namespace TeacherWorkout.Api
             {
                 app.UseHttpsRedirection();
             }
-            
+
+            db.Database.Migrate();
+
             app.UseGraphQL<ISchema>();
             app.UseRouting();
 
