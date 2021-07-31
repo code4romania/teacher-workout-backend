@@ -5,12 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.2" />
+    <Compile Remove="Controllers\**" />
+    <Compile Remove="GraphQL\Mutations\**" />
+    <Content Remove="Controllers\**" />
+    <Content Remove="GraphQL\Mutations\**" />
+    <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="GraphQL\Mutations\**" />
+    <None Remove="Controllers\**" />
+    <None Remove="GraphQL\Mutations\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers" />
-    <Folder Include="GraphQL\Mutations" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.2" />
   </ItemGroup>
 
 </Project>
