@@ -9,7 +9,7 @@ namespace TeacherWorkout.Domain.Lessons
     {
         public class Input : PaginationInput
         {
-            public int ThemeId { get; set; }
+            public int? ThemeId { get; set; }
         }
         
         private readonly ILessonRepository _repository;
@@ -21,7 +21,13 @@ namespace TeacherWorkout.Domain.Lessons
         
         public PaginatedResult<Lesson> Execute(Input input)
         {
-            return _repository.PaginatedList(input.ToPaginationFilter(), new List<IFilter> { new ThemeFilter(input.ThemeId) });
+            var filterList = new List<IFilter>();
+            if (input.ThemeId.HasValue)
+            {
+                filterList.Add(new ThemeFilter(input.ThemeId.Value));
+            }
+            
+            return _repository.PaginatedList(input.ToPaginationFilter(), filterList);
         }
     }
 }

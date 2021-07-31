@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using GraphQL;
 using GraphQL.Builders;
 using TeacherWorkout.Domain.Models.Inputs;
 
@@ -16,7 +19,16 @@ namespace TeacherWorkout.Api.GraphQL.Utils
                 Last = context.Last
             };
 
-            // Todo: Parse other parameters
+            var knownProperties = new List<string> { "Before", "After", "First", "Last" };
+
+            typeof(TInput).GetProperties()
+                .Where(p => !knownProperties.Contains(p.Name))
+                .ToList()
+                .ForEach(p =>
+                {
+                    var value = context.GetArgument(p.PropertyType, p.Name);
+                    p.SetValue(result, value);
+                });
             
             return result;
         }
