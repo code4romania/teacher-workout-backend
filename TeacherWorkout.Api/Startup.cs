@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -35,12 +33,9 @@ namespace TeacherWorkout.Api
                     });
             });
 
-            services.AddControllers();
-
             services.AddSingleton<TeacherWorkoutQuery>();
             services.AddSingleton<TeacherWorkoutMutation>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
-            AddGraphQLNamespaces(services);
 
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -48,7 +43,8 @@ namespace TeacherWorkout.Api
                     options.EnableMetrics = true;
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
-                .AddSystemTextJson();
+                .AddSystemTextJson()
+                .AddGraphTypes();
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
@@ -70,25 +66,10 @@ namespace TeacherWorkout.Api
 
             db.Database.Migrate();
 
-            app.UseGraphQL<ISchema>();
             app.UseRouting();
 
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-
-        private static void AddGraphQLNamespaces(IServiceCollection services)
-        {
-            AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(t => t.GetTypes())
-                .Where(t => t.IsClass)
-                .Where(t => t.Namespace != null && t.Namespace.StartsWith("TeacherWorkout.Api.GraphQL.Types"))
-                .ToList()
-                .ForEach(t => services.AddSingleton(t));
+            app.UseGraphQL<ISchema>();
+            app.UseGraphQLGraphiQL();
         }
     }
 }
