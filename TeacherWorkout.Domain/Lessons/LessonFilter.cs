@@ -4,6 +4,6 @@ namespace TeacherWorkout.Domain.Lessons
 {
     public class LessonFilter : PaginationFilter
     {
-        public int? ThemeId { get; set; }
+        public string ThemeId { get; set; }
     }
 }
