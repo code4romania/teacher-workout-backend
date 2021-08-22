@@ -13,7 +13,7 @@ namespace TeacherWorkout.MockData.Repositories
             return PaginatedList(pagination, Enumerable.Empty<IFilter>());
         }
 
-        public PaginatedResult<Lesson> PaginatedList(PaginationFilter pagination, IEnumerable<IFilter> input)
+        public PaginatedResult<Lesson> PaginatedList(PaginationFilter pagination, IEnumerable<IFilter> filters)
         {
             return new PaginatedResult<Lesson>
             {

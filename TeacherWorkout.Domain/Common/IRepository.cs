@@ -7,6 +7,6 @@ namespace TeacherWorkout.Domain.Common
     {
         PaginatedResult<TSource> PaginatedList(PaginationFilter pagination);
         
-        PaginatedResult<TSource> PaginatedList(PaginationFilter pagination, IEnumerable<IFilter> input);
+        PaginatedResult<TSource> PaginatedList(PaginationFilter pagination, IEnumerable<IFilter> filters);
     }
 }
