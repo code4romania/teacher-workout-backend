@@ -4,12 +4,8 @@ using TeacherWorkout.Domain.Models.Inputs;
 
 namespace TeacherWorkout.Domain.Themes
 {
-    public class GetThemes : IOperation<GetThemes.Input, PaginatedResult<Theme>>
+    public class GetThemes : IOperation<PaginationFilter, PaginatedResult<Theme>>
     {
-        public class Input : PaginationInput
-        {
-        }
-        
         private readonly IThemeRepository _repository;
 
         public GetThemes(IThemeRepository repository)
@@ -17,9 +13,9 @@ namespace TeacherWorkout.Domain.Themes
             _repository = repository;
         }
         
-        public PaginatedResult<Theme> Execute(Input input)
+        public PaginatedResult<Theme> Execute(PaginationFilter filter)
         {
-            return _repository.PaginatedList(input.ToPaginationFilter());
+            return _repository.PaginatedList(filter);
         }
     }
 }

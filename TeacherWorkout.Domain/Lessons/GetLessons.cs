@@ -5,13 +5,8 @@ using TeacherWorkout.Domain.Models.Inputs;
 
 namespace TeacherWorkout.Domain.Lessons
 {
-    public class GetLessons : IOperation<GetLessons.Input, PaginatedResult<Lesson>>
+    public class GetLessons : IOperation<LessonFilter, PaginatedResult<Lesson>>
     {
-        public class Input : PaginationInput
-        {
-            public int? ThemeId { get; set; }
-        }
-        
         private readonly ILessonRepository _repository;
 
         public GetLessons(ILessonRepository repository)
@@ -19,15 +14,9 @@ namespace TeacherWorkout.Domain.Lessons
             _repository = repository;
         }
         
-        public PaginatedResult<Lesson> Execute(Input input)
+        public PaginatedResult<Lesson> Execute(LessonFilter filter)
         {
-            var filterList = new List<IFilter>();
-            if (input.ThemeId.HasValue)
-            {
-                filterList.Add(new ThemeFilter(input.ThemeId.Value));
-            }
-            
-            return _repository.PaginatedList(input.ToPaginationFilter(), filterList);
+            return _repository.PaginatedList(filter);
         }
     }
 }

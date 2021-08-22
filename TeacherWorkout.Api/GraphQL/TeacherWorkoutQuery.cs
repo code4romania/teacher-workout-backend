@@ -5,6 +5,7 @@ using GraphQL;
 using GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Utils;
+using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Domain.Themes;
@@ -20,13 +21,13 @@ namespace TeacherWorkout.Api.GraphQL
             Connection<NonNullGraphType<ThemeType>>()
                 .Name("themes")
                 .Bidirectional()
-                .Resolve(context => getThemes.Execute(context.ToInput<GetThemes.Input>()).ToConnection());
+                .Resolve(context => getThemes.Execute(context.ToInput<PaginationFilter>()).ToConnection());
             
             Connection<NonNullGraphType<LessonType>>()
                 .Name("lessons")
                 .Argument<NonNullGraphType<IdGraphType>>("themeId", "id of the Theme")
                 .ReturnAll()
-                .Resolve(context => getLessons.Execute(context.ToInput<GetLessons.Input>()).ToConnection());
+                .Resolve(context => getLessons.Execute(context.ToInput<LessonFilter>()).ToConnection());
 
             Field<NonNullGraphType<StepUnionType>>(
                 "step",

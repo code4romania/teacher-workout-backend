@@ -1,6 +1,6 @@
 namespace TeacherWorkout.Domain.Common
 {
-    public class PaginationFilter : IFilter
+    public class PaginationFilter
     {
         public int? First { get; set; }
         public int? After { get; set; }

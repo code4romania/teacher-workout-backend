@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
@@ -8,14 +7,9 @@ namespace TeacherWorkout.MockData.Repositories
 {
     public class LessonRepository : ILessonRepository
     {
-        public PaginatedResult<Lesson> PaginatedList(PaginationFilter pagination)
+        public PaginatedResult<Lesson> PaginatedList(LessonFilter filter)
         {
-            return PaginatedList(pagination, Enumerable.Empty<IFilter>());
-        }
-
-        public PaginatedResult<Lesson> PaginatedList(PaginationFilter pagination, IEnumerable<IFilter> filters)
-        {
-            return new PaginatedResult<Lesson>
+            return new()
             {
                 TotalCount = 11,
                 Items = new List<Lesson>
