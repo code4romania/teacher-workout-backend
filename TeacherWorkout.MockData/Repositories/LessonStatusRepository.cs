@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using GraphQL;
+using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Api.GraphQL.Mock
 {
-    public class LessonStatusFactory
+    public class LessonStatusRepository : ILessonStatusRepository
     {
-        public static object Make(IResolveFieldContext<object> context)
+        public IEnumerable<LessonStatus> List(LessonStatusFilter filter)
         {
-            return context.GetArgument<IEnumerable<string>>("lessonIds")
+            return filter.LessonIds
                 .Select(lessonId => new LessonStatus
                 {
                     Lesson = new Lesson

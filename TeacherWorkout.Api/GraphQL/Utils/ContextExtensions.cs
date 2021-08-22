@@ -33,5 +33,21 @@ namespace TeacherWorkout.Api.GraphQL.Utils
             
             return result;
         }
+        
+        public static TInput ToInput<TInput>(this IResolveFieldContext context)
+            where TInput : new()
+        {
+            var result = new TInput();
+
+            typeof(TInput).GetProperties()
+                .ToList()
+                .ForEach(p =>
+                {
+                    var value = context.GetArgument(p.PropertyType, p.Name);
+                    p.SetValue(result, value);
+                });
+            
+            return result;
+        }
     }
 }

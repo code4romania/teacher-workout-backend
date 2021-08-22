@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Models;
-using TeacherWorkout.Domain.Models.Inputs;
 
 namespace TeacherWorkout.Domain.Lessons
 {
