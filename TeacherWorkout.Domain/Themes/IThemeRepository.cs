@@ -3,7 +3,8 @@ using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Domain.Themes
 {
-    public interface IThemeRepository : IRepository<Theme>
+    public interface IThemeRepository
     {
+        PaginatedResult<Theme> PaginatedList(PaginationFilter pagination);
     }
 }
