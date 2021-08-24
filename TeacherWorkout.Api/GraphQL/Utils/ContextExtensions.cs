@@ -12,24 +12,14 @@ namespace TeacherWorkout.Api.GraphQL.Utils
         public static TInput ToInput<TInput>(this IResolveConnectionContext context)
             where TInput : PaginationFilter, new()
         {
-            var result = new TInput
-            {
-                Before = CursorUtils.Deserialize(context.Before),
-                After = CursorUtils.Deserialize(context.After),
-                First = context.First,
-                Last = context.Last
-            };
+            var result = new TInput();
+            
+            ExtractProperties(context, result);
 
-            var knownProperties = new List<string> { "Before", "After", "First", "Last" };
-
-            typeof(TInput).GetProperties()
-                .Where(p => !knownProperties.Contains(p.Name))
-                .ToList()
-                .ForEach(p =>
-                {
-                    var value = context.GetArgument(p.PropertyType, p.Name);
-                    p.SetValue(result, value);
-                });
+            result.Before = CursorUtils.Deserialize(context.Before);
+            result.After = CursorUtils.Deserialize(context.After);
+            result.First = context.First;
+            result.Last = context.Last;
             
             return result;
         }
@@ -39,6 +29,13 @@ namespace TeacherWorkout.Api.GraphQL.Utils
         {
             var result = new TInput();
 
+            ExtractProperties(context, result);
+            
+            return result;
+        }
+
+        private static void ExtractProperties<TInput>(IResolveFieldContext context, TInput result) where TInput : new()
+        {
             typeof(TInput).GetProperties()
                 .ToList()
                 .ForEach(p =>
@@ -46,8 +43,6 @@ namespace TeacherWorkout.Api.GraphQL.Utils
                     var value = context.GetArgument(p.PropertyType, p.Name);
                     p.SetValue(result, value);
                 });
-            
-            return result;
         }
     }
 }
