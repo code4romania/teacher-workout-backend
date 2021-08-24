@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -11,9 +13,6 @@ using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Domain.Lessons;
-using TeacherWorkout.Domain.Themes;
-using TeacherWorkout.MockData.Repositories;
 
 namespace TeacherWorkout.Api
 {
@@ -26,9 +25,10 @@ namespace TeacherWorkout.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            EnsureReferencedAssembliesAreLoaded();
+            
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -43,7 +43,7 @@ namespace TeacherWorkout.Api
             services.AddSingleton<TeacherWorkoutMutation>();
             services.AddSingleton<ISchema, TeacherWorkoutSchema>();
             AddOperations(services);
-            AddRepositories(services);
+            AddRepositories(services, "TeacherWorkout.MockData");
 
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -91,12 +91,26 @@ namespace TeacherWorkout.Api
                 .ForEach(t => services.AddSingleton(t));
         }
 
-        private static void AddRepositories(IServiceCollection services)
+        private static void AddRepositories(IServiceCollection services, string sourceNamespace)
         {
-            services.AddSingleton<IThemeRepository, ThemeRepository>();
-            services.AddSingleton<ILessonRepository, LessonRepository>();
-            services.AddSingleton<ILessonStatusRepository, LessonStatusRepository>();
-            services.AddSingleton<IStepRepository, StepRepository>();
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsClass)
+                .Where(t => t.Namespace != null && t.Namespace.StartsWith(sourceNamespace))
+                .Where(t => t.Name.EndsWith("Repository"))
+                .ToList()
+                .ForEach(t =>
+                {
+                    var repositoryInterface = t.GetInterfaces().First(i => i.Name.EndsWith("Repository"));
+                    services.AddSingleton(repositoryInterface, t);
+                });
+        }
+        
+        private static void EnsureReferencedAssembliesAreLoaded()
+        {
+            // We need to reference something in the assembly to make it load  
+            // otherwise the Compiler will not include it in the output package
+            new List<Assembly> { typeof(MockData.Repositories.LessonRepository).Assembly };
         }
     }
 }

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\TeacherWorkout.MockData\TeacherWorkout.MockData.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="GraphQL\Mock" />
-  </ItemGroup>
-
 </Project>
