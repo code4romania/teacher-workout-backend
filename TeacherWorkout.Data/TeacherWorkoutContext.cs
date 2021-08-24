@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using TeacherWorkout.Data.Entities;
 
 namespace TeacherWorkout.Data

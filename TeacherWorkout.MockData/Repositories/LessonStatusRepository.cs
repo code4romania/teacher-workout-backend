@@ -3,7 +3,7 @@ using System.Linq;
 using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
 
-namespace TeacherWorkout.Api.GraphQL.Mock
+namespace TeacherWorkout.MockData.Repositories
 {
     public class LessonStatusRepository : ILessonStatusRepository
     {

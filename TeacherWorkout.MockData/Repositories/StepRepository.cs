@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using GraphQL;
+using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
 
-namespace TeacherWorkout.Api.GraphQL.Mock
+namespace TeacherWorkout.MockData.Repositories
 {
-    public static class StepFactory
+    public class StepRepository : IStepRepository
     {
-        public static object Make(IResolveFieldContext<object> context)
+        public ILessonStep Find(string id)
         {
-            switch (context.GetArgument<string>("id"))
+            switch (id)
             {
                 case "1":
                     return new SlideStep

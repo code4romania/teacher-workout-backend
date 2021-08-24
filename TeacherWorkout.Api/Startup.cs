@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
-using TeacherWorkout.Api.GraphQL.Mock;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Lessons;
@@ -97,6 +96,7 @@ namespace TeacherWorkout.Api
             services.AddSingleton<IThemeRepository, ThemeRepository>();
             services.AddSingleton<ILessonRepository, LessonRepository>();
             services.AddSingleton<ILessonStatusRepository, LessonStatusRepository>();
+            services.AddSingleton<IStepRepository, StepRepository>();
         }
     }
 }
