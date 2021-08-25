@@ -9,21 +9,6 @@ namespace TeacherWorkout.Api.GraphQL.Utils
 {
     public static class ContextExtensions
     {
-        public static TInput ToInput<TInput>(this IResolveConnectionContext context)
-            where TInput : PaginationFilter, new()
-        {
-            var result = new TInput();
-            
-            ExtractProperties(context, result);
-
-            result.Before = CursorUtils.Deserialize(context.Before);
-            result.After = CursorUtils.Deserialize(context.After);
-            result.First = context.First;
-            result.Last = context.Last;
-            
-            return result;
-        }
-        
         public static TInput ToInput<TInput>(this IResolveFieldContext context)
             where TInput : new()
         {

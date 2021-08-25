@@ -5,19 +5,6 @@ using TeacherWorkout.Domain.Common;
 
 namespace TeacherWorkout.Api.GraphQL.Utils
 {
-    public static class CursorUtils
-    {
-        public static string Serialize(int? id)
-        {
-            return null;
-        }
-
-        public static int? Deserialize(string cursor)
-        {
-            return null;
-        }
-    }
-    
     public static class ConnectionUtils
     {
         public static Connection<TSource> ToConnection<TSource>(this IEnumerable<TSource> items) 
