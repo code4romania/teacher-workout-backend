@@ -4,9 +4,9 @@
 
 **Check out the [Wiki](https://github.com/code4romania/teacher-workout-backend/wiki)!**
 
-Teacher Workout [was prototyped](https://civiclabs.ro/ro/solutions/teacher-workout) in [Civic Labs](https://civiclabs.ro/ro), the research and prototyping program in [Code for Romania](https://code4.ro/ro). 
+Teacher Workout [was prototyped](https://civiclabs.ro/ro/solutions/teacher-workout) in [Civic Labs](https://civiclabs.ro/ro), the research and prototyping program in [Code for Romania](https://code4.ro/ro).
 
-Teacher Workout is an application meant to deliver shot, interactive lessons. The themes of these lessons include identifying children who manifest a difficulty in learning, handling difficult classrooms situations, integrating children with particular needs in a classroom. These micro-courses are meant to help foster positive habits for teachers and professors alike. 
+Teacher Workout is an application meant to deliver shot, interactive lessons. The themes of these lessons include identifying children who manifest a difficulty in learning, handling difficult classrooms situations, integrating children with particular needs in a classroom. These micro-courses are meant to help foster positive habits for teachers and professors alike.
 
 The Teacher Workout ecosystem is composed of:
 
@@ -14,7 +14,7 @@ The Teacher Workout ecosystem is composed of:
 * [the web app](https://github.com/code4romania/teacher-workout-client)
 * the two mobile apps, [one for Android](https://github.com/code4romania/teacher-workout-android) and [another one for iOS](https://github.com/code4romania/teacher-workout-ios)
 
-The Teacher Workout prototype and UI is available [in the Figma project](https://www.figma.com/file/uLiqrlxmOB5xCppIzmiUXV/Teacher-Workout?node-id=0%3A1). 
+The Teacher Workout prototype and UI is available [in the Figma project](https://www.figma.com/file/uLiqrlxmOB5xCppIzmiUXV/Teacher-Workout?node-id=0%3A1).
 
 [Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code-for-romania)
 
@@ -22,10 +22,10 @@ The Teacher Workout prototype and UI is available [in the Figma project](https:/
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](https://github.com/code4romania/.github/blob/master/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-Help us out by testing this project in the [staging environment](https://teacher.heroesof.tech/graphql). You can use a GraphQL client like [Insomnia](https://insomnia.rest/). 
+Help us out by testing this project in the [staging environment](https://teacher.heroesof.tech/graphql). You can use a GraphQL client like [Insomnia](https://insomnia.rest/).
 If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
-If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements. 
+If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
 ## Built With
 
@@ -54,6 +54,10 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 ### Database technology & provider
 
 - postgres
+
+### API endpoints
+
+- GraphiQL (available at `/ui/graphiql`)
 
 ## Repos and projects
 
