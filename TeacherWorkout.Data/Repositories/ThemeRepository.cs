@@ -1,24 +1,24 @@
 ﻿using System.Linq;
 using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
+using TeacherWorkout.Domain.Themes;
 
 namespace TeacherWorkout.Data.Repositories
 {
-    public class LessonRepository : ILessonRepository
+    public class ThemeRepository : IThemeRepository
     {
         private readonly TeacherWorkoutContext _context;
 
-        public LessonRepository(TeacherWorkoutContext context)
+        public ThemeRepository(TeacherWorkoutContext context)
         {
             _context = context;
         }
-        
-        public PaginatedResult<Lesson> PaginatedList(LessonFilter filter)
-        {
-            var result = _context.Lessons.AsQueryable();
 
-            return new PaginatedResult<Lesson>
+        public PaginatedResult<Theme> PaginatedList(PaginationFilter pagination)
+        {
+            var result = _context.Themes.AsQueryable();
+
+            return new PaginatedResult<Theme>
             {
                 TotalCount = result.Count(),
                 Items = result.ToList()
