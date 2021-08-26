@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TeacherWorkout.Data.Entities;
 using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Data
 {
     public class TeacherWorkoutContext : DbContext
     {
-        public DbSet<ELesson> Lessons { get; set; }
-        public DbSet<ETheme> Themes { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Theme> Themes { get; set; }
 
         public TeacherWorkoutContext(DbContextOptions<TeacherWorkoutContext> options) : base(options)
         {
@@ -22,10 +22,26 @@ namespace TeacherWorkout.Data
                 from => from.TotalSeconds,
                 to => Duration.FromSeconds(to)
             );
+            var idConverter = new ValueConverter<string, int>(
+                from => Convert.ToInt32(from),
+                to => to.ToString()
+            );
 
             modelBuilder.Entity<Lesson>()
                 .Property(l => l.Duration)
                 .HasConversion(converter);
+
+            modelBuilder.Entity<Lesson>()
+                .Property(l => l.Id)
+                .HasConversion(idConverter);
+            
+            modelBuilder.Entity<Theme>()
+                .Property(l => l.Id)
+                .HasConversion(idConverter);
+            
+            modelBuilder.Entity<Image>()
+                .Property(l => l.Id)
+                .HasConversion(idConverter);
         }
     }
 }
