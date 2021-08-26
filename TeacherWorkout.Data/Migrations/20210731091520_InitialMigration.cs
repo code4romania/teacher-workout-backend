@@ -23,8 +23,7 @@ namespace TeacherWorkout.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Lessons");
+            migrationBuilder.DropTable(name: "Lessons");
         }
     }
 }
