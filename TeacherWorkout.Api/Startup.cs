@@ -39,11 +39,12 @@ namespace TeacherWorkout.Api
                     });
             });
 
-            services.AddSingleton<TeacherWorkoutQuery>();
-            services.AddSingleton<TeacherWorkoutMutation>();
-            services.AddSingleton<ISchema, TeacherWorkoutSchema>();
+            services.AddScoped<TeacherWorkoutQuery>();
+            services.AddScoped<TeacherWorkoutMutation>();
+            services.AddScoped<ISchema, TeacherWorkoutSchema>();
             AddOperations(services);
             AddRepositories(services, "TeacherWorkout.MockData");
+            AddRepositories(services, "TeacherWorkout.Data");
 
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -55,7 +56,7 @@ namespace TeacherWorkout.Api
                 .AddGraphTypes();
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
+                options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +89,7 @@ namespace TeacherWorkout.Api
                 .Where(t => t.IsClass)
                 .Where(t => t.GetInterfaces().Contains(operationType))
                 .ToList()
-                .ForEach(t => services.AddSingleton(t));
+                .ForEach(t => services.AddScoped(t));
         }
 
         private static void AddRepositories(IServiceCollection services, string sourceNamespace)
@@ -102,7 +103,7 @@ namespace TeacherWorkout.Api
                 .ForEach(t =>
                 {
                     var repositoryInterface = t.GetInterfaces().First(i => i.Name.EndsWith("Repository"));
-                    services.AddSingleton(repositoryInterface, t);
+                    services.AddScoped(repositoryInterface, t);
                 });
         }
         
