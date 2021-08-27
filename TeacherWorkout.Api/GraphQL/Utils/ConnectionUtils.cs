@@ -34,7 +34,7 @@ namespace TeacherWorkout.Api.GraphQL.Utils
         {
             var edges = result.Items.Select(e => new Edge<TSource>
             {
-                Cursor = CreateCursor(e.Id),
+                Cursor = e.Id,
                 Node = e
             }).ToList();
 
@@ -49,12 +49,6 @@ namespace TeacherWorkout.Api.GraphQL.Utils
                     HasNextPage = false,
                 }
             };
-        }
-
-        private static string CreateCursor(string id)
-        {
-            // TOOD
-            return id;
         }
     }
 }
