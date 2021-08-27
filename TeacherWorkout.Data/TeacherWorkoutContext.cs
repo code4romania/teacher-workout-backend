@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Data
@@ -22,10 +23,6 @@ namespace TeacherWorkout.Data
                 from => from.TotalSeconds,
                 to => Duration.FromSeconds(to)
             );
-            var idConverter = new ValueConverter<string, int>(
-                from => Convert.ToInt32(from),
-                to => to.ToString()
-            );
 
             modelBuilder.Entity<Lesson>()
                 .Property(l => l.Duration)
@@ -33,15 +30,18 @@ namespace TeacherWorkout.Data
 
             modelBuilder.Entity<Lesson>()
                 .Property(l => l.Id)
-                .HasConversion(idConverter);
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<StringValueGenerator>();
             
             modelBuilder.Entity<Theme>()
                 .Property(l => l.Id)
-                .HasConversion(idConverter);
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<StringValueGenerator>();
             
             modelBuilder.Entity<Image>()
                 .Property(l => l.Id)
-                .HasConversion(idConverter);
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<StringValueGenerator>();
         }
     }
 }

@@ -9,8 +9,8 @@ using TeacherWorkout.Data;
 namespace TeacherWorkout.Data.Migrations
 {
     [DbContext(typeof(TeacherWorkoutContext))]
-    [Migration("20210825174052_UpdateLessonsSchema")]
-    partial class UpdateLessonsSchema
+    [Migration("20210827110816_DropModels")]
+    partial class DropModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,21 +19,6 @@ namespace TeacherWorkout.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("TeacherWorkout.Data.Entities.Lesson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Lessons");
-                });
 #pragma warning restore 612, 618
         }
     }
