@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Domain.Themes;
@@ -16,7 +17,8 @@ namespace TeacherWorkout.Data.Repositories
 
         public PaginatedResult<Theme> PaginatedList(PaginationFilter pagination)
         {
-            var result = _context.Themes.AsQueryable();
+            var result = _context.Themes.AsQueryable()
+                .Include(t => t.Thumbnail);
 
             return new PaginatedResult<Theme>
             {
