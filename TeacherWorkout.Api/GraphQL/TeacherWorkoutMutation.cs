@@ -1,11 +1,9 @@
 using GraphQL;
 using GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Resolvers;
-using TeacherWorkout.Api.GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Types.Inputs;
 using TeacherWorkout.Api.GraphQL.Types.Payloads;
-using TeacherWorkout.Api.Models;
-using TeacherWorkout.Api.Models.Inputs;
+using TeacherWorkout.Domain.Models.Inputs;
 
 namespace TeacherWorkout.Api.GraphQL
 {

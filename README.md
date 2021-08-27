@@ -65,6 +65,25 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 - [android](https://github.com/code4romania/teacher-workout-android)
 - [ios](https://github.com/code4romania/teacher-workout-ios)
 
+## How To
+### Run
+```
+docker-compose up # and stop
+docker start teacher_workout_db
+dotnet run -p TeacherWorkout.Api
+```
+TODO: decouple docker-compose in development from staging 
+
+### Add a migration
+```
+dotnet ef migrations add <MigrationNameGoesHere> --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/
+```
+
+### Run migrations
+```
+dotnet ef database update --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/
+```
+
 ## Deployment
 
 Guide users through getting your code up and running on their own system. In this section you can talk about:

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphQL.Types.Relay.DataObjects;
-using TeacherWorkout.Api.Models;
+using TeacherWorkout.Domain.Common;
 
 namespace TeacherWorkout.Api.GraphQL.Utils
 {
@@ -11,6 +11,28 @@ namespace TeacherWorkout.Api.GraphQL.Utils
             where TSource: IIdentifiable
         {
             var edges = items.Select(e => new Edge<TSource>
+            {
+                Cursor = e.Id,
+                Node = e
+            }).ToList();
+
+            return new Connection<TSource>
+            {
+                Edges = edges,
+                PageInfo = new PageInfo
+                {
+                    StartCursor = edges.FirstOrDefault()?.Cursor,
+                    EndCursor = edges.LastOrDefault()?.Cursor,
+                    HasPreviousPage = false,
+                    HasNextPage = false,
+                }
+            };
+        }
+        
+        public static Connection<TSource> ToConnection<TSource>(this PaginatedResult<TSource> result) 
+            where TSource: IIdentifiable
+        {
+            var edges = result.Items.Select(e => new Edge<TSource>
             {
                 Cursor = e.Id,
                 Node = e

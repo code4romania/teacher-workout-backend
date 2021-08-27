@@ -1,6 +1,6 @@
-using TeacherWorkout.Api.Models;
-using TeacherWorkout.Api.Models.Inputs;
-using TeacherWorkout.Api.Models.Payloads;
+using TeacherWorkout.Domain.Models;
+using TeacherWorkout.Domain.Models.Inputs;
+using TeacherWorkout.Domain.Models.Payloads;
 
 namespace TeacherWorkout.Api.GraphQL.Resolvers
 
