@@ -23,7 +23,7 @@ namespace TeacherWorkout.Api.GraphQL
             
             Connection<NonNullGraphType<LessonType>>()
                 .Name("lessons")
-                .Argument<NonNullGraphType<IdGraphType>>("themeId", "id of the Theme")
+                .Argument<IdGraphType>("themeId", "The id of the theme. Keep it null to ignore filtering.")
                 .ReturnAll()
                 .Resolve(context => getLessons.Execute(context.ToInput<LessonFilter>()).ToConnection());
 
