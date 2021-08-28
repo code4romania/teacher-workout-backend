@@ -7,5 +7,7 @@ namespace TeacherWorkout.Domain.Models
         public string Id { get; set; }
 
         public IEnumerable<AnswerResult> Results { get; set; }
+
+        public Lesson Lesson { get; set; }
     }
 }
