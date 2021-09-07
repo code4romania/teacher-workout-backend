@@ -5,5 +5,7 @@ namespace TeacherWorkout.Domain.Models
         public string Id { get; set; }
 
         public int ExperiencePoints { get; set; }
+
+        public Lesson Lesson { get; set; }
     }
 }
