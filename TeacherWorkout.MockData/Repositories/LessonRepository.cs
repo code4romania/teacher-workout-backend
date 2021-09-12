@@ -7,6 +7,35 @@ namespace TeacherWorkout.MockData.Repositories
 {
     public class LessonRepository : ILessonRepository
     {
+        public Lesson Find(string ID)
+        {
+            return new()
+            {
+                Id = "2",
+                Title = "Dolor sit amet",
+                Thumbnail = new Image
+                {
+                    Description = "Another Cat Photo",
+                    Url = "https://static.toiimg.com/thumb/msid-67586673,width-800,height-600,resizemode-75,imgsize-3918697,pt-32,y_pad-40/67586673.jpg"
+                },
+                Theme = new Theme
+                {
+                    Id = "1",
+                    Title = "Lorem Ipsum",
+                    Thumbnail = new Image
+                    {
+                        Description = "Cat Photo",
+                        Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/640px-Felis_catus-cat_on_snow.jpg"
+                    }
+                },
+                Duration = new Duration
+                {
+                    Value = 32,
+                    Unit = DurationUnit.Minutes
+                }
+            };
+        }
+
         public PaginatedResult<Lesson> PaginatedList(LessonFilter filter)
         {
             return new()

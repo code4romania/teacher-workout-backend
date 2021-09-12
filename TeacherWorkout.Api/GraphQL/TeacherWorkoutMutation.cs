@@ -9,10 +9,10 @@ namespace TeacherWorkout.Api.GraphQL
 {
     public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
-        public TeacherWorkoutMutation()
+        public TeacherWorkoutMutation(LessonSaveResolver lessonSaveResolver)
         {
             Name = "Mutation";
-
+            
             Field<NonNullGraphType<LessonSavePayloadType>>(
                 "lessonSave",
                 arguments: new QueryArguments(
@@ -21,7 +21,8 @@ namespace TeacherWorkout.Api.GraphQL
                 resolve: context =>
                 {
                     var lessonSave = context.GetArgument<LessonSaveInput>("input");
-                    return LessonSaveResolver.Resolve(lessonSave);
+                    
+                    return lessonSaveResolver.Execute(lessonSave);
                 });
         }
     }
