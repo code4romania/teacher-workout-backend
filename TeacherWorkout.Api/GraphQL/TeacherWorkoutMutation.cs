@@ -10,7 +10,7 @@ namespace TeacherWorkout.Api.GraphQL
 {
     public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
-        public TeacherWorkoutMutation(CompleteStep completeStep)
+        public TeacherWorkoutMutation(CompleteStep completeStep, LessonSaveResolver lessonSaveResolver)
         {
             Name = "Mutation";
             
