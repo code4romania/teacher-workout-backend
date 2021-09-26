@@ -13,7 +13,7 @@ namespace TeacherWorkout.Api.GraphQL
         public TeacherWorkoutMutation(CompleteStep completeStep, LessonSaveResolver lessonSaveResolver)
         {
             Name = "Mutation";
-            
+
             Field<NonNullGraphType<LessonSavePayloadType>>(
                 "lessonSave",
                 arguments: new QueryArguments(
@@ -22,8 +22,19 @@ namespace TeacherWorkout.Api.GraphQL
                 resolve: context =>
                 {
                     var lessonSave = context.GetArgument<LessonSaveInput>("input");
-                    
-                    return lessonSaveResolver.Execute(lessonSave);
+
+                    return LessonSaveResolver.Resolve(lessonSave);
+                });
+
+            Field<StepCompletePayloadType>(
+                "stepComplete",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StepCompleteInputType>> { Name = "input" }
+                ),
+                resolve: context =>
+                {
+                    var stepComplete = context.GetArgument<StepCompleteInput>("input");
+                    return completeStep.Execute(stepComplete);
                 });
 
             Field<StepCompletePayloadType>(
