@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
+using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Api
 {
@@ -28,7 +29,7 @@ namespace TeacherWorkout.Api
         public void ConfigureServices(IServiceCollection services)
         {
             EnsureReferencedAssembliesAreLoaded();
-            
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -57,6 +58,8 @@ namespace TeacherWorkout.Api
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
+
+            services.AddSingleton<IContext>(new Context() { CurentUser = new User() { Id = "1", Name = "Test user" }});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

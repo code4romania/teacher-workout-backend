@@ -6,5 +6,6 @@ namespace TeacherWorkout.Domain.Lessons
     public interface ILessonStatusRepository
     {
         IEnumerable<LessonStatus> List(LessonStatusFilter filter);
+        LessonStatus Insert(LessonStatus lessonStatus);
     }
 }
