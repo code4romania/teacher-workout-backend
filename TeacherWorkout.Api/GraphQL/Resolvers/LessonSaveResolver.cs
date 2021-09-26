@@ -21,7 +21,7 @@ namespace TeacherWorkout.Api.GraphQL.Resolvers
             _lessonRepository = lessonRepository;
 
         }
-        `
+        
         public LessonSavePayload Execute(LessonSaveInput input)
         {
             Lesson lesson = _lessonRepository.Find(input.LessonId);

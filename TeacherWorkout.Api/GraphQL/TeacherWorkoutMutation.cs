@@ -23,18 +23,7 @@ namespace TeacherWorkout.Api.GraphQL
                 {
                     var lessonSave = context.GetArgument<LessonSaveInput>("input");
 
-                    return LessonSaveResolver.Resolve(lessonSave);
-                });
-
-            Field<StepCompletePayloadType>(
-                "stepComplete",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<StepCompleteInputType>> { Name = "input" }
-                ),
-                resolve: context =>
-                {
-                    var stepComplete = context.GetArgument<StepCompleteInput>("input");
-                    return completeStep.Execute(stepComplete);
+                    return lessonSaveResolver.Execute(lessonSave);
                 });
 
             Field<StepCompletePayloadType>(
