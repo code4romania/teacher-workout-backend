@@ -7,6 +7,11 @@ namespace TeacherWorkout.MockData.Repositories
 {
     public class LessonStatusRepository : ILessonStatusRepository
     {
+        public LessonStatus Insert(LessonStatus lessonStatus)
+        {
+            return lessonStatus;
+        }
+
         public IEnumerable<LessonStatus> List(LessonStatusFilter filter)
         {
             return filter.LessonIds

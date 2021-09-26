@@ -14,7 +14,12 @@ namespace TeacherWorkout.Data.Repositories
         {
             _context = context;
         }
-        
+
+        public Lesson Find(string ID)
+        {
+           return _context.Lessons.Find(ID);            
+        }
+
         public PaginatedResult<Lesson> PaginatedList(LessonFilter filter)
         {
             var result = _context.Lessons.AsQueryable()

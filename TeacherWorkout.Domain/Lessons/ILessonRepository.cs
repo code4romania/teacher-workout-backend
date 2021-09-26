@@ -6,5 +6,9 @@ namespace TeacherWorkout.Domain.Lessons
     public interface ILessonRepository
     {
         PaginatedResult<Lesson> PaginatedList(LessonFilter filter);
+
+        Lesson Find(string ID);
+
     }
+
 }

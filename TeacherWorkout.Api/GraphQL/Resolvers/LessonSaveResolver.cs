@@ -1,3 +1,5 @@
+using TeacherWorkout.Domain.Common;
+using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Domain.Models.Inputs;
 using TeacherWorkout.Domain.Models.Payloads;
@@ -5,40 +7,39 @@ using TeacherWorkout.Domain.Models.Payloads;
 namespace TeacherWorkout.Api.GraphQL.Resolvers
 
 {
-    public static class LessonSaveResolver
+    public class LessonSaveResolver : IOperation<LessonSaveInput, LessonSavePayload>
     {
-        public static LessonSavePayload Resolve(LessonSaveInput lessonSave)
-        {
-            return new() {Lesson = MockData(lessonSave)};
-        }
 
-        private static Lesson MockData(LessonSaveInput lessonSave)
+        private IContext _context;
+        private ILessonStatusRepository _lessonStatusRepository;
+        private ILessonRepository _lessonRepository;
+        
+        public LessonSaveResolver (IContext context, ILessonStatusRepository lessonStatusRepository, ILessonRepository lessonRepository)
         {
-            return new()
+            _context = context;
+            _lessonStatusRepository = lessonStatusRepository;
+            _lessonRepository = lessonRepository;
+
+        }
+        
+        public LessonSavePayload Execute(LessonSaveInput input)
+        {
+            Lesson lesson = _lessonRepository.Find(input.LessonId);
+
+            _lessonStatusRepository.Insert(new LessonStatus()
             {
-                Id = lessonSave.LessonId,
-                Title = "Lorem Ipsum",
-                Thumbnail = new Image
-                {
-                    Description = "For Challenged People",
-                    Url = "https://example.com"
-                },
-                Theme = new Theme
-                {
-                    Id = "1",
-                    Title = "Lorem Ipsum",
-                    Thumbnail = new Image
-                    {
-                        Description = "For Challenged People",
-                        Url = "https://example.com"
-                    }
-                },
-                Duration = new Duration
-                {
-                    Value = 45,
-                    Unit = DurationUnit.Minutes
-                }
+                Lesson = lesson,
+                PercentCompleted = 0,
+                User = _context.CurentUser
+            });
+
+            return new LessonSavePayload()
+            {
+                Lesson = lesson
             };
         }
+
+       
+
     }
 }

@@ -1,0 +1,321 @@
+[33mcommit 3816789720d5d8ba9778ae598b34e2cc7379a5a9[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m)[m
+Author: Simona Zgarcea <simina424@yahoo.com>
+Date:   Sun Sep 12 16:49:49 2021 +0300
+
+    adding user for LessonSave
+
+:000000 100644 0000000 4644a90 A	TeacherWorkout.Domain/Common/IUser.cs
+:000000 100644 0000000 1463a82 A	TeacherWorkout.Domain/Models/User.cs
+
+[33mcommit ac2be249b0c0ef9233e42ce21e0a9176918d4d2f[m[33m ([m[1;32mlessonSave[m[33m)[m
+Author: Doru Pirvu <pirvu.doru@ymail.com>
+Date:   Fri Aug 27 15:00:51 2021 +0300
+
+    [feature/12] Add lessons query (#45)
+    
+    * Add Domain project with Themes and Lessons
+    
+    * Implement dynamic argument extraction
+    
+    * Add mock data to lesson repository
+    
+    * Fix rebase
+    
+    * Rename argument
+    
+    * Drop generic repository interface
+    
+    * Simplify repository filter methods
+    
+    * Fix type of theme id in filter
+    
+    * Delete unused imports
+    
+    * Convert lesson statuses factory to repository
+    
+    * Move mock data for step out of query
+    
+    * Dynamically load repositories
+    
+    * Cleanup context extensions
+    
+    * Add repository implementation in the Data layer
+    
+    * Extend DB model
+    
+    * Configure how duration is converted from the database
+    
+    * Use entities that derive from models
+    
+    Not convinced this is a good approach.
+    Alternative is to more verbose map from
+    entities to the models, but have to consider how we load associations.
+    Todo this later.
+    
+    * Use real repositories
+    
+    Side effect is to make repositories scoped to match the db context scope. Ideally we would have them still singleton and figure out a way to inject the scoped context since nothing would run outside a scope
+    
+    * Add how to run
+    
+    * Update context and add converter for id
+    
+    * Make ids strings and generate them client side
+    
+    * Seed dummy data
+    
+    * Include thumnail for theme
+    
+    * Drop special method for cursor
+
+:100644 100644 4a1f619 114e1d0 M	README.md
+:100644 000000 f0d88d9 0000000 D	TeacherWorkout.Api/GraphQL/Mock/LessonFactory.cs
+:100644 000000 f6e0f9b 0000000 D	TeacherWorkout.Api/GraphQL/Mock/ThemeFactory.cs
+:100644 100644 e80059d 1f5354c M	TeacherWorkout.Api/GraphQL/Resolvers/LessonSaveResolver.cs
+:100644 100644 250f13b 2246a37 M	TeacherWorkout.Api/GraphQL/TeacherWorkoutMutation.cs
+:100644 100644 a08fb70 846fd45 M	TeacherWorkout.Api/GraphQL/TeacherWorkoutQuery.cs
+:100644 100644 158c126 62eba6f M	TeacherWorkout.Api/GraphQL/TeacherWorkoutSchema.cs
+:100644 100644 dee5fff 2bab846 M	TeacherWorkout.Api/GraphQL/Types/AnswerResultType.cs
+:100644 100644 884af64 6fc6b67 M	TeacherWorkout.Api/GraphQL/Types/AnswerStatusEnum.cs
+:100644 100644 f54afe8 3a441e5 M	TeacherWorkout.Api/GraphQL/Types/AnswerType.cs
+:100644 100644 b0dd936 b5bef80 M	TeacherWorkout.Api/GraphQL/Types/DurationType.cs
+:100644 100644 366b2d8 9c33bd4 M	TeacherWorkout.Api/GraphQL/Types/DurationUnitEnum.cs
+:100644 100644 0bb0799 14678e3 M	TeacherWorkout.Api/GraphQL/Types/ExerciseStepType.cs
+:100644 100644 14f5972 082766a M	TeacherWorkout.Api/GraphQL/Types/ExerciseSummaryStepType.cs
+:100644 100644 7398eb0 361bbca M	TeacherWorkout.Api/GraphQL/Types/ImageType.cs
+:100644 100644 79a80d6 7cc9be9 M	TeacherWorkout.Api/GraphQL/Types/Inputs/LessonSaveInputType.cs
+:100644 100644 47a0f54 359d899 M	TeacherWorkout.Api/GraphQL/Types/LessonStatusType.cs
+:100644 100644 3f5e330 de41236 M	TeacherWorkout.Api/GraphQL/Types/LessonStepInterface.cs
+:100644 100644 eeaa9c6 694433e M	TeacherWorkout.Api/GraphQL/Types/LessonSummaryStepType.cs
+:100644 100644 ce6ff84 3d7175c M	TeacherWorkout.Api/GraphQL/Types/LessonType.cs
+:100644 100644 146b13c 9667dda M	TeacherWorkout.Api/GraphQL/Types/Payloads/LessonSavePayloadType.cs
+:100644 100644 48ddee0 29762b8 M	TeacherWorkout.Api/GraphQL/Types/SlideStepType.cs
+:100644 100644 2eb88f2 d84dba3 M	TeacherWorkout.Api/GraphQL/Types/ThemeType.cs
+:100644 100644 8c304c1 d1bbf0e M	TeacherWorkout.Api/GraphQL/Utils/ConnectionUtils.cs
+:000000 100644 0000000 4836e2b A	TeacherWorkout.Api/GraphQL/Utils/ContextExtensions.cs
+:100644 000000 f98ee20 0000000 D	TeacherWorkout.Api/Models/Duration.cs
+:100644 000000 fdcc942 0000000 D	TeacherWorkout.Api/Models/ILessonStep.cs
+:100644 000000 f519460 0000000 D	TeacherWorkout.Api/Models/Image.cs
+:100644 100644 580f118 4509059 M	TeacherWorkout.Api/Startup.cs
+:100644 100644 7a13ee2 98acc64 M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+:100644 000000 5c0c5ae 0000000 D	TeacherWorkout.Data/Entities/Lesson.cs
+:100644 100644 0355f18 5607b1c M	TeacherWorkout.Data/Migrations/20210731091520_InitialMigration.cs
+:000000 100644 0000000 7773edd A	TeacherWorkout.Data/Migrations/20210827110816_DropModels.Designer.cs
+:000000 100644 0000000 529d1c5 A	TeacherWorkout.Data/Migrations/20210827110816_DropModels.cs
+:000000 100644 0000000 ab720ad A	TeacherWorkout.Data/Migrations/20210827110854_AddSchema.Designer.cs
+:000000 100644 0000000 8a35ecb A	TeacherWorkout.Data/Migrations/20210827110854_AddSchema.cs
+:000000 100644 0000000 852f0bf A	TeacherWorkout.Data/Migrations/20210827110928_SeedDummyData.Designer.cs
+:000000 100644 0000000 249cb10 A	TeacherWorkout.Data/Migrations/20210827110928_SeedDummyData.cs
+:100644 100644 67271c4 7c26d1c M	TeacherWorkout.Data/Migrations/TeacherWorkoutContextModelSnapshot.cs
+:000000 100644 0000000 dadc8d9 A	TeacherWorkout.Data/Repositories/LessonRepository.cs
+:000000 100644 0000000 dfe84cd A	TeacherWorkout.Data/Repositories/ThemeRepository.cs
+:100644 100644 fee6f5f fbe01c3 M	TeacherWorkout.Data/TeacherWorkout.Data.csproj
+:100644 100644 a741be6 939b9e1 M	TeacherWorkout.Data/TeacherWorkoutContext.cs
+:000000 100644 0000000 9bca29f A	TeacherWorkout.Data/Utils/IdSerializer.cs
+:100644 100644 5ef56ac 30e7fed R068	TeacherWorkout.Api/Models/IIdentifiable.cs	TeacherWorkout.Domain/Common/IIdentifiable.cs
+:000000 100644 0000000 97dc0a5 A	TeacherWorkout.Domain/Common/IOperation.cs
+:000000 100644 0000000 5d34f39 A	TeacherWorkout.Domain/Common/PaginatedResult.cs
+:000000 100644 0000000 3375c46 A	TeacherWorkout.Domain/Common/PaginationFilter.cs
+:000000 100644 0000000 7af12da A	TeacherWorkout.Domain/Common/Unit.cs
+:000000 100644 0000000 5c98356 A	TeacherWorkout.Domain/Lessons/GetLessonStatuses.cs
+:000000 100644 0000000 05229a4 A	TeacherWorkout.Domain/Lessons/GetLessons.cs
+:000000 100644 0000000 5a43f55 A	TeacherWorkout.Domain/Lessons/GetStep.cs
+:000000 100644 0000000 94f63af A	TeacherWorkout.Domain/Lessons/ILessonRepository.cs
+:000000 100644 0000000 75a0345 A	TeacherWorkout.Domain/Lessons/ILessonStatusRepository.cs
+:000000 100644 0000000 6b3d4fc A	TeacherWorkout.Domain/Lessons/IStepRepository.cs
+:000000 100644 0000000 5cf8f74 A	TeacherWorkout.Domain/Lessons/LessonFilter.cs
+:000000 100644 0000000 3ae6f81 A	TeacherWorkout.Domain/Lessons/LessonStatusFilter.cs
+:000000 100644 0000000 9854168 A	TeacherWorkout.Domain/Lessons/LessonStatusFindInput.cs
+:100644 100644 fb6c186 a6cfabc R065	TeacherWorkout.Api/Models/Answer.cs	TeacherWorkout.Domain/Models/Answer.cs
+:100644 100644 17a36bb 20468cb R078	TeacherWorkout.Api/Models/AnswerResult.cs	TeacherWorkout.Domain/Models/AnswerResult.cs
+:100644 100644 57bdb83 98796b9 R072	TeacherWorkout.Api/Models/AnswerStatus.cs	TeacherWorkout.Domain/Models/AnswerStatus.cs
+:000000 100644 0000000 1826b89 A	TeacherWorkout.Domain/Models/Duration.cs
+:100644 100644 d582d70 a597a5b R067	TeacherWorkout.Api/Models/DurationUnit.cs	TeacherWorkout.Domain/Models/DurationUnit.cs
+:100644 100644 69c6873 130c612 R085	TeacherWorkout.Api/Models/ExerciseStep.cs	TeacherWorkout.Domain/Models/ExerciseStep.cs
+:100644 100644 ec9da8a c271f84 R083	TeacherWorkout.Api/Models/ExerciseSummaryStep.cs	TeacherWorkout.Domain/Models/ExerciseSummaryStep.cs
+:000000 100644 0000000 b3f5e6a A	TeacherWorkout.Domain/Models/ILessonStep.cs
+:000000 100644 0000000 c8110e3 A	TeacherWorkout.Domain/Models/Image.cs
+:100644 100644 e2cb952 3c63294 R066	TeacherWorkout.Api/Models/Inputs/LessonSaveInput.cs	TeacherWorkout.Domain/Models/Inputs/LessonSaveInput.cs
+:100644 100644 2f3dc89 b7cf499 R081	TeacherWorkout.Api/Models/Lesson.cs	TeacherWorkout.Domain/Models/Lesson.cs
+:100644 100644 75ef2f1 7f5db7c R083	TeacherWorkout.Api/Models/LessonStaus.cs	TeacherWorkout.Domain/Models/LessonStaus.cs
+:100644 100644 796f09b 7492165 R079	TeacherWorkout.Api/Models/LessonSummaryStep.cs	TeacherWorkout.Domain/Models/LessonSummaryStep.cs
+:100644 100644 df8ead4 6ae9eb1 R065	TeacherWorkout.Api/Models/Payloads/LessonSavePayload.cs	TeacherWorkout.Domain/Models/Payloads/LessonSavePayload.cs
+:100644 100644 d120411 2f8e78a R088	TeacherWorkout.Api/Models/SlideStep.cs	TeacherWorkout.Domain/Models/SlideStep.cs
+:100644 100644 aeb6740 91c1d31 R070	TeacherWorkout.Api/Models/Theme.cs	TeacherWorkout.Domain/Models/Theme.cs
+:000000 100644 0000000 4a01788 A	TeacherWorkout.Domain/TeacherWorkout.Domain.csproj
+:000000 100644 0000000 d9569d4 A	TeacherWorkout.Domain/Themes/GetThemes.cs
+:000000 100644 0000000 fb2cace A	TeacherWorkout.Domain/Themes/IThemeRepository.cs
+:000000 100644 0000000 18a8654 A	TeacherWorkout.MockData/Repositories/LessonRepository.cs
+:100644 100644 97087e7 f1d1ce4 R090	TeacherWorkout.Api/GraphQL/Mock/LessonStatusFactory.cs	TeacherWorkout.MockData/Repositories/LessonStatusRepository.cs
+:100644 100644 cd3e9b7 98d3d2d R096	TeacherWorkout.Api/GraphQL/Mock/StepFactory.cs	TeacherWorkout.MockData/Repositories/StepRepository.cs
+:000000 100644 0000000 d1e9423 A	TeacherWorkout.MockData/Repositories/ThemeRepository.cs
+:000000 100644 0000000 c488bbf A	TeacherWorkout.MockData/TeacherWorkout.MockData.csproj
+:100644 100644 44143ca 5625f18 M	TeacherWorkout.sln
+
+[33mcommit 2cbe38e5f24d4860f5e4e56add565ff135bc8f38[m
+Author: Gabriel Majeri <gabriel.majeri6@gmail.com>
+Date:   Thu Aug 26 10:59:08 2021 +0300
+
+    Add support for GraphiQL (#47)
+
+:100644 100644 b452544 4a1f619 M	README.md
+:100644 100644 82c5ef7 580f118 M	TeacherWorkout.Api/Startup.cs
+:100644 100644 ed17f7a 7a13ee2 M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+
+[33mcommit 15841df14464dfae49dcbee7e2d249aa9aed4aa9[m
+Author: alina-dicoiu <37511235+alina-dicoiu@users.noreply.github.com>
+Date:   Sat Jul 31 16:19:11 2021 +0300
+
+    Added project for data layer (#43)
+
+:100644 100644 6d7455b 60630bd M	.env.example
+:100644 100644 588fb74 99b14bf M	Dockerfile
+:100644 100644 cbc0411 82c5ef7 M	TeacherWorkout.Api/Startup.cs
+:100644 100644 c18d5a5 ed17f7a M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+:100644 100644 8983e0f 801d530 M	TeacherWorkout.Api/appsettings.Development.json
+:100644 100644 d9d9a9b 397ab92 M	TeacherWorkout.Api/appsettings.json
+:000000 100644 0000000 5c0c5ae A	TeacherWorkout.Data/Entities/Lesson.cs
+:000000 100644 0000000 2f7e66b A	TeacherWorkout.Data/Migrations/20210731091520_InitialMigration.Designer.cs
+:000000 100644 0000000 0355f18 A	TeacherWorkout.Data/Migrations/20210731091520_InitialMigration.cs
+:000000 100644 0000000 67271c4 A	TeacherWorkout.Data/Migrations/TeacherWorkoutContextModelSnapshot.cs
+:000000 100644 0000000 fee6f5f A	TeacherWorkout.Data/TeacherWorkout.Data.csproj
+:000000 100644 0000000 a741be6 A	TeacherWorkout.Data/TeacherWorkoutContext.cs
+:100644 100644 e4ea824 44143ca M	TeacherWorkout.sln
+
+[33mcommit 53490c73e2e0e055802a6f60ec099e34fa6e6cfe[m
+Author: radu <39530866+RaduBuciuceanu@users.noreply.github.com>
+Date:   Sat Jul 31 16:06:10 2021 +0300
+
+    [feature/42] Make theme id optional (#44)
+
+:100644 100644 add7c28 a08fb70 M	TeacherWorkout.Api/GraphQL/TeacherWorkoutQuery.cs
+
+[33mcommit 7ba2e26a031dadb1763590aca005ab446f046538[m
+Author: radu <39530866+RaduBuciuceanu@users.noreply.github.com>
+Date:   Sat Jul 31 15:59:49 2021 +0300
+
+    [feature/40] Add description to lesson (#41)
+    
+    * [feature/40] Create new factories
+    
+    * [feature/40] Cange query root node
+    
+    * [feature/40] Change lesson graph type
+    
+    * [feature/40] Change lesson model
+    
+    * [feature/40] Change project file
+
+:000000 100644 0000000 f0d88d9 A	TeacherWorkout.Api/GraphQL/Mock/LessonFactory.cs
+:000000 100644 0000000 97087e7 A	TeacherWorkout.Api/GraphQL/Mock/LessonStatusFactory.cs
+:000000 100644 0000000 cd3e9b7 A	TeacherWorkout.Api/GraphQL/Mock/StepFactory.cs
+:000000 100644 0000000 f6e0f9b A	TeacherWorkout.Api/GraphQL/Mock/ThemeFactory.cs
+:100644 100644 fbd1764 add7c28 M	TeacherWorkout.Api/GraphQL/TeacherWorkoutQuery.cs
+:100644 100644 4c30cd7 ce6ff84 M	TeacherWorkout.Api/GraphQL/Types/LessonType.cs
+:100644 100644 87d7fa0 2f3dc89 M	TeacherWorkout.Api/Models/Lesson.cs
+:100644 100644 f223e34 c18d5a5 M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+
+[33mcommit 9129ee6779de4ed9be00f3d023466592e09bef93[m
+Author: Micusan Lidia <35565172+MicusanL@users.noreply.github.com>
+Date:   Sat Jul 31 11:26:01 2021 +0300
+
+    Revert "Fix references" (#38)
+    
+    * Revert "Fix references (#37)"
+    
+    This reverts commit 931c122d02a19c3bdb4a4d43a03f4ba9ab174881.
+    
+    * Remove references
+
+:100644 100644 4dc09b6 f223e34 M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+
+[33mcommit 931c122d02a19c3bdb4a4d43a03f4ba9ab174881[m[33m ([m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Micusan Lidia <35565172+MicusanL@users.noreply.github.com>
+Date:   Sat Jul 31 11:21:09 2021 +0300
+
+    Fix references (#37)
+    
+    Co-authored-by: MicusanL <lidia.micusan@visma.com>
+
+:100644 100644 c6a66c4 4dc09b6 M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+
+[33mcommit e3201b367d57c03c471b1d345940af440ad21067[m
+Author: Alex Damian Negru <negru.alex.damian@gmail.com>
+Date:   Wed Jul 21 14:13:36 2021 +0300
+
+    Implement LessonSave mutation (#31)
+    
+    * Add initial mutation with `LessonSave`
+    
+    * Extract mock LessonSave resolver
+    
+    * Take input into account
+    
+    * Extract LessonSaveResolver#Resolve
+    
+    * Auto-register GraphQL `Inputs` & `Types` namespaces
+    
+    * Reorganize input and output types
+    
+    Co-authored-by: pirvudoru <pirvu.doru@ymail.com>
+
+:000000 100644 0000000 e80059d A	TeacherWorkout.Api/GraphQL/Resolvers/LessonSaveResolver.cs
+:000000 100644 0000000 250f13b A	TeacherWorkout.Api/GraphQL/TeacherWorkoutMutation.cs
+:100644 100644 c447156 158c126 M	TeacherWorkout.Api/GraphQL/TeacherWorkoutSchema.cs
+:000000 100644 0000000 79a80d6 A	TeacherWorkout.Api/GraphQL/Types/Inputs/LessonSaveInputType.cs
+:000000 100644 0000000 146b13c A	TeacherWorkout.Api/GraphQL/Types/Payloads/LessonSavePayloadType.cs
+:000000 100644 0000000 e2cb952 A	TeacherWorkout.Api/Models/Inputs/LessonSaveInput.cs
+:000000 100644 0000000 df8ead4 A	TeacherWorkout.Api/Models/Payloads/LessonSavePayload.cs
+:100644 100644 4a773d1 cbc0411 M	TeacherWorkout.Api/Startup.cs
+:100644 100644 62894ff c6a66c4 M	TeacherWorkout.Api/TeacherWorkout.Api.csproj
+
+[33mcommit 984d10859e46ee44f10566a3dad928eacc708044[m
+Author: anamarisimo <48225513+anamarisimo@users.noreply.github.com>
+Date:   Fri Jul 16 15:03:13 2021 +0300
+
+    Add dummy items in query lists (#35)
+
+:100644 100644 e4ee4eb fbd1764 M	TeacherWorkout.Api/GraphQL/TeacherWorkoutQuery.cs
+
+[33mcommit 4ba74769e3f47cc8537046f9133489fac175c06b[m
+Author: Doru Pirvu <pirvu.doru@ymail.com>
+Date:   Mon Jul 12 10:54:20 2021 +0300
+
+    Convert lessons and themes nodes to Relay Connections (#34)
+    
+    * Convert themes to connection
+    
+    * Convert lessons to connection
+    
+    * Extract connection helper
+    
+    * Add extra theme mock data
+    
+    * Add extra entries for lessons and themes
+
+:100644 100644 f0066a4 e4ee4eb M	TeacherWorkout.Api/GraphQL/TeacherWorkoutQuery.cs
+:000000 100644 0000000 8c304c1 A	TeacherWorkout.Api/GraphQL/Utils/ConnectionUtils.cs
+:100644 100644 9d9ab1f fb6c186 M	TeacherWorkout.Api/Models/Answer.cs
+:000000 100644 0000000 5ef56ac A	TeacherWorkout.Api/Models/IIdentifiable.cs
+:100644 100644 68dddba fdcc942 M	TeacherWorkout.Api/Models/ILessonStep.cs
+:100644 100644 7705f3b 87d7fa0 M	TeacherWorkout.Api/Models/Lesson.cs
+:100644 100644 2e35093 aeb6740 M	TeacherWorkout.Api/Models/Theme.cs
+
+[33mcommit 31cc0cb73da83137192a5dc81e48f55b4d41eb86[m
+Author: Doru Pirvu <pirvu.doru@ymail.com>
+Date:   Tue Jul 6 20:23:59 2021 +0300
+
+    Update README.md (#33)
+    
+    Add staging URL
+    Update badge URLs
+
+:100644 100644 fe35b7a b452544 M	README.md
+
+[33mcommit 3d871d1ba0c28efb8a9387a2d588e1b10fd47bb4[m
+Author: catileptic <s.alexandra.stefanescu@gmail.com>
+Date:   Sun Jun 27 11:01:02 2021 +0300
+
+    Connection string to match DB settings (#30)
+
+:100644 100644 a067802 6d7455b M	.env.exa
