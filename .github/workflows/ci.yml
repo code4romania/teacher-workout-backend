@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ConnectionStrings__TestingDbConnectionString: Server=localhost;Port=5432;Database=test_db;User Id=user;Password=password;
+      ASPNETCORE_ENVIRONMENT: CI
     services:
       postgres:
         image: postgres
