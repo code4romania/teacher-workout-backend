@@ -36,7 +36,6 @@ namespace TeacherWorkout.Api.GraphQL
                     
                     if (graphType != null)
                     {
-                        Console.WriteLine($"Registering {graphType}");
                         RegisterType(graphType);
                         RegisterTypeMapping(clrType, graphType);
                     }
