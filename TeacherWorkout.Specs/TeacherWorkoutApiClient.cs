@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Client.Abstractions;
@@ -16,6 +17,16 @@ namespace TeacherWorkout.Specs
     }
     public class TeacherWorkoutApiClient
     {
+        enum Queries
+        {
+            Themes
+        }
+
+        enum Mutations
+        {
+            ThemeCreate
+        }
+        
         private readonly GraphQLHttpClient _client;
 
         public TeacherWorkoutApiClient(GraphQLHttpClient client)
@@ -25,15 +36,9 @@ namespace TeacherWorkout.Specs
 
         public async Task<Result<PaginatedResult<Theme>>> ThemesAsync()
         {
-            var response = await _client.SendQueryAsync(@"query Themes {
-  themes {
-    items {
-      id
-      title
-    }
-  }
-}", new { },
-                "Themes",
+            var response = await _client.SendQueryAsync(QueryFor(Queries.Themes),
+                new { },
+                Queries.Themes.ToString(),
                 () => new {themes = new PaginatedResult<Theme>()});
 
             return new Result<PaginatedResult<Theme>>
@@ -45,28 +50,38 @@ namespace TeacherWorkout.Specs
 
         public async Task<Result<ThemeCreatePayload>> ThemeCreateAsync()
         {
-            var response = await _client.SendQueryAsync(@"mutation ThemeCreate($input: ThemeCreateInput!) {
-  themeCreate(input: $input) {
-    theme {
-      id
-      title
-    }
-  }
-}", new
+            var response = await _client.SendQueryAsync(MutationFor(Mutations.ThemeCreate),
+                new
                 {
                     input = new ThemeCreateInput
                     {
                         Title = "foo"
                     }
                 },
-                "ThemeCreate",
-                () => new { themeCreate = new ThemeCreatePayload() });
+                Mutations.ThemeCreate.ToString(),
+                () => new {themeCreate = new ThemeCreatePayload()});
 
             return new Result<ThemeCreatePayload>
             {
                 Data = response.Data.themeCreate,
                 Errors =  response.Errors
             };
+        }
+
+        private string QueryFor(Queries query)
+        {
+            return GraphQL("Query", query.ToString());
+        }
+
+
+        private string MutationFor(Mutations mutation)
+        {
+            return GraphQL("Mutation", mutation.ToString());
+        }
+
+        private string GraphQL(string category, string name)
+        {
+            return File.ReadAllText($"GraphQL/{category}/{name}.graphql");
         }
     }
 }
