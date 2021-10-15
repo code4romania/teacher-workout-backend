@@ -22,10 +22,12 @@ namespace TeacherWorkout.Specs
 
         public WebApplicationFactory<Startup> Factory => _factory;
 
+        private string EnvName => Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
         public GraphQLServer(WebApplicationFactory<Startup> factory)
         {
             var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.Test.json")
+                .AddJsonFile($"appsettings.{EnvName}.json")
                 .Build();
             
             _factory = factory.WithWebHostBuilder(builder =>
