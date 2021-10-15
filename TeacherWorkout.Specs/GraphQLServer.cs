@@ -2,7 +2,11 @@ using System;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.SystemTextJson;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using TeacherWorkout.Api;
+using TeacherWorkout.Data;
 
 namespace TeacherWorkout.Specs
 {
@@ -16,14 +20,25 @@ namespace TeacherWorkout.Specs
                 new SystemTextJsonSerializer(), 
                 _factory.CreateClient());
 
+        public WebApplicationFactory<Startup> Factory => _factory;
+
         public GraphQLServer(WebApplicationFactory<Startup> factory)
         {
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.Test.json")
+                .Build();
+            
             _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
+                    var options = new DbContextOptionsBuilder<TeacherWorkoutContext>()
+                        .UseNpgsql(config.GetConnectionString("TeacherWorkoutContext"))
+                        .Options;
+                    services.AddSingleton(_ => new TeacherWorkoutContext(options));
                 });
             });
+            _factory.Server.PreserveExecutionContext = true;
         }
     }
 }
