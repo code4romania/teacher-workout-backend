@@ -10,13 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ASPNETCORE_ENVIRONMENT: CI
+      ASPNETCORE_ENVIRONMENT: Test
     services:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: password
-          POSTGRES_USER: user
+          POSTGRES_DB: teacher_workout_test
+          POSTGRES_PASSWORD: docker
+          POSTGRES_USER: docker
         ports:
           - 5432:5432
         options: >-
