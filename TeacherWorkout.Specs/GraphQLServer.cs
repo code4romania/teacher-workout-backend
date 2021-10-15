@@ -22,22 +22,20 @@ namespace TeacherWorkout.Specs
 
         public WebApplicationFactory<Startup> Factory => _factory;
 
-        private string EnvName => Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
         public GraphQLServer(WebApplicationFactory<Startup> factory)
         {
-            var config = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.{EnvName}.json")
-                .Build();
-            
             _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
                 {
-                    var options = new DbContextOptionsBuilder<TeacherWorkoutContext>()
-                        .UseNpgsql(config.GetConnectionString("TeacherWorkoutContext"))
-                        .Options;
-                    services.AddSingleton(_ => new TeacherWorkoutContext(options));
+                    services.AddSingleton(p =>
+                    {
+                        var configuration = p.GetService<IConfiguration>();
+                        var options = new DbContextOptionsBuilder<TeacherWorkoutContext>()
+                            .UseNpgsql(configuration.GetConnectionString("TeacherWorkoutContext"))
+                            .Options;
+                        return new TeacherWorkoutContext(options);
+                    });
                 });
             });
             _factory.Server.PreserveExecutionContext = true;
