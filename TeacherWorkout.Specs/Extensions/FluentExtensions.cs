@@ -28,9 +28,6 @@ namespace TeacherWorkout.Specs.Extensions
                 var currentNamespace = "TeacherWorkout.Specs";
                 var currentDirectoryPath = Directory.GetCurrentDirectory();
                 var targetFilePath = Path.Join(currentDirectoryPath.Split(currentNamespace).First(), currentNamespace, path);
-                Console.WriteLine("TargetFilePath1 " + currentDirectoryPath.Split(currentNamespace).First());
-                Console.WriteLine("TargetFilePath2 " + currentNamespace);
-                Console.WriteLine("TargetFilePath3 " + path);
                 var targetDirectoryPath = Path.GetDirectoryName(targetFilePath);
 
                 if (!Directory.Exists(targetDirectoryPath))
