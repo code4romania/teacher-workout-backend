@@ -5,8 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="GraphQL.Client" Version="3.2.4" />
-        <PackageReference Include="GraphQL.Client.Serializer.SystemTextJson" Version="3.2.4" />
+        <PackageReference Include="FluentAssertions.Json" Version="5.4.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.6" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
         <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.8.35" />
@@ -27,6 +26,15 @@
         <Content Include="GraphQL\**\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Include="Responses\**\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Responses" />
+      <Folder Include="Responses\Mutation\ThemeCreate" />
+      <Folder Include="Responses\Query\Themes" />
     </ItemGroup>
 
 </Project>

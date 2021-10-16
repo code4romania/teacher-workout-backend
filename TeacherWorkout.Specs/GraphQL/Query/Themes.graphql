@@ -1,7 +1,6 @@
 query Themes {
     themes {
         items {
-            id
             title
         }
     }

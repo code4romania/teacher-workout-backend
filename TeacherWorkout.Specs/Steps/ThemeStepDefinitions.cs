@@ -1,9 +1,6 @@
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Domain.Models;
-using TeacherWorkout.Domain.Models.Payloads;
+using TeacherWorkout.Specs.Extensions;
 using TechTalk.SpecFlow;
 
 namespace TeacherWorkout.Specs.Steps
@@ -34,18 +31,17 @@ namespace TeacherWorkout.Specs.Steps
         [Then(@"Vasile receives the theme")]
         public void ThenVasileReceivesTheTheme()
         {
-            ((Result<PaginatedResult<Theme>>) _scenarioContext["themes"])
-                .Data.Should().NotBeNull();
-            ((Result<PaginatedResult<Theme>>) _scenarioContext["themes"])
-                .Data.Items.Count().Should().Be(1);
+            _scenarioContext["themes"]
+                .Should()
+                .MatchResponse("Responses/Query/Themes/VisibleToVasileAsAnonymous.json");
         }
 
         [Then(@"the theme was created successfully")]
         public void ThenTheThemeWasCreatedSuccessfully()
         {
-            var result = (Result<ThemeCreatePayload>) _scenarioContext["theme-create-response"];
-            result.Errors.Should().BeNull();
-            result.Data.Theme.Id.Should().NotBeNull();
+            _scenarioContext["theme-create-response"]
+                .Should()
+                .MatchResponse("Responses/Mutation/ThemeCreate/Success.json");
         }
     }
 }

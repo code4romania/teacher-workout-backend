@@ -1,20 +1,11 @@
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using GraphQL;
-using GraphQL.Client.Abstractions;
-using GraphQL.Client.Http;
-using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Domain.Models;
-using TeacherWorkout.Domain.Models.Inputs;
-using TeacherWorkout.Domain.Models.Payloads;
+using TeacherWorkout.Specs.Extensions;
 
 namespace TeacherWorkout.Specs
 {
-    public class Result<TWrappedResult>
-    {
-        public TWrappedResult Data { get; set; }
-        public GraphQLError[] Errors { get; set; }
-    }
     public class TeacherWorkoutApiClient
     {
         enum Queries
@@ -27,52 +18,33 @@ namespace TeacherWorkout.Specs
             ThemeCreate
         }
         
-        private readonly GraphQLHttpClient _client;
+        private readonly HttpClient _client;
 
-        public TeacherWorkoutApiClient(GraphQLHttpClient client)
+        public TeacherWorkoutApiClient(HttpClient client)
         {
             _client = client;
         }
 
-        public async Task<Result<PaginatedResult<Theme>>> ThemesAsync()
+        public async Task<string> ThemesAsync()
         {
-            var response = await _client.SendQueryAsync(QueryFor(Queries.Themes),
-                new { },
-                Queries.Themes.ToString(),
-                () => new {themes = new PaginatedResult<Theme>()});
-
-            return new Result<PaginatedResult<Theme>>
-            {
-                Data = response.Data.themes,
-                Errors =  response.Errors
-            };
+            return await SendRequest(QueryFor(Queries.Themes), new {});
         }
 
-        public async Task<Result<ThemeCreatePayload>> ThemeCreateAsync()
+        public async Task<string> ThemeCreateAsync()
         {
-            var response = await _client.SendQueryAsync(MutationFor(Mutations.ThemeCreate),
-                new
-                {
-                    input = new ThemeCreateInput
-                    {
-                        Title = "foo"
-                    }
-                },
-                Mutations.ThemeCreate.ToString(),
-                () => new {themeCreate = new ThemeCreatePayload()});
-
-            return new Result<ThemeCreatePayload>
+            return await SendRequest(MutationFor(Mutations.ThemeCreate), new
             {
-                Data = response.Data.themeCreate,
-                Errors =  response.Errors
-            };
+                input = new
+                {
+                    title = "foo"
+                }
+            });
         }
 
         private string QueryFor(Queries query)
         {
             return GraphQL("Query", query.ToString());
         }
-
 
         private string MutationFor(Mutations mutation)
         {
@@ -82,6 +54,13 @@ namespace TeacherWorkout.Specs
         private string GraphQL(string category, string name)
         {
             return File.ReadAllText($"GraphQL/{category}/{name}.graphql");
+        }
+
+        private async Task<string> SendRequest(string query, object variables)
+        {
+            var content = new StringContent(new {query, variables}.ToJson(), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("http://localhost/graphql", content);
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

@@ -1,6 +1,4 @@
-using System;
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,11 +12,7 @@ namespace TeacherWorkout.Specs
     {       
         private readonly WebApplicationFactory<Startup> _factory;
 
-        public GraphQLHttpClient Client =>
-            new(
-                new GraphQLHttpClientOptions { EndPoint = new Uri("http://localhost/graphql") }, 
-                new SystemTextJsonSerializer(), 
-                _factory.CreateClient());
+        public HttpClient Client => _factory.CreateClient();
 
         public WebApplicationFactory<Startup> Factory => _factory;
 

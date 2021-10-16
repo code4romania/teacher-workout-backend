@@ -49,7 +49,7 @@ namespace TeacherWorkout.Api
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
                 {
-                    options.EnableMetrics = true;
+                    options.EnableMetrics = false;
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson()
