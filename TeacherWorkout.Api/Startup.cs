@@ -111,7 +111,7 @@ namespace TeacherWorkout.Api
         {
             // We need to reference something in the assembly to make it load  
             // otherwise the Compiler will not include it in the output package
-            new List<Assembly> { typeof(MockData.Repositories.LessonRepository).Assembly };
+            new List<Assembly> { typeof(MockData.Repositories.StepRepository).Assembly };
         }
     }
 }
