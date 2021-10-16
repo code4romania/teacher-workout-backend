@@ -1,0 +1,7 @@
+mutation ThemeCreate($input: ThemeCreateInput!) {
+    themeCreate(input: $input) {
+        theme {
+            title
+        }
+    }
+}

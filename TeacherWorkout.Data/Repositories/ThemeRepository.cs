@@ -26,5 +26,11 @@ namespace TeacherWorkout.Data.Repositories
                 Items = result.ToList()
             };
         }
+
+        public void Insert(Theme theme)
+        {
+            _context.Themes.Add(theme);
+            _context.SaveChanges();
+        }
     }
 }

@@ -136,5 +136,9 @@ namespace TeacherWorkout.MockData.Repositories
                 }
             };
         }
+
+        public void Insert(Theme theme)
+        {
+        }
     }
 }

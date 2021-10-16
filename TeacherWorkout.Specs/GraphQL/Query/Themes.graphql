@@ -1,0 +1,7 @@
+query Themes {
+    themes {
+        items {
+            title
+        }
+    }
+}

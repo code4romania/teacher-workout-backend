@@ -6,5 +6,7 @@ namespace TeacherWorkout.Domain.Themes
     public interface IThemeRepository
     {
         PaginatedResult<Theme> PaginatedList(PaginationFilter pagination);
+        
+        void Insert(Theme theme);
     }
 }

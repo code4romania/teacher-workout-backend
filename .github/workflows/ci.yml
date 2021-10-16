@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop, main ]
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ASPNETCORE_ENVIRONMENT: CI
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: teacher_workout_test
+          POSTGRES_PASSWORD: docker
+          POSTGRES_USER: docker
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      
+      - name: Install dependencies
+        run: dotnet tool install --global dotnet-ef
+      
+      - name: Restore dependencies
+        run: dotnet restore TeacherWorkout.sln
+      
+      - name: Build
+        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true TeacherWorkout.sln
+      
+      - name: Apply migrations
+        run: dotnet ef database update --no-build --project TeacherWorkout.Domain --startup-project TeacherWorkout.Api
+      
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover TeacherWorkout.sln 

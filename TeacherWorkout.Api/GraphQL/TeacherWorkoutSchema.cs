@@ -24,6 +24,7 @@ namespace TeacherWorkout.Api.GraphQL
             var classTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
                 .Where(t => t.IsClass || t.IsEnum)
+                .Where(t => t.Namespace != null && t.Namespace.StartsWith("TeacherWorkout"))
                 .ToList();
 
             classTypes.Where(t => t.Namespace == "TeacherWorkout.Domain.Models")

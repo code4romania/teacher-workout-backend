@@ -5,12 +5,14 @@ using TeacherWorkout.Api.GraphQL.Types.Inputs;
 using TeacherWorkout.Api.GraphQL.Types.Payloads;
 using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models.Inputs;
+using TeacherWorkout.Domain.Themes;
 
 namespace TeacherWorkout.Api.GraphQL
 {
     public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
-        public TeacherWorkoutMutation(CompleteStep completeStep)
+        public TeacherWorkoutMutation(CompleteStep completeStep,
+            CreateTheme createTheme)
         {
             Name = "Mutation";
 
@@ -32,8 +34,19 @@ namespace TeacherWorkout.Api.GraphQL
                 ),
                 resolve: context =>
                 {
-                    var stepComplete = context.GetArgument<StepCompleteInput>("input");
-                    return completeStep.Execute(stepComplete);
+                    var input = context.GetArgument<StepCompleteInput>("input");
+                    return completeStep.Execute(input);
+                });
+
+            Field<ThemeCreatePayloadType>(
+                "themeCreate",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ThemeCreateInputType>> { Name = "input" }
+                ),
+                resolve: context =>
+                {
+                    var input = context.GetArgument<ThemeCreateInput>("input");
+                    return createTheme.Execute(input);
                 });
         }
     }
