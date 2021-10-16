@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using FluentAssertions.Execution;
@@ -13,7 +12,7 @@ namespace TeacherWorkout.Specs.Extensions
     {
         public static void MatchResponse(this ObjectAssertions assertions, string path)
         {
-            var generateNew = true;
+            var generateNew = !GlobalSettings.IsCi;
             var actual = assertions.Subject;
 
             Execute.Assertion
