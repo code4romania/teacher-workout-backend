@@ -15,6 +15,7 @@ namespace TeacherWorkout.Api.GraphQL.Types
             Field(x => x.Thumbnail).Description("The thumbnail of the Lesson");
             Field(x => x.Theme).Description("The Theme of the Lesson");
             Field(x => x.Duration).Description("The duration of the Lesson");
+            Field(x => x.State).Description("The state of the Lesson.");
         }
     }
 }

@@ -15,5 +15,7 @@ namespace TeacherWorkout.Domain.Models
         public Theme Theme { get; set; }
         
         public Duration Duration { get; set; }
+
+        public LessonState State { get; set; }
     }
 }
