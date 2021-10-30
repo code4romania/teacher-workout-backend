@@ -11,8 +11,10 @@ namespace TeacherWorkout.Api.GraphQL
 {
     public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
-        public TeacherWorkoutMutation(CompleteStep completeStep,
-            CreateTheme createTheme)
+        public TeacherWorkoutMutation(
+            CompleteStep completeStep,
+            CreateTheme createTheme,
+            SubmitAnswer submitAnswer)
         {
             Name = "Mutation";
 
@@ -36,6 +38,17 @@ namespace TeacherWorkout.Api.GraphQL
                 {
                     var input = context.GetArgument<StepCompleteInput>("input");
                     return completeStep.Execute(input);
+                });
+
+            Field<StepSubmitAnswerPayloadType>(
+                "stepSubmitAnswer",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StepSubmitAnswerInputType>> { Name = "input" }
+                ),
+                resolve: context =>
+                {
+                    var input = context.GetArgument<StepSubmitAnswerInput>("input");
+                    return submitAnswer.Execute(input);
                 });
 
             Field<ThemeCreatePayloadType>(

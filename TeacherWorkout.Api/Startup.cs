@@ -28,7 +28,7 @@ namespace TeacherWorkout.Api
         public void ConfigureServices(IServiceCollection services)
         {
             EnsureReferencedAssembliesAreLoaded();
-            
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -43,6 +43,7 @@ namespace TeacherWorkout.Api
             services.AddScoped<TeacherWorkoutMutation>();
             services.AddScoped<ISchema, TeacherWorkoutSchema>();
             AddOperations(services);
+            AddValidators(services);
             AddRepositories(services, "TeacherWorkout.MockData");
             AddRepositories(services, "TeacherWorkout.Data");
 
@@ -92,6 +93,17 @@ namespace TeacherWorkout.Api
                 .ForEach(t => services.AddScoped(t));
         }
 
+        private static void AddValidators(IServiceCollection services)
+        {
+            var validatorType = typeof(IValidator);
+            AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass)
+                .Where(t => t.GetInterfaces().Contains(validatorType))
+                .ToList()
+                .ForEach(t => services.AddScoped(t));
+        }
+
         private static void AddRepositories(IServiceCollection services, string sourceNamespace)
         {
             AppDomain.CurrentDomain.GetAssemblies()
@@ -106,7 +118,7 @@ namespace TeacherWorkout.Api
                     services.AddScoped(repositoryInterface, t);
                 });
         }
-        
+
         private static void EnsureReferencedAssembliesAreLoaded()
         {
             // We need to reference something in the assembly to make it load  

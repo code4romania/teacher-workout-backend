@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using TeacherWorkout.Domain.Models;
-using TeacherWorkout.Domain.Models.Payloads;
 
 namespace TeacherWorkout.Domain.Lessons
 {
@@ -8,5 +8,7 @@ namespace TeacherWorkout.Domain.Lessons
         ILessonStep Find(string id);
 
         ILessonStep CompleteStep(string id);
+
+        ILessonStep SubmitAnswer(string id, IEnumerable<string> answerIds);
     }
 }
