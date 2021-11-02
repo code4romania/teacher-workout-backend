@@ -8,9 +8,6 @@ namespace TeacherWorkout.Api.GraphQL.Types
         public LessonStateEnum()
         {
             Name = "LessonState";
-
-            AddValue("Draft", "Draft state.", 1);
-            AddValue("Published", "Published state.", 2);
         }
     }
 }
