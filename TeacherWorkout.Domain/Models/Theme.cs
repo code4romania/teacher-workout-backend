@@ -8,6 +8,8 @@ namespace TeacherWorkout.Domain.Models
 
         public string Title { get; set; }
 
+        public string ThumbnailId { get; set; }
+
         public Image Thumbnail { get; set; }
     }
 }

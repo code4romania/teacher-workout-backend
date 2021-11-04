@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +25,6 @@ namespace TeacherWorkout.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            EnsureReferencedAssembliesAreLoaded();
-            
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -43,7 +39,6 @@ namespace TeacherWorkout.Api
             services.AddScoped<TeacherWorkoutMutation>();
             services.AddScoped<ISchema, TeacherWorkoutSchema>();
             AddOperations(services);
-            AddRepositories(services, "TeacherWorkout.MockData");
             AddRepositories(services, "TeacherWorkout.Data");
 
             services.AddHttpContextAccessor();
@@ -57,6 +52,7 @@ namespace TeacherWorkout.Api
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +70,6 @@ namespace TeacherWorkout.Api
             }
 
             db.Database.Migrate();
-
             app.UseRouting();
 
             app.UseGraphQL<ISchema>();
@@ -105,13 +100,6 @@ namespace TeacherWorkout.Api
                     var repositoryInterface = t.GetInterfaces().First(i => i.Name.EndsWith("Repository"));
                     services.AddScoped(repositoryInterface, t);
                 });
-        }
-        
-        private static void EnsureReferencedAssembliesAreLoaded()
-        {
-            // We need to reference something in the assembly to make it load  
-            // otherwise the Compiler will not include it in the output package
-            new List<Assembly> { typeof(MockData.Repositories.StepRepository).Assembly };
         }
     }
 }
