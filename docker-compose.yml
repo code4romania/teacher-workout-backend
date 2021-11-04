@@ -23,7 +23,7 @@
         dockerfile: TeacherWorkout.Migrator.Dockerfile
       environment:
         ConnectionStrings__DbConnectionString: ${DB_CONNECTION_STRING}
-        SeedData: false
+        SeedData: ${SEEDDATA}
       depends_on: 
         - "postgres"
 
