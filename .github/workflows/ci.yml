@@ -51,7 +51,7 @@ jobs:
           cd ./TeacherWorkout.Migrator/bin/Debug/net5.0
           dotnet TeacherWorkout.Migrator.dll
         env:
-          ConnectionStrings__TeacherWorkoutContext: Server=postgres;Port=5432;Database=teacher_workout_test;User Id=docker;Password=docker;
+          ConnectionStrings__TeacherWorkoutContext: Server=localhost;Port=5432;Database=teacher_workout_test;User Id=docker;Password=docker;
           SeedData: false
       
       - name: Run tests
