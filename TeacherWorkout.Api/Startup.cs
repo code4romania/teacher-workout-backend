@@ -69,7 +69,6 @@ namespace TeacherWorkout.Api
                 app.UseHttpsRedirection();
             }
 
-            db.Database.Migrate();
             app.UseRouting();
 
             app.UseGraphQL<ISchema>();
