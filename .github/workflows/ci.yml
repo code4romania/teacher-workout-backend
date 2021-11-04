@@ -44,7 +44,7 @@ jobs:
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true TeacherWorkout.sln
 
       - name: Build Migrator
-        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true TeacherWorkout.Migrator.sln
+        run: dotnet build /p:ContinuousIntegrationBuild=true TeacherWorkout.Migrator.sln
       
       - name: Apply migrations
         run: |
