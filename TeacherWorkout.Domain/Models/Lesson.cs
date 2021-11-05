@@ -18,5 +18,6 @@ namespace TeacherWorkout.Domain.Models
         
         public Duration Duration { get; set; }
 
+        public LessonState State { get; set; }
     }
 }
