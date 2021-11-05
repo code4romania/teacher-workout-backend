@@ -95,7 +95,7 @@ Guide users through getting your code up and running on their own system. In thi
 Describe and show how to build your code and run the tests.
 
 ## Automatic tests
-1. Run `$ dotnet test`
+1. Run `$ ASPNETCORE_ENVIRONMENT=Test dotnet test` or the Powershell command `$env:ASPNETCORE_ENVIRONMENT="Test") | dotnet test -v n`
 
 ## Feedback
 

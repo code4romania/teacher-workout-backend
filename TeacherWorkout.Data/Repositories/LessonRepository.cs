@@ -14,12 +14,18 @@ namespace TeacherWorkout.Data.Repositories
         {
             _context = context;
         }
-        
+
         public PaginatedResult<Lesson> PaginatedList(LessonFilter filter)
         {
-            var result = _context.Lessons.AsQueryable()
+            var result = _context.Lessons
                 .Include(l => l.Thumbnail)
-                .Include(l => l.Theme.Thumbnail);
+                .Include(l => l.Theme.Thumbnail)
+                .AsQueryable();
+
+            if (filter.State.HasValue)
+            {
+                result = result.Where(l => l.State == filter.State);
+            }
 
             return new PaginatedResult<Lesson>
             {
