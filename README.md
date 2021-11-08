@@ -85,10 +85,16 @@ dotnet ef database update --startup-project TeacherWorkout.Api/ --project Teache
 ```
 
 ### Apply migrations and seed data to your dev DB
-Migrations will be applyed using the Migrator in all environments. 
-If dummy data is needed for development purposes just set the *SEEDDATA* to true in the .env file. This will populate the DB with some dummy data on the first run. Subsequent runs will not re-seed if the data is already present.
+Migrations will be applyed using the Migrator in all environments when running the application with docker.
+
+If dummy data is needed for development purposes just set the *SEEDDATA* to true in the .env file when runngin locally using docker. This will populate the DB with some dummy data on the first run. Subsequent runs will not re-seed if the data is already present.
 ```
 SEEDDATA=true
+```
+Alternatively, you can run the following commands to only run the Migrator in your local environment as needed. 
+```
+cd TeacherWorkout.Migrator
+dotnet run SeedData=false
 ```
 
 ## Deployment

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,12 +11,15 @@ namespace TeacherWorkout.Migrator
 {
     class Program
     {
-        static async Task Main()
+        static async Task Main(string[] args)
         {
+            Console.WriteLine(Assembly.GetExecutingAssembly().Location);
+
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
+                .AddCommandLine(args)
                 .Build();
 
             var services = new ServiceCollection();
@@ -58,7 +62,7 @@ namespace TeacherWorkout.Migrator
 
         private static async Task SeedData(IConfigurationRoot configuration, TeacherWorkoutContext? teacherWorkoutContext)
         {
-            var seedDataEnabled = bool.Parse(configuration.GetSection("SeedData").Value);
+            var seedDataEnabled = bool.Parse(configuration["SeedData"]);
             if (!seedDataEnabled)
             {
                 return;
