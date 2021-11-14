@@ -9,14 +9,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="appsettings.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
@@ -32,6 +24,25 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TeacherWorkout.Data\TeacherWorkout.Data.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="..\TeacherWorkout.Api\appsettings.CI.json">
+	    <Link>appsettings.CI.json</Link>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\TeacherWorkout.Api\appsettings.Development.json">
+	    <Link>appsettings.Development.json</Link>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\TeacherWorkout.Api\appsettings.json">
+	    <Link>appsettings.json</Link>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\TeacherWorkout.Api\appsettings.Test.json">
+	    <Link>appsettings.Test.json</Link>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>
