@@ -10,8 +10,10 @@ namespace TeacherWorkout.Domain.Models
 
         public string Description { get; set; }
 
+        public string ThumbnailId { get; set; }
         public Image Thumbnail { get; set; }
-        
+
+        public string ThemeId { get; set; }
         public Theme Theme { get; set; }
         
         public Duration Duration { get; set; }

@@ -17,10 +17,21 @@
       volumes:
         - pgdata:/var/lib/postgresql/data
 
+    migrator:
+      build:
+        context: .
+        dockerfile: TeacherWorkout.Migrator.Dockerfile
+      environment:
+        ConnectionStrings__DbConnectionString: ${DB_CONNECTION_STRING}
+        SeedData: ${SEEDDATA}
+      depends_on: 
+        - "postgres"
+
     api:
       container_name: teacher_workout_api
       depends_on:
         - "postgres"
+        - "migrator"
       build:
         context: .
         dockerfile: Dockerfile

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using TeacherWorkout.Domain.Models;
@@ -10,6 +9,7 @@ namespace TeacherWorkout.Data
     {
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Theme> Themes { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public TeacherWorkoutContext(DbContextOptions<TeacherWorkoutContext> options) : base(options)
         {
@@ -18,7 +18,7 @@ namespace TeacherWorkout.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             var converter = new ValueConverter<Duration, int>(
                 from => from.TotalSeconds,
                 to => Duration.FromSeconds(to)
@@ -35,12 +35,12 @@ namespace TeacherWorkout.Data
 
             modelBuilder.Entity<Lesson>()
                 .HasIndex(new [] { "ThemeId", "State" });
-            
+
             modelBuilder.Entity<Theme>()
                 .Property(l => l.Id)
                 .ValueGeneratedOnAdd()
                 .HasValueGenerator<StringValueGenerator>();
-            
+
             modelBuilder.Entity<Image>()
                 .Property(l => l.Id)
                 .ValueGeneratedOnAdd()

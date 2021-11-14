@@ -1,5 +1,4 @@
 using TeacherWorkout.Domain.Models;
-using TeacherWorkout.Domain.Models.Payloads;
 
 namespace TeacherWorkout.Domain.Lessons
 {
