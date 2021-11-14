@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Lessons;
@@ -25,6 +25,11 @@ namespace TeacherWorkout.Data.Repositories
             if (filter.State.HasValue)
             {
                 result = result.Where(l => l.State == filter.State);
+            }
+            
+            if (!string.IsNullOrEmpty(filter.ThemeId))
+            {
+                result = result.Where(l => l.Theme.Id == filter.ThemeId);
             }
 
             return new PaginatedResult<Lesson>
