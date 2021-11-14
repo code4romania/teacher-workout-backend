@@ -11,13 +11,17 @@ namespace TeacherWorkout.Migrator
 {
     class Program
     {
+        private static object DefaultEnvironmentName => "Development";
+        private static string EnvironmentName => (string) (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? DefaultEnvironmentName);
+
+
         static async Task Main(string[] args)
         {
             Console.WriteLine(Assembly.GetExecutingAssembly().Location);
 
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();

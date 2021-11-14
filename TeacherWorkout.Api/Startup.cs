@@ -52,7 +52,6 @@ namespace TeacherWorkout.Api
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
