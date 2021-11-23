@@ -25,7 +25,8 @@ namespace TeacherWorkout.Api.GraphQL.Utils
                     EndCursor = edges.LastOrDefault()?.Cursor,
                     HasPreviousPage = false,
                     HasNextPage = false,
-                }
+                },
+                TotalCount = items.Count()
             };
         }
         
@@ -47,7 +48,8 @@ namespace TeacherWorkout.Api.GraphQL.Utils
                     EndCursor = edges.LastOrDefault()?.Cursor,
                     HasPreviousPage = false,
                     HasNextPage = false,
-                }
+                },
+                TotalCount = result.TotalCount
             };
         }
     }
