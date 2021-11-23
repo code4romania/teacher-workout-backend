@@ -10,8 +10,8 @@ namespace TeacherWorkout.Api.GraphQL.Types
             Name = "Theme";
             
             Field(x => x.Id, type: typeof(IdGraphType));
-            Field(x => x.Title).Description("The title of the Theme");
-            Field(x => x.Thumbnail).Description("The thumbnail of the Theme");
+            Field(x => x.Title, true).Description("The title of the Theme");
+            Field(x => x.Thumbnail, true).Description("The thumbnail of the Theme");
         }
     }
 }
