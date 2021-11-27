@@ -18,6 +18,7 @@
         - pgdata:/var/lib/postgresql/data
 
     migrator:
+      container_name: teacher_workout_migrator
       build:
         context: .
         dockerfile: TeacherWorkout.Migrator.Dockerfile
