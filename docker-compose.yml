@@ -38,7 +38,7 @@
         dockerfile: Dockerfile
       environment:
         ASPNETCORE_URLS: ${ASPNETCORE_URLS}
-        ConnectionStrings__DbConnectionString: ${DB_CONNECTION_STRING}
+        ConnectionStrings__TeacherWorkoutContext: ${DB_CONNECTION_STRING}
         ConnectionStrings__IdentityDbConnectionString: ${DB_CONNECTION_STRING}
       ports:
         - ${EXPOSED_APP_PORT}:80
