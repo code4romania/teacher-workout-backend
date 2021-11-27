@@ -10,11 +10,17 @@ COPY ["TeacherWorkout.Migrator/TeacherWorkout.Migrator.csproj", "TeacherWorkout.
 COPY ["TeacherWorkout.Data/TeacherWorkout.Data.csproj", "TeacherWorkout.Data/"]
 COPY ["TeacherWorkout.Domain/TeacherWorkout.Domain.csproj", "TeacherWorkout.Domain/"]
 
+COPY ["TeacherWorkout.Api/appsettings.CI.json", "TeacherWorkout.Migrator/"]
+COPY ["TeacherWorkout.Api/appsettings.Development.json", "TeacherWorkout.Migrator/"]
+COPY ["TeacherWorkout.Api/appsettings.Test.json", "TeacherWorkout.Migrator/"]
+COPY ["TeacherWorkout.Api/appsettings.json", "TeacherWorkout.Migrator/"]
+
 RUN dotnet restore "TeacherWorkout.Migrator/TeacherWorkout.Migrator.csproj"
 
 COPY ["TeacherWorkout.Migrator", "TeacherWorkout.Migrator/"]
 COPY ["TeacherWorkout.Data", "TeacherWorkout.Data/"]
 COPY ["TeacherWorkout.Domain", "TeacherWorkout.Domain/"]
+COPY ["TeacherWorkout.Api", "TeacherWorkout.Api/"]
 
 WORKDIR "/src/TeacherWorkout.Migrator"
 RUN dotnet build "TeacherWorkout.Migrator.csproj" -c Release -o /app/build
