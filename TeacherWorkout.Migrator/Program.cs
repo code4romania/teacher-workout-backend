@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeacherWorkout.Data;
+using TeacherWorkout.Identity;
 
 namespace TeacherWorkout.Migrator
 {
@@ -32,14 +32,21 @@ namespace TeacherWorkout.Migrator
             Console.WriteLine("Registering contexts.");
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("TeacherWorkoutContext")));
+
+            services.AddDbContext<UserContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("IdentityDbConnectionString")));
             Console.WriteLine("Done: Registering contexts.");
 
             Console.WriteLine("Getting contexts");
             var serviceProvider = services.BuildServiceProvider();
+
             var teacherWorkoutContext = serviceProvider.GetService<TeacherWorkoutContext>();
+            var userContext = serviceProvider.GetService<UserContext>();
+
             var dbContexts = new DbContext[]
             {
-                teacherWorkoutContext
+                teacherWorkoutContext,
+                userContext
             };
             Console.WriteLine("Done: Getting contexts");
 
@@ -64,7 +71,7 @@ namespace TeacherWorkout.Migrator
             Console.WriteLine("--------------------------------------------");
         }
 
-        private static async Task SeedData(IConfigurationRoot configuration, TeacherWorkoutContext? teacherWorkoutContext)
+        private static async Task SeedData(IConfigurationRoot configuration, TeacherWorkoutContext teacherWorkoutContext)
         {
             var seedDataEnabled = bool.Parse(configuration["SeedData"]);
             if (!seedDataEnabled)

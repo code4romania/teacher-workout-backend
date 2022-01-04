@@ -11,12 +11,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TeacherWorkout.Data\TeacherWorkout.Data.csproj" />
     <ProjectReference Include="..\TeacherWorkout.Domain\TeacherWorkout.Domain.csproj" />
+    <ProjectReference Include="..\TeacherWorkout.Identity\TeacherWorkout.Identity.csproj" />
   </ItemGroup>
 
 </Project>

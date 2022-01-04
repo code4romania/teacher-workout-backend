@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TeacherWorkout.Data\TeacherWorkout.Data.csproj" />
+		<ProjectReference Include="..\TeacherWorkout.Identity\TeacherWorkout.Identity.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
