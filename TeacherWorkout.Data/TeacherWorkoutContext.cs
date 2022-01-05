@@ -10,6 +10,7 @@ namespace TeacherWorkout.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public TeacherWorkoutContext(DbContextOptions<TeacherWorkoutContext> options) : base(options)
         {
@@ -34,7 +35,7 @@ namespace TeacherWorkout.Data
                 .HasValueGenerator<StringValueGenerator>();
 
             modelBuilder.Entity<Lesson>()
-                .HasIndex(new [] { "ThemeId", "State" });
+                .HasIndex("ThemeId", "State");
 
             modelBuilder.Entity<Theme>()
                 .Property(l => l.Id)
@@ -45,6 +46,15 @@ namespace TeacherWorkout.Data
                 .Property(l => l.Id)
                 .ValueGeneratedOnAdd()
                 .HasValueGenerator<StringValueGenerator>();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Id)
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<GuidValueGenerator>();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Email)
+                .IsRequired();
         }
     }
 }

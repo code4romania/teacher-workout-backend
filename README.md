@@ -76,10 +76,10 @@ TODO: decouple docker-compose in development from staging
 
 ### Add a migration
 ```
-dotnet ef migrations add <MigrationNameGoesHere> --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/
+dotnet ef migrations add <MigrationNameGoesHere> --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/ --context TeacherWorkoutContext
 ```
 
-### Add a migration for a specific context
+### Add a migration for a different context
 ```
 dotnet ef migrations add <MigrationNameGoesHere> --context UserContext --project .\TeacherWorkout.Identity --startup-project .\TeacherWorkout.Api 
 ```

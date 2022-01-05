@@ -7,7 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\TeacherWorkout.Data\TeacherWorkout.Data.csproj" />
+		<ProjectReference Include="..\TeacherWorkout.Domain\TeacherWorkout.Domain.csproj" />
 		<ProjectReference Include="..\TeacherWorkout.Identity\TeacherWorkout.Identity.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>

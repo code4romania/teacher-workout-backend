@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TeacherWorkout.Data.Repositories;
+using TeacherWorkout.Domain.Users;
 using TeacherWorkout.Identity.Services;
 
 namespace TeacherWorkout.Identity.Api
@@ -11,6 +13,7 @@ namespace TeacherWorkout.Identity.Api
             services.AddBearerAuth(configuration);
 
             services.AddTransient<IJwtService, JwtService>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }
