@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using GraphQL.Server;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
@@ -8,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using TeacherWorkout.Api.GraphQL;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Identity;
+using TeacherWorkout.Identity.Api;
+using TeacherWorkout.Identity.Api.Controllers;
 
 namespace TeacherWorkout.Api
 {
@@ -51,11 +54,18 @@ namespace TeacherWorkout.Api
                 .AddSystemTextJson()
                 .AddGraphTypes();
 
+            services.AddControllers();
+
+            var applicationAssemblies = GetAssemblies();
+            services.AddSwaggerFor(applicationAssemblies, Configuration);
+
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
-            
-            services.AddBearerAuth(Configuration);
+
+            services.AddIdentityApiServices(Configuration);
         }
+
+        private Assembly[] GetAssemblies() => new[] { typeof(AuthController).GetTypeInfo().Assembly };
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db)
@@ -76,6 +86,24 @@ namespace TeacherWorkout.Api
 
             app.UseGraphQL<ISchema>();
             app.UseGraphQLGraphiQL();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.ConfigObject = new ConfigObject
+                {
+                    Urls = new[]
+                    {
+                        new UrlDescriptor{Name = "api", Url = "/swagger/v1/swagger.json"}
+                    }
+                };
+
+            });
         }
 
         private static void AddOperations(IServiceCollection services)

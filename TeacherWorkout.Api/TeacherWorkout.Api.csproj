@@ -12,12 +12,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TeacherWorkout.Data\TeacherWorkout.Data.csproj" />
     <ProjectReference Include="..\TeacherWorkout.Domain\TeacherWorkout.Domain.csproj" />
-    <ProjectReference Include="..\TeacherWorkout.Identity\TeacherWorkout.Identity.csproj" />
+    <ProjectReference Include="..\TeacherWorkout.Identity.Api\TeacherWorkout.Identity.Api.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using TeacherWorkout.Identity.Options;
 
 namespace TeacherWorkout.Identity
 {
@@ -13,7 +15,14 @@ namespace TeacherWorkout.Identity
     {
         public static void AddBearerAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            var key = Encoding.ASCII.GetBytes("key secret");
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.Configure<JwtConfig>(configuration.GetSection(JwtConfig.SectionName));
+            services.Configure<PasswordOptions>(configuration.GetSection(nameof(PasswordOptions)));
+
+            var jwtConfig = services.GetOptions<JwtConfig>(JwtConfig.SectionName);
+            var passwordOptions = services.GetOptions<PasswordOptions>(nameof(PasswordOptions));
+
+            var key = Encoding.ASCII.GetBytes(jwtConfig.Secret);
 
             var tokenValidationParams = new TokenValidationParameters
             {
@@ -38,31 +47,12 @@ namespace TeacherWorkout.Identity
                     jwt.TokenValidationParameters = tokenValidationParams;
                 });
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
-            });
+            services.Configure<IdentityOptions>(options => { options.Password = passwordOptions; });
 
             services.AddDatabase<UserContext>(configuration.GetConnectionString("IdentityDbConnectionString"));
 
             services
-                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<UserContext>();
         }
 
@@ -76,6 +66,17 @@ namespace TeacherWorkout.Identity
                 )));
 
             return services;
+        }
+        
+        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
+        {
+            using var serviceProvider = services.BuildServiceProvider();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var section = configuration.GetSection(sectionName);
+            var options = new T();
+            section.Bind(options);
+
+            return options;
         }
     }
 }
