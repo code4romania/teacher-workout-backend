@@ -10,6 +10,7 @@ COPY ["TeacherWorkout.Migrator/TeacherWorkout.Migrator.csproj", "TeacherWorkout.
 COPY ["TeacherWorkout.Data/TeacherWorkout.Data.csproj", "TeacherWorkout.Data/"]
 COPY ["TeacherWorkout.Domain/TeacherWorkout.Domain.csproj", "TeacherWorkout.Domain/"]
 COPY ["TeacherWorkout.Identity/TeacherWorkout.Identity.csproj", "TeacherWorkout.Identity/"]
+COPY ["TeacherWorkout.Common/TeacherWorkout.Common.csproj", "TeacherWorkout.Common/"]
 
 COPY ["TeacherWorkout.Api/appsettings.CI.json", "TeacherWorkout.Migrator/"]
 COPY ["TeacherWorkout.Api/appsettings.Development.json", "TeacherWorkout.Migrator/"]
@@ -22,6 +23,7 @@ COPY ["TeacherWorkout.Migrator", "TeacherWorkout.Migrator/"]
 COPY ["TeacherWorkout.Data", "TeacherWorkout.Data/"]
 COPY ["TeacherWorkout.Domain", "TeacherWorkout.Domain/"]
 COPY ["TeacherWorkout.Identity", "TeacherWorkout.Identity/"]
+COPY ["TeacherWorkout.Common", "TeacherWorkout.Common/"]
 COPY ["TeacherWorkout.Api", "TeacherWorkout.Api/"]
 
 WORKDIR "/src/TeacherWorkout.Migrator"

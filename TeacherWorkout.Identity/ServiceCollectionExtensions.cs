@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using TeacherWorkout.Common.Authorization;
+using TeacherWorkout.Common.Extensions;
 using TeacherWorkout.Identity.Options;
 
 namespace TeacherWorkout.Identity
@@ -33,6 +35,7 @@ namespace TeacherWorkout.Identity
                 ValidateLifetime = true,
                 RequireExpirationTime = false,
                 ClockSkew = TimeSpan.Zero,
+                RoleClaimType = AuthorizationRoles.ClaimName
             };
 
             services.AddAuthentication(options =>
@@ -47,36 +50,20 @@ namespace TeacherWorkout.Identity
                     jwt.TokenValidationParameters = tokenValidationParams;
                 });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationPolicies.AdminOnly, policy => policy.RequireRole(AuthorizationRoles.Admin));
+            });
+
             services.Configure<IdentityOptions>(options => { options.Password = passwordOptions; });
 
-            services.AddDatabase<UserContext>(configuration.GetConnectionString("IdentityDbConnectionString"));
+            services.AddDbContext<UserContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("IdentityDbConnectionString")));
 
             services
                 .AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<UserContext>();
-        }
-
-        public static IServiceCollection AddDatabase<T>(this IServiceCollection services, string connectionString) where T : DbContext
-        {
-            services.AddDbContextPool<T>(options =>
-                options.UseNpgsql(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(5),
-                    errorCodesToAdd: null
-                )));
-
-            return services;
-        }
-        
-        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : new()
-        {
-            using var serviceProvider = services.BuildServiceProvider();
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            var section = configuration.GetSection(sectionName);
-            var options = new T();
-            section.Bind(options);
-
-            return options;
         }
     }
 }

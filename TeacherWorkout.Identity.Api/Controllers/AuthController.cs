@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TeacherWorkout.Common.Authorization;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Domain.Users;
 using TeacherWorkout.Identity.Api.Dtos;
@@ -17,6 +18,8 @@ namespace TeacherWorkout.Identity.Api.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly IJwtService _jwtService;
+
+        private const string IncorrectEmailOrPassword = "Incorrect email or password.";
 
         public AuthController(UserManager<IdentityUser> userManager, IJwtService jwtService, IUserRepository userRepository)
         {
@@ -42,16 +45,25 @@ namespace TeacherWorkout.Identity.Api.Controllers
                 UserName = user.Email
             };
 
-            //todo decide if we need to confirm the email before we allow the user to login
             var result = await _userManager.CreateAsync(newUser, user.Password);
-            await _userRepository.Insert(new User
+            if (result.Succeeded)
             {
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            });
+                await _userManager.AddToRoleAsync(newUser, AuthorizationRoles.User);
 
-            return Ok(result);
+                await _userRepository.Insert(new User
+                {
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber
+                });
+
+                //todo decide if we need to confirm the email before we allow the user to login
+
+                return Ok(result);
+            }
+
+            return BadRequest(result);
         }
 
         [HttpPost]
@@ -61,16 +73,17 @@ namespace TeacherWorkout.Identity.Api.Controllers
             var existingUser = await _userManager.FindByEmailAsync(user.Email);
             if (existingUser == null)
             {
-                return BadRequest("Incorrect email or password.");
+                return BadRequest(IncorrectEmailOrPassword);
             }
 
             var passwordIsCorrect = await _userManager.CheckPasswordAsync(existingUser, user.Password);
             if (!passwordIsCorrect)
             {
-                return BadRequest("Incorrect email or password.");
+                return BadRequest(IncorrectEmailOrPassword);
             }
 
-            var jwtToken = _jwtService.GenerateToken(existingUser);
+            var userRoles = await _userManager.GetRolesAsync(existingUser);
+            var jwtToken = _jwtService.GenerateToken(existingUser, userRoles);
             var userDetails = await _userRepository.Find(user.Email);
 
             return Ok(new

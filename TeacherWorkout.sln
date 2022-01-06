@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeacherWorkout.Migrator", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeacherWorkout.Identity", "TeacherWorkout.Identity\TeacherWorkout.Identity.csproj", "{8F80AA74-F64D-4C69-AABD-A5D4D9FD214A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherWorkout.Identity.Api", "TeacherWorkout.Identity.Api\TeacherWorkout.Identity.Api.csproj", "{715E7B70-942E-418C-AAD8-CFFD10C1EC5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeacherWorkout.Identity.Api", "TeacherWorkout.Identity.Api\TeacherWorkout.Identity.Api.csproj", "{715E7B70-942E-418C-AAD8-CFFD10C1EC5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherWorkout.Common", "TeacherWorkout.Common\TeacherWorkout.Common.csproj", "{19C6734C-36BF-40F3-856D-1C0432CCD5E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +112,18 @@ Global
 		{715E7B70-942E-418C-AAD8-CFFD10C1EC5B}.Release|x64.Build.0 = Release|Any CPU
 		{715E7B70-942E-418C-AAD8-CFFD10C1EC5B}.Release|x86.ActiveCfg = Release|Any CPU
 		{715E7B70-942E-418C-AAD8-CFFD10C1EC5B}.Release|x86.Build.0 = Release|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Debug|x64.Build.0 = Debug|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Debug|x86.Build.0 = Debug|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Release|x64.Build.0 = Release|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{19C6734C-36BF-40F3-856D-1C0432CCD5E8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

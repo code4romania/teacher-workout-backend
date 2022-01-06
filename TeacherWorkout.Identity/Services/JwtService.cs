@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TeacherWorkout.Common.Authorization;
 using TeacherWorkout.Identity.Options;
 
 namespace TeacherWorkout.Identity.Services
@@ -19,7 +20,7 @@ namespace TeacherWorkout.Identity.Services
             _jwtConfig = jwtConfigOptions.Value;
         }
 
-        public string GenerateToken(IdentityUser user)
+        public string GenerateToken(IdentityUser user, IList<string> userRoles)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -27,7 +28,7 @@ namespace TeacherWorkout.Identity.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(GetUserClaims(user)),
+                Subject = new ClaimsIdentity(GetUserClaims(user, userRoles)),
                 Expires = DateTime.UtcNow.AddSeconds(_jwtConfig.TokenExpirationInSeconds),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -38,7 +39,7 @@ namespace TeacherWorkout.Identity.Services
             return jwtToken;
         }
 
-        private static Claim[] GetUserClaims(IdentityUser user)
+        private static Claim[] GetUserClaims(IdentityUser user, IList<string> roles)
         {
             var claimsBuilder = new List<Claim>
             {
@@ -47,6 +48,16 @@ namespace TeacherWorkout.Identity.Services
                 new (JwtRegisteredClaimNames.Sub, user.Id),
                 new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
+
+            if (roles == null || roles.Count == 0)
+            {
+                roles = new[] { AuthorizationRoles.User };
+            }
+
+            foreach (string userRole in roles)
+            {
+                claimsBuilder.Add(new Claim(AuthorizationRoles.ClaimName, userRole));
+            }
 
             return claimsBuilder.ToArray();
         }
