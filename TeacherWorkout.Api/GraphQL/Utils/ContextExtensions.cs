@@ -1,9 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
-using GraphQL.Builders;
-using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Domain.Models.Inputs;
 
 namespace TeacherWorkout.Api.GraphQL.Utils
 {

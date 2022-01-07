@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using GraphQL.Server;
 using GraphQL.Types;
+using GraphQL.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using TeacherWorkout.Api.Extensions;
 using TeacherWorkout.Api.GraphQL;
+using TeacherWorkout.Api.GraphQL.ValidationRules;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Identity.Api;
@@ -44,6 +47,7 @@ namespace TeacherWorkout.Api
             services.AddScoped<ISchema, TeacherWorkoutSchema>();
             AddOperations(services);
             AddRepositories(services, "TeacherWorkout.Data");
+            AddValidationRules(services);
 
             services.AddHttpContextAccessor();
             services.AddGraphQL(options =>
@@ -52,7 +56,8 @@ namespace TeacherWorkout.Api
                 })
                 .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
                 .AddSystemTextJson()
-                .AddGraphTypes();
+                .AddGraphTypes()
+                .AddUserContextBuilder(httpContext => new GraphQlUserContext(httpContext.User));
 
             services.AddControllers();
 
@@ -63,6 +68,11 @@ namespace TeacherWorkout.Api
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
 
             services.AddIdentityApiServices(Configuration);
+        }
+
+        private static void AddValidationRules(IServiceCollection services)
+        {
+            services.AddScoped<IValidationRule, RequiresAuthValidationRule>();
         }
 
         private Assembly[] GetAssemblies() => new[] { typeof(AuthController).GetTypeInfo().Assembly };

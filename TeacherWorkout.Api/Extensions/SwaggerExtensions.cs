@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace TeacherWorkout.Api
+namespace TeacherWorkout.Api.Extensions
 {
     public static class SwaggerExtensions
     {
