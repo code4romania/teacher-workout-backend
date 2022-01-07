@@ -93,6 +93,7 @@ namespace TeacherWorkout.Api
 
             app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseGraphQL<ISchema>();
             app.UseGraphQLPlayground();

@@ -14,6 +14,11 @@ namespace TeacherWorkout.Api.GraphQL.ValidationRules
             return Task.FromResult((INodeVisitor)new NodeVisitors(
                 new MatchingNodeVisitor<Operation>((operation, context) =>
                 {
+                    if (operation.Name == "IntrospectionQuery")
+                    {
+                        return;
+                    }
+
                     if (!authenticated)
                     {
                         context.ReportError(

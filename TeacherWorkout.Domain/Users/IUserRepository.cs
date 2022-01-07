@@ -5,8 +5,9 @@ namespace TeacherWorkout.Domain.Users
 {
     public interface IUserRepository
     {
-        Task Insert(User user);
+        Task InsertAsync(User user);
 
-        Task<User> Find(string email);
+        Task<User> FindAsync(string email);
+        Task DeleteAsync(string userEmail);
     }
 }

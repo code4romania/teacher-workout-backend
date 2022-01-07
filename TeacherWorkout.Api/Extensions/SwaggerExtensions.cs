@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -13,6 +14,18 @@ namespace TeacherWorkout.Api.Extensions
         {
             services.AddSwaggerGen(c =>
             {
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme.ToLowerInvariant(),
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    BearerFormat = "JWT",
+                    Description = "JWT Authorization header using the Bearer scheme."
+                };
+                c.AddSecurityDefinition("Bearer", jwtSecurityScheme);
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
+
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
