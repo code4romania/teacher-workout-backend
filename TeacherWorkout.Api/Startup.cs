@@ -58,7 +58,7 @@ namespace TeacherWorkout.Api
                 .AddSystemTextJson()
                 .AddGraphTypes()
                 .AddUserContextBuilder(httpContext => new GraphQlUserContext(httpContext.User));
-
+            
             services.AddControllers();
 
             var applicationAssemblies = GetAssemblies();
@@ -95,11 +95,12 @@ namespace TeacherWorkout.Api
             app.UseAuthentication();
 
             app.UseGraphQL<ISchema>();
-            app.UseGraphQLGraphiQL();
+            app.UseGraphQLPlayground();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGraphQLPlayground();
             });
 
             app.UseSwagger();
@@ -112,7 +113,6 @@ namespace TeacherWorkout.Api
                         new UrlDescriptor{Name = "api", Url = "/swagger/v1/swagger.json"}
                     }
                 };
-
             });
         }
 
