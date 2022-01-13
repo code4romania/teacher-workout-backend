@@ -7,9 +7,9 @@ Scenario: Admin user can create a theme
 	When Ion creates a theme
 	Then the theme was created successfully
 
-Scenario: Anonymous user can list themes
+Scenario: Authenticated user can list themes
 	Given Ion is an admin
-	And Vasile is an anonymous user
+	And Vasile is an authenticated user
 	And Ion creates a theme
 	When Vasile requests themes
 	Then Vasile receives the theme

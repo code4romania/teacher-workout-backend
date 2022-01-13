@@ -8,7 +8,7 @@ namespace TeacherWorkout.Specs.Hooks
     [Binding]
     public class DatabaseHooks
     {
-        private ScenarioContext _scenarioContext;
+        private readonly ScenarioContext _scenarioContext;
         private readonly GraphQLServer _server;
 
         public DatabaseHooks(ScenarioContext scenarioContext, GraphQLServer server)
@@ -20,7 +20,7 @@ namespace TeacherWorkout.Specs.Hooks
         [BeforeScenario]
         public void BeforeScenario()
         {
-            var dbContext = _server.Factory.Services.GetService<TeacherWorkoutContext>();
+            var dbContext = _server.Factory.Services.GetRequiredService<TeacherWorkoutContext>();
             var transaction = dbContext.Database.BeginTransaction();
 
             _scenarioContext["transaction"] = transaction;

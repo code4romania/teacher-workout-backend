@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using TeacherWorkout.Data;
 namespace TeacherWorkout.Specs
 {
     public class GraphQLServer
-    {       
+    {
         private readonly WebApplicationFactory<Startup> _factory;
 
         public HttpClient Client => _factory.CreateClient();
@@ -22,6 +23,11 @@ namespace TeacherWorkout.Specs
             {
                 builder.ConfigureServices(services =>
                 {
+                    var existingContext = services.First(x =>
+                        x.ServiceType == typeof(TeacherWorkoutContext)
+                        && x.Lifetime == ServiceLifetime.Scoped);
+                    services.Remove(existingContext);
+
                     services.AddSingleton(p =>
                     {
                         var configuration = p.GetService<IConfiguration>();

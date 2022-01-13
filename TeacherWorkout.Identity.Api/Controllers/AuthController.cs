@@ -97,8 +97,8 @@ namespace TeacherWorkout.Identity.Api.Controllers
             return Ok(new
             {
                 token = jwtToken,
-                userDetails.LastName,
-                userDetails.FirstName,
+                userDetails?.LastName,
+                userDetails?.FirstName,
                 Success = true
             });
         }

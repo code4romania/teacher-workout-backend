@@ -153,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("Ion is an admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 12
- testRunner.And("Vasile is an anonymous user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Vasile is an authenticated user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 13
  testRunner.And("Ion creates a theme", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

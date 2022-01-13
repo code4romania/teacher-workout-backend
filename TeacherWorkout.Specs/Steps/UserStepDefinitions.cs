@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace TeacherWorkout.Specs.Steps
@@ -15,15 +16,23 @@ namespace TeacherWorkout.Specs.Steps
         }
         
         [Given(@"Ion is an admin")]
-        public void GivenIonIsAnAdmin()
+        public async Task GivenIonIsAnAdmin()
         {
-            _scenarioContext["Ion"] = new TeacherWorkoutApiClient(_server.Client);
+            var ion = new TeacherWorkoutApiClient(_server.Client);
+            await ion.Register("ion");
+            await ion.Login("ion");
+
+            _scenarioContext["Ion"] = ion;
         }
 
-        [Given(@"Vasile is an anonymous user")]
-        public void GivenVasileIsAnAnonymousUser()
+        [Given(@"Vasile is an authenticated user")]
+        public async Task GivenVasileIsAnAnonymousUser()
         {
-            _scenarioContext["Vasile"] = new TeacherWorkoutApiClient(_server.Client);
+            var vasile = new TeacherWorkoutApiClient(_server.Client);
+            await vasile.Register("vasile");
+            await vasile.Login("vasile");
+
+            _scenarioContext["Vasile"] = vasile;
         }
     }
 }
