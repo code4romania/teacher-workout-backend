@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +38,11 @@ namespace TeacherWorkout.Migrator
                 options.UseNpgsql(configuration.GetConnectionString("IdentityDbConnectionString")));
             Console.WriteLine("Done: Registering contexts.");
 
+            services
+                .AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<UserContext>();
+
             Console.WriteLine("Getting contexts");
             var serviceProvider = services.BuildServiceProvider();
 
@@ -52,7 +58,9 @@ namespace TeacherWorkout.Migrator
 
             await ApplyMigrations(dbContexts);
 
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             await SeedData(configuration, teacherWorkoutContext);
+            await SeedUsers(configuration, teacherWorkoutContext, userManager);
         }
 
         private static async Task ApplyMigrations(DbContext[] dbContexts)
@@ -83,6 +91,24 @@ namespace TeacherWorkout.Migrator
             await new TeacherWorkoutSeeder(teacherWorkoutContext).Seed();
 
             Console.WriteLine("Finished seeding database.");
+            Console.WriteLine("--------------------------------------------");
+        }
+
+        private static async Task SeedUsers(IConfigurationRoot configuration,
+            TeacherWorkoutContext teacherWorkoutContext, UserManager<IdentityUser> userManager)
+        {
+            var seedUsersEnabled = bool.Parse(configuration["SeedUsers"]);
+            if (!seedUsersEnabled)
+            {
+                return;
+            }
+
+            Console.WriteLine("Starting users seed.");
+            var adminEmail = configuration["Admin:EmailAddress"];
+            var adminPassword = configuration["Admin:Password"];
+            await new UserSeeder(teacherWorkoutContext, userManager).SeedDefaultAdmin(adminEmail, adminPassword);
+
+            Console.WriteLine("Finished seeding users.");
             Console.WriteLine("--------------------------------------------");
         }
     }
