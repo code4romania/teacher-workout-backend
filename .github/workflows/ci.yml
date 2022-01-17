@@ -58,5 +58,5 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover TeacherWorkout.sln
         env:
-          JwtConfig__Secret: cisecretcisecretcisecretcisecret
+          JwtConfig__Secret: ${{ secrets.JWTSECRET }}
 
