@@ -56,7 +56,7 @@ jobs:
           SeedData: false
       
       - name: Run tests
+        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover TeacherWorkout.sln
         env:
-          JwtConfig_Secret: ${{ secrets.JwtSecret }}
-        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover TeacherWorkout.sln 
+          JwtConfig__Secret: cisecretcisecretcisecretcisecret
 
