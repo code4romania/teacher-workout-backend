@@ -27,7 +27,7 @@
         ConnectionStrings__IdentityDbConnectionString: ${DB_CONNECTION_STRING}
         SeedData: ${SEEDDATA}
         SeedUsers: ${SEEDUSERS}
-        Admin__Email: ${ADMIN_EMAIL}
+        Admin__EmailAddress: ${ADMIN_EMAIL}
         Admin__Password: ${ADMIN_PASSWORD}
       depends_on: 
         - "postgres"

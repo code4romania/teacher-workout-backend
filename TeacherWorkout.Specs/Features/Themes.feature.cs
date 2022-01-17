@@ -121,14 +121,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Anonymous user can list themes")]
+        [Xunit.SkippableFactAttribute(DisplayName="Authenticated user can list themes")]
         [Xunit.TraitAttribute("FeatureTitle", "Themes")]
-        [Xunit.TraitAttribute("Description", "Anonymous user can list themes")]
-        public virtual void AnonymousUserCanListThemes()
+        [Xunit.TraitAttribute("Description", "Authenticated user can list themes")]
+        public virtual void AuthenticatedUserCanListThemes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Anonymous user can list themes", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Authenticated user can list themes", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
