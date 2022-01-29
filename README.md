@@ -65,23 +65,39 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 - [android](https://github.com/code4romania/teacher-workout-android)
 - [ios](https://github.com/code4romania/teacher-workout-ios)
 
-## How To
-### Run
+## Set Up
+### Install Dependencies
+
+- docker-compose >= v1.26.2
+- docker >= v20.10.7
+
+### Start DB server
 ```
 docker-compose up # and stop
 docker start teacher_workout_db
-dotnet run -p TeacherWorkout.Api
 ```
 TODO: decouple docker-compose in development from staging 
+
+### Run migrations
+```
+dotnet ef database update --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/
+```
+
+### Start App
+```
+dotnet run -p TeacherWorkout.Api
+```
+
+## FAQ
 
 ### Add a migration
 ```
 dotnet ef migrations add <MigrationNameGoesHere> --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/
 ```
 
-### Run migrations
+### Run tests
 ```
-dotnet ef database update --startup-project TeacherWorkout.Api/ --project TeacherWorkout.Data/
+ASPNETCORE_ENVIRONMENT=Test dotnet test
 ```
 
 ### Apply migrations and seed data to your dev DB
@@ -98,7 +114,6 @@ dotnet run SeedData=false
 ```
 
 ## Deployment
-
 Guide users through getting your code up and running on their own system. In this section you can talk about:
 1. Installation process
 2. Software dependencies
@@ -106,9 +121,6 @@ Guide users through getting your code up and running on their own system. In thi
 4. API references
 
 Describe and show how to build your code and run the tests.
-
-## Automatic tests
-1. Run `$ ASPNETCORE_ENVIRONMENT=Test dotnet test TeacherWorkout.sln` or the Powershell command `($env:ASPNETCORE_ENVIRONMENT="Test") | dotnet test -v n  TeacherWorkout.sln`
 
 ## Feedback
 
