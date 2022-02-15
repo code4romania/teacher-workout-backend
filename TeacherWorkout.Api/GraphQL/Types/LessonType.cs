@@ -10,11 +10,11 @@ namespace TeacherWorkout.Api.GraphQL.Types
             Name = "Lesson";
 
             Field(x => x.Id, type: typeof(IdGraphType));
-            Field(x => x.Title).Description("The title of the Lesson");
-            Field(x => x.Description).Description("The description of the Lesson");
-            Field(x => x.Thumbnail).Description("The thumbnail of the Lesson");
-            Field(x => x.Theme).Description("The Theme of the Lesson");
-            Field(x => x.Duration).Description("The duration of the Lesson");
+            Field(x => x.Title, true).Description("The title of the Lesson");
+            Field(x => x.Description, true).Description("The description of the Lesson");
+            Field(x => x.Thumbnail, true).Description("The thumbnail of the Lesson");
+            Field(x => x.Theme, true).Description("The Theme of the Lesson");
+            Field(x => x.Duration, true).Description("The duration of the Lesson");
             Field(x => x.State).Description("The state of the Lesson.");
         }
     }

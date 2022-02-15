@@ -1,10 +1,12 @@
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.EntityFrameworkCore;
 using TeacherWorkout.Api.GraphQL.Resolvers;
 using TeacherWorkout.Api.GraphQL.Types.Inputs;
 using TeacherWorkout.Api.GraphQL.Types.Payloads;
 using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Models.Inputs;
+using TeacherWorkout.Domain.Models.Payloads;
 using TeacherWorkout.Domain.Themes;
 
 namespace TeacherWorkout.Api.GraphQL
@@ -12,7 +14,8 @@ namespace TeacherWorkout.Api.GraphQL
     public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
         public TeacherWorkoutMutation(CompleteStep completeStep,
-            CreateTheme createTheme)
+            CreateTheme createTheme,
+            UpdateTheme updateTheme)
         {
             Name = "Mutation";
 
@@ -47,6 +50,17 @@ namespace TeacherWorkout.Api.GraphQL
                 {
                     var input = context.GetArgument<ThemeCreateInput>("input");
                     return createTheme.Execute(input);
+                });
+
+            Field<ThemeUpdatePayloadType>(
+                "themeUpdate",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ThemeUpdateInputType>> { Name = "input" }
+                ),
+                resolve: context =>
+                {
+                    var input = context.GetArgument<ThemeUpdateInput>("input");
+                    return updateTheme.Execute(input);
                 });
         }
     }
