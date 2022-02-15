@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TeacherWorkout.Common.Extensions;
 using TeacherWorkout.Data;
 using TeacherWorkout.Identity;
 
@@ -42,6 +43,7 @@ namespace TeacherWorkout.Migrator
                 .AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<UserContext>();
+            ConfigurePasswordOptions(services, configuration);
 
             Console.WriteLine("Getting contexts");
             var serviceProvider = services.BuildServiceProvider();
@@ -61,6 +63,14 @@ namespace TeacherWorkout.Migrator
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             await SeedData(configuration, teacherWorkoutContext);
             await SeedUsers(configuration, teacherWorkoutContext, userManager);
+        }
+
+        private static void ConfigurePasswordOptions(ServiceCollection services, IConfigurationRoot configuration)
+        {
+            services.AddSingleton<IConfiguration>(configuration);
+            services.Configure<PasswordOptions>(configuration.GetSection(nameof(PasswordOptions)));
+            var passwordOptions = services.GetOptions<PasswordOptions>(nameof(PasswordOptions));
+            services.Configure<IdentityOptions>(options => { options.Password = passwordOptions; });
         }
 
         private static async Task ApplyMigrations(DbContext[] dbContexts)

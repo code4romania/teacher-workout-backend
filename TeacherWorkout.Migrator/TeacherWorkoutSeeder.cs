@@ -173,7 +173,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 45,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Draft
             },
             new()
             {
@@ -185,7 +186,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 32,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Published
             },
             new()
             {
@@ -197,7 +199,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 55,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Draft
             },
             new()
             {
@@ -209,7 +212,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 37,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Published
             },
             new()
             {
@@ -221,7 +225,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 39,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Draft
             },
             new()
             {
@@ -233,7 +238,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 42,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Published
             },
             new()
             {
@@ -245,7 +251,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 45,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Draft
             },
             new()
             {
@@ -257,7 +264,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 44,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Published
             },
             new()
             {
@@ -269,7 +277,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 43,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Draft
             },
             new()
             {
@@ -281,7 +290,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 46,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Published
             },
             new()
             {
@@ -293,7 +303,8 @@ namespace TeacherWorkout.Migrator
                 {
                     Value = 49,
                     Unit = DurationUnit.Minutes
-                }
+                },
+                State = LessonState.Published
             }
         };
 
