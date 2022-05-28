@@ -32,7 +32,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 6.0.x
       
       - name: Install dependencies
         run: dotnet tool install --global dotnet-ef
@@ -48,7 +48,7 @@ jobs:
       
       - name: Apply migrations
         run: |
-          cd ./TeacherWorkout.Migrator/bin/Debug/net5.0
+          cd ./TeacherWorkout.Migrator/bin/Debug/net6.0
           dotnet TeacherWorkout.Migrator.dll
         env:
           ConnectionStrings__IdentityDbConnectionString: Server=localhost;Port=5432;Database=teacher_workout_test;User Id=docker;Password=docker;
