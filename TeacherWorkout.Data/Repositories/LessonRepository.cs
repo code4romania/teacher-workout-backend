@@ -32,6 +32,11 @@ namespace TeacherWorkout.Data.Repositories
                 result = result.Where(l => l.Theme.Id == filter.ThemeId);
             }
 
+            if (!string.IsNullOrEmpty(filter.Term))
+            {
+                result = result.Where(l => l.Title.Contains(filter.Term) || l.Description.Contains(filter.Term));
+            }
+
             return new PaginatedResult<Lesson>
             {
                 TotalCount = result.Count(),
