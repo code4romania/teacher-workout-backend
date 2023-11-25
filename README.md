@@ -73,6 +73,7 @@ If you would like to suggest new functionality, open an Issue and mark it as a _
 
 ### Start DB server
 ```
+cp .env.example .env
 docker-compose up # and stop
 docker start teacher_workout_db
 ```
