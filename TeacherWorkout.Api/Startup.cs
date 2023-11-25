@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using GraphQL.Server;
+using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,13 +42,10 @@ namespace TeacherWorkout.Api
             AddRepositories(services, "TeacherWorkout.Data");
 
             services.AddHttpContextAccessor();
-            services.AddGraphQL(options =>
-                {
-                    options.EnableMetrics = false;
-                })
-                .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
-                .AddSystemTextJson()
-                .AddGraphTypes();
+            services.AddGraphQL(b => b
+                .AddErrorInfoProvider(opt => opt.ExposeExceptionDetails = true)
+                .AddGraphTypes()
+                .AddSystemTextJson());
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));

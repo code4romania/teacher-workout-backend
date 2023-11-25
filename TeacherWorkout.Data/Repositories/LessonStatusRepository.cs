@@ -30,8 +30,20 @@ namespace TeacherWorkout.Data.Repositories
             return lessons.Select(l => new LessonStatus
             {
                 Lesson = l,
-                CurrentLessonStep = new ExerciseStep {
-                    Question = "Some very important question?"
+                CurrentLessonStep = new ExerciseStep
+                {
+                    Id = "42",
+                    Question = "Some very important question?",
+                    Answers = new List<Answer> {
+                        new() {
+                            Id = "42",
+                            Title = "Yes"
+                        },
+                        new() {
+                            Id = "43",
+                            Title = "Awesome"
+                        }
+                    }
                 },
                 PercentCompleted = 1
             });
