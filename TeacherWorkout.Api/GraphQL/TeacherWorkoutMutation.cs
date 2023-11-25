@@ -19,45 +19,33 @@ namespace TeacherWorkout.Api.GraphQL
         {
             Name = "Mutation";
 
-            Field<NonNullGraphType<LessonSavePayloadType>>(
-                "lessonSave",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<LessonSaveInputType>> { Name = "input" }
-                ),
-                resolve: context =>
+            Field<NonNullGraphType<LessonSavePayloadType>>("lessonSave")
+                .Argument<NonNullGraphType<LessonSaveInputType>>(Name = "input")
+                .Resolve(context =>
                 {
                     var lessonSave = context.GetArgument<LessonSaveInput>("input");
                     return LessonSaveResolver.Resolve(lessonSave);
                 });
 
-            Field<StepCompletePayloadType>(
-                "stepComplete",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<StepCompleteInputType>> { Name = "input" }
-                ),
-                resolve: context =>
+            Field<StepCompletePayloadType>("stepComplete")
+                .Argument<NonNullGraphType<StepCompleteInputType>>(Name = "input")
+                .Resolve(context =>
                 {
                     var input = context.GetArgument<StepCompleteInput>("input");
                     return completeStep.Execute(input);
                 });
 
-            Field<ThemeCreatePayloadType>(
-                "themeCreate",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<ThemeCreateInputType>> { Name = "input" }
-                ),
-                resolve: context =>
+            Field<ThemeCreatePayloadType>("themeCreate")
+                .Argument<NonNullGraphType<ThemeCreateInputType>>(Name = "input")
+                .Resolve(context =>
                 {
                     var input = context.GetArgument<ThemeCreateInput>("input");
                     return createTheme.Execute(input);
                 });
 
-            Field<ThemeUpdatePayloadType>(
-                "themeUpdate",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<ThemeUpdateInputType>> { Name = "input" }
-                ),
-                resolve: context =>
+            Field<ThemeUpdatePayloadType>("themeUpdate")
+                .Argument<NonNullGraphType<ThemeUpdateInputType>>(Name = "input")
+                .Resolve(context =>
                 {
                     var input = context.GetArgument<ThemeUpdateInput>("input");
                     return updateTheme.Execute(input);

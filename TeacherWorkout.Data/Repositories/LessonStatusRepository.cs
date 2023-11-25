@@ -32,12 +32,15 @@ namespace TeacherWorkout.Data.Repositories
                 Lesson = l,
                 CurrentLessonStep = new ExerciseStep
                 {
+                    Id = "42",
                     Question = "Some very important question?",
                     Answers = new List<Answer> {
                         new() {
+                            Id = "42",
                             Title = "Yes"
                         },
                         new() {
+                            Id = "43",
                             Title = "Awesome"
                         }
                     }
