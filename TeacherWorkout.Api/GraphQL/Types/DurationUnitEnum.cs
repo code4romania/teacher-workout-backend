@@ -9,8 +9,8 @@ namespace TeacherWorkout.Api.GraphQL.Types
         {
             Name = "DurationUnit";
             
-            AddValue("Minutes", "Minutes.", 1);
-            AddValue("Hours", "Hours.", 2);
+            Add("Minutes", DurationUnit.Minutes);
+            Add("Hours", DurationUnit.Hours);
         }
     }
 }

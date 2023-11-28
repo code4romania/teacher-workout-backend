@@ -336,3 +336,10 @@ ASALocalRun/
 # Project specific
 postgres_data
 .env
+
+# VSCode
+.vscode
+
+# MacOS
+.DS_Store
+Thumbs.db

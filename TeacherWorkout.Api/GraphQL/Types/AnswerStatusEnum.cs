@@ -9,9 +9,9 @@ namespace TeacherWorkout.Api.GraphQL.Types
         {
             Name = "AnswerStatus";
             
-            AddValue("Correct", "Correct.", 1);
-            AddValue("Incorrect", "Incorrect.", 2);
-            AddValue("None", "None.", 3);
+            Add("Correct", AnswerStatus.Correct);
+            Add("Incorrect", AnswerStatus.Incorrect);
+            Add("None", AnswerStatus.None);
         }
     }
 }
