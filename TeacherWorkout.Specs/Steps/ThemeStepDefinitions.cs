@@ -7,14 +7,23 @@ using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Specs.Extensions;
 using TechTalk.SpecFlow;
 using Xunit.Abstractions;
+namespace TeacherWorkout.Specs.Steps;
 
-namespace TeacherWorkout.Specs.Steps
+[Binding]
+public class ThemeStepDefinitions(ScenarioContext scenarioContext)
 {
-    [Binding]
-    public class ThemeStepDefinitions(ScenarioContext scenarioContext)
+    [Given(@"Ion creates a theme")]
+    [When(@"Ion creates a theme")]
+    public async Task GivenIonCreatesATheme()
     {
-        private readonly ScenarioContext _scenarioContext = scenarioContext;
+        scenarioContext["theme-create-response"] = await ((TeacherWorkoutApiClient)scenarioContext["Ion"]).ThemeCreateAsync();
+    }
 
+    [When(@"Vasile requests themes")]
+    public async Task WhenVasileRequestsThemes()
+    {
+        scenarioContext["themes"] = await ((TeacherWorkoutApiClient)scenarioContext["Vasile"]).ThemesAsync();
+    }
         [Given(@"Ion creates a theme with image")]
         [When(@"Ion creates a theme with image")]
         public async Task GivenIonCreatesAThemeWithImage()
@@ -32,27 +41,19 @@ namespace TeacherWorkout.Specs.Steps
 
             _scenarioContext["theme-create-response"] = await ((TeacherWorkoutApiClient) _scenarioContext["Ion"]).ThemeCreateAsync(fileBlobId);
         }
+    [Then(@"Vasile receives the theme")]
+    public void ThenVasileReceivesTheTheme()
+    {
+        scenarioContext["themes"]
+            .Should()
+            .MatchResponse("Responses/Query/Themes/VisibleToVasileAsAnonymous.json");
+    }
 
-        [When(@"Vasile requests themes")]
-        public async Task WhenVasileRequestsThemes()
-        {
-            _scenarioContext["themes"] = await ((TeacherWorkoutApiClient) _scenarioContext["Vasile"]).ThemesAsync();
-        }
-
-        [Then(@"Vasile receives the theme")]
-        public void ThenVasileReceivesTheTheme()
-        {
-            _scenarioContext["themes"]
-                .Should()
-                .MatchResponse("Responses/Query/Themes/VisibleToVasileAsAnonymous.json");
-        }
-
-        [Then(@"the theme was created successfully")]
-        public void ThenTheThemeWasCreatedSuccessfully()
-        {
-            _scenarioContext["theme-create-response"]
-                .Should()
-                .MatchResponse("Responses/Mutation/ThemeCreate/Success.json");
-        }
+    [Then(@"the theme was created successfully")]
+    public void ThenTheThemeWasCreatedSuccessfully()
+    {
+        scenarioContext["theme-create-response"]
+            .Should()
+            .MatchResponse("Responses/Mutation/ThemeCreate/Success.json");
     }
 }

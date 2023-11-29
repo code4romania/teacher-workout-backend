@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Specs.Extensions;
 
-namespace TeacherWorkout.Specs
+namespace TeacherWorkout.Specs;
+
+public class TeacherWorkoutApiClient(HttpClient client)
 {
-    public class TeacherWorkoutApiClient
+    enum Queries
     {
-        enum Queries
-        {
-            Themes
-        }
+        Themes,
+        Lessons
+    }
 
         enum Mutations
         {
@@ -24,10 +25,7 @@ namespace TeacherWorkout.Specs
         
         private readonly HttpClient _client;
 
-        public TeacherWorkoutApiClient(HttpClient client)
-        {
-            _client = client;
-        }
+    #region    Themes
 
         public async Task<string> UploadImage(FileBlob imageFile)
         {
@@ -55,7 +53,7 @@ namespace TeacherWorkout.Specs
 
         public async Task<string> ThemeCreateAsync(string fileBlobId)
         {
-            return await SendRequest(MutationFor(Mutations.ThemeCreate), new
+            input = new
             {
                 input = new
                 {
@@ -65,26 +63,51 @@ namespace TeacherWorkout.Specs
             });
         }
 
-        private string QueryFor(Queries query)
-        {
-            return GraphQL("Query", query.ToString());
-        }
+    #endregion
 
-        private string MutationFor(Mutations mutation)
-        {
-            return GraphQL("Mutation", mutation.ToString());
-        }
+    #region   Lessons
 
-        private string GraphQL(string category, string name)
-        {
-            return File.ReadAllText($"GraphQL/{category}/{name}.graphql");
-        }
-
-        private async Task<string> SendRequest(string query, object variables)
-        {
-            var content = new StringContent(new {query, variables}.ToJson(), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("http://localhost/graphql", content);
-            return await response.Content.ReadAsStringAsync();
-        }
+    public async Task<string> LessonsAsync()
+    {
+        return await SendRequest(QueryFor(Queries.Lessons), new { });
     }
+    public async Task<string> SearchLessonByTitleAsync()
+    {
+        return await SendRequest(QueryFor(Queries.Lessons), new
+        {
+            input = new
+            {
+                title = "sit"
+            }
+        });
+    }
+
+    #endregion
+
+
+    #region   Utils
+
+    private static string QueryFor(Queries query)
+    {
+        return GraphQL("Query", query.ToString());
+    }
+
+    private static string MutationFor(Mutations mutation)
+    {
+        return GraphQL("Mutation", mutation.ToString());
+    }
+
+    private static string GraphQL(string category, string name)
+    {
+        return File.ReadAllText($"GraphQL/{category}/{name}.graphql");
+    }
+
+    private async Task<string> SendRequest(string query, object variables)
+    {
+        var content = new StringContent(new { query, variables }.ToJson(), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync("http://localhost/graphql", content);
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    #endregion
 }
