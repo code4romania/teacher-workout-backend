@@ -10,6 +10,7 @@ namespace TeacherWorkout.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<FileBlob> FileBlobs { get; set; }
 
         public TeacherWorkoutContext(DbContextOptions<TeacherWorkoutContext> options) : base(options)
         {
@@ -42,6 +43,11 @@ namespace TeacherWorkout.Data
                 .HasValueGenerator<StringValueGenerator>();
 
             modelBuilder.Entity<Image>()
+                .Property(l => l.Id)
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<StringValueGenerator>();
+
+            modelBuilder.Entity<FileBlob>()
                 .Property(l => l.Id)
                 .ValueGeneratedOnAdd()
                 .HasValueGenerator<StringValueGenerator>();

@@ -42,10 +42,12 @@ namespace TeacherWorkout.Api
             AddRepositories(services, "TeacherWorkout.Data");
 
             services.AddHttpContextAccessor();
-            services.AddGraphQL(b => b
-                .AddErrorInfoProvider(opt => opt.ExposeExceptionDetails = true)
-                .AddGraphTypes()
-                .AddSystemTextJson());
+            services
+                .AddGraphQLUpload()
+                .AddGraphQL(b => b
+                    .AddErrorInfoProvider(opt => opt.ExposeExceptionDetails = true)
+                    .AddGraphTypes()
+                    .AddSystemTextJson());
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
@@ -67,7 +69,8 @@ namespace TeacherWorkout.Api
 
             app.UseRouting();
 
-            app.UseGraphQL<ISchema>();
+            app.UseGraphQLUpload<ISchema>()
+                .UseGraphQL<ISchema>();
             app.UseGraphQLGraphiQL();
         }
 
