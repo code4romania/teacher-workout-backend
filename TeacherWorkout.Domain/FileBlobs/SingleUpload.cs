@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using TeacherWorkout.Domain.Common;
@@ -18,6 +19,7 @@ namespace TeacherWorkout.Domain.FileBlobs
                 Content = input.Content,
                 Mimetype = input.Mimetype,
                 Description = input.FileName,
+                CreatedAt = DateTime.UtcNow
             };
 
             // Validate extension
