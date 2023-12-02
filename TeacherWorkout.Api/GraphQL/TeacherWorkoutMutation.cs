@@ -58,7 +58,7 @@ namespace TeacherWorkout.Api.GraphQL
 
 
             Field<SingleUploadPayloadType>("singleUpload")
-                .Argument<UploadGraphType>(Name = "file")
+                .Argument<NonNullGraphType<UploadGraphType>>(Name = "file")
                 .Resolve(context =>
                 {
                     var file = context.GetArgument<IFormFile>("file");
