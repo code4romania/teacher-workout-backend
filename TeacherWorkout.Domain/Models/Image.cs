@@ -11,6 +11,7 @@ namespace TeacherWorkout.Domain.Models
 
         public string Url { get; set; }
         
+        public string FileBlobId { get; set; }
         public FileBlob FileBlob { get; set; }
     }
 }

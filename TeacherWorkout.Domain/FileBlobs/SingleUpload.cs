@@ -17,22 +17,20 @@ namespace TeacherWorkout.Domain.FileBlobs
             FileBlob fileBlob = new()
             {
                 Content = input.Content,
-                Mimetype = input.Mimetype,
+                Mimetype = input.Mimetype.ToLower(),
                 Description = input.FileName,
                 CreatedAt = DateTime.UtcNow
             };
 
             // Validate extension
             string extension = System.IO.Path.GetExtension(input.FileName);
-            string[] imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
-            if (!imageExtensions.Contains(extension.ToLower()))
+            if (!ImageUtils.Extensions.Contains(extension.ToLower()))
             {
                 throw new ValidationException("Invalid image extension");
             }
 
             // Validate content type
-            string[] imageContentTypes = ["image/jpeg", "image/png", "image/gif"];
-            if (!imageContentTypes.Contains(fileBlob.Mimetype.ToLower()))
+            if (!ImageUtils.ContentTypes.Contains(fileBlob.Mimetype))
             {
                 throw new ValidationException("Invalid image content type");
             }
@@ -44,6 +42,5 @@ namespace TeacherWorkout.Domain.FileBlobs
                 FileBlobId = fileBlob.Id
             };
         }
-
-        }
+    }
 }

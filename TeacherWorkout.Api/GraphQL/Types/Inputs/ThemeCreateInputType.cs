@@ -9,8 +9,11 @@ namespace TeacherWorkout.Api.GraphQL.Types.Inputs
         {
             Name = "ThemeCreateInput";
 
-            Field(x => x.ThumbnailId, type: typeof(IdGraphType));
             Field(x => x.Title);
+            Field(x => x.FileBlobId, true, type: typeof(IdGraphType))
+                .Description("Id of uploaded image blob (precedes and overwrites ThumbnailId)");
+            Field(x => x.ThumbnailId, true, type: typeof(IdGraphType))
+                .Description("Id of existing thumbnail");
         }
     }
 }

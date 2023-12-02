@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using GraphQL;
 using GraphQL.Types;
@@ -62,6 +63,11 @@ namespace TeacherWorkout.Api.GraphQL
                 .Resolve(context =>
                 {
                     var file = context.GetArgument<IFormFile>("file");
+
+                    if (file.Length > 5 * 1024 * 1024)
+                    {
+                        throw new ValidationException("File size exceeds the limit of 5MB.");
+                    }
 
                     using var memoryStream = new MemoryStream();
                     file.CopyTo(memoryStream);
