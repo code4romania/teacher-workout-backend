@@ -5,6 +5,7 @@ using GraphQL.Types;
 using GraphQL.Upload.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TeacherWorkout.Api.GraphQL.Resolvers;
 using TeacherWorkout.Api.GraphQL.Types.Inputs;
 using TeacherWorkout.Api.GraphQL.Types.Payloads;
@@ -21,7 +22,8 @@ namespace TeacherWorkout.Api.GraphQL
         public TeacherWorkoutMutation(CompleteStep completeStep,
             CreateTheme createTheme,
             UpdateTheme updateTheme,
-            SingleUpload singleUpload)
+            SingleUpload singleUpload,
+            IConfiguration configuration)
         {
             Name = "Mutation";
 
@@ -63,10 +65,11 @@ namespace TeacherWorkout.Api.GraphQL
                 .Resolve(context =>
                 {
                     var file = context.GetArgument<IFormFile>("file");
-
-                    if (file.Length > 5 * 1024 * 1024)
+                    
+                    var maxFileSizeMb = configuration.GetValue("TeacherWorkout:MaxFileSizeMb", 5);
+                    if (file.Length > maxFileSizeMb * 1024 * 1024)
                     {
-                        throw new ValidationException("File size exceeds the limit of 5MB.");
+                        throw new ValidationException($"File size exceeds the limit of {maxFileSizeMb}MB.");
                     }
 
                     using var memoryStream = new MemoryStream();
