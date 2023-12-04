@@ -1,13 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using TeacherWorkout.Domain.FileBlobs;
 using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Data.Repositories
 {
-    public class FileBlobRepository(TeacherWorkoutContext context) : IFileBlobRepository
+    public class FileBlobRepository(TeacherWorkoutContext context, ILogger<FileBlobRepository> customLogger) : IFileBlobRepository
     {
         private readonly TeacherWorkoutContext _context = context;
+        private readonly ILogger<FileBlobRepository> _logger = customLogger;
+        
 
         public void Add(FileBlob fileBlob)
         {
@@ -27,6 +31,16 @@ namespace TeacherWorkout.Data.Repositories
                 .OrderByDescending(i => i.CreatedAt)
                 .Take(limit ?? 5)
                 .ToList();
+        }
+
+        public void DeleteOldEntries()
+        {
+            var cutoffDate = DateTime.Now.AddDays(-1).ToUniversalTime();
+            var oldEntries = _context.FileBlobs
+                .Where(fb => fb.CreatedAt < cutoffDate && !_context.Images.Any(i => i.FileBlobId == fb.Id));
+            _logger.LogInformation("Deleting {EntryCount} old file blobs", oldEntries.Count());
+            _context.FileBlobs.RemoveRange(oldEntries);
+            _context.SaveChanges();
         }
     }
 }

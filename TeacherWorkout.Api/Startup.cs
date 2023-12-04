@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using GraphQL;
 using GraphQL.Types;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
+using TeacherWorkout.Domain.FileBlobs;
 
 namespace TeacherWorkout.Api
 {
@@ -51,10 +54,22 @@ namespace TeacherWorkout.Api
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
+            
+            services.AddHangfire(configuration =>
+            {
+                configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170);
+                configuration.UseSimpleAssemblyNameTypeSerializer();
+                configuration.UseRecommendedSerializerSettings();
+
+                // Initialize JobStorage
+                configuration.UsePostgreSqlStorage(c =>
+                    c.UseNpgsqlConnection(Configuration.GetConnectionString("TeacherWorkoutContext")));
+            });
+            services.AddHangfireServer(config => config.WorkerCount = 1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db, IServiceProvider serviceProvider)
         {
             app.UseCors();
 
@@ -72,6 +87,10 @@ namespace TeacherWorkout.Api
             app.UseGraphQLUpload<ISchema>()
                 .UseGraphQL<ISchema>();
             app.UseGraphQLGraphiQL();
+
+            var fileBlobRepository = serviceProvider.GetRequiredService<IFileBlobRepository>();
+            RecurringJob.AddOrUpdate("DeleteOldFileBlobs",
+                () => fileBlobRepository.DeleteOldEntries(), Cron.Minutely);
         }
 
         private static void AddOperations(IServiceCollection services)
