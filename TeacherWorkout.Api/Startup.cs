@@ -90,7 +90,7 @@ namespace TeacherWorkout.Api
 
             var fileBlobRepository = serviceProvider.GetRequiredService<IFileBlobRepository>();
             RecurringJob.AddOrUpdate("DeleteOldFileBlobs",
-                () => fileBlobRepository.DeleteOldEntries(), Cron.Minutely);
+                () => fileBlobRepository.DeleteOldEntries(), Cron.Daily);
         }
 
         private static void AddOperations(IServiceCollection services)
