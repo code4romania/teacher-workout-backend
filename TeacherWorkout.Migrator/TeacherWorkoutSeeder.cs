@@ -12,8 +12,8 @@ namespace TeacherWorkout.Migrator
     {
         private readonly TeacherWorkoutContext _context;
 
-        private readonly List<Image> _images = new()
-        {
+        private readonly List<Image> _images =
+        [
             new()
             {
                 Id = "1",
@@ -86,13 +86,12 @@ namespace TeacherWorkout.Migrator
             {
                 Id = "11",
                 Description = "Beautiful dog photo",
-                Url =
-                    "https://commons.wikimedia.org/wiki/Category:Quality_images_of_dogs#/media/File:Canis_lupus_PO.jpg"
+                FileBlobId = "FileBlob_1",
             }
-        };
+        ];
 
-        private readonly List<Theme> _themes = new()
-        {
+        private readonly List<Theme> _themes =
+        [
             new()
             {
                 Id = "1",
@@ -159,10 +158,10 @@ namespace TeacherWorkout.Migrator
                 Title = "Accusamus et iusto",
                 ThumbnailId = "11"
             }
-        };
+        ];
 
-        private readonly List<Lesson> _lessons = new()
-        {
+        private readonly List<Lesson> _lessons =
+        [
             new()
             {
                 Id = "1",
@@ -295,7 +294,19 @@ namespace TeacherWorkout.Migrator
                     Unit = DurationUnit.Minutes
                 }
             }
-        };
+        ];
+
+        private readonly List<FileBlob> _fileBlobs =
+        [
+            new()
+            {
+                Id = "FileBlob_1",
+                Content = Convert.FromBase64String("iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="),
+                Mimetype = "image/png",
+                Description = "Tiny image",
+                CreatedAt = DateTime.Now.ToUniversalTime()
+            }
+        ];
 
         public TeacherWorkoutSeeder(TeacherWorkoutContext context)
         {
@@ -315,6 +326,7 @@ namespace TeacherWorkout.Migrator
             await _context.AddRangeAsync(_images);
             await _context.AddRangeAsync(_themes);
             await _context.AddRangeAsync(_lessons);
+            await _context.AddRangeAsync(_fileBlobs);
 
             await _context.SaveChangesAsync();
         }

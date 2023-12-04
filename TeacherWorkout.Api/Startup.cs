@@ -44,6 +44,7 @@ namespace TeacherWorkout.Api
             AddOperations(services);
             AddRepositories(services, "TeacherWorkout.Data");
 
+            services.AddControllers();
             services.AddHttpContextAccessor();
             services
                 .AddGraphQLUpload()
@@ -83,6 +84,7 @@ namespace TeacherWorkout.Api
             }
 
             app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseGraphQLUpload<ISchema>()
                 .UseGraphQL<ISchema>();
