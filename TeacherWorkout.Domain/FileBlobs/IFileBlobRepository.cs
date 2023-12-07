@@ -8,6 +8,6 @@ namespace TeacherWorkout.Domain.FileBlobs
         void Add(FileBlob fileBlob);
         FileBlob Find(string id);
         List<FileBlob> FindRecent(string[] mimetypes, int? limit);
-        void DeleteOldEntries();
+        void DeleteOldEntries(int daysInThePast);
     }
 }

@@ -14,7 +14,7 @@ namespace TeacherWorkout.Domain.Themes
     {
         private readonly IThemeRepository _themeRepository = themeRepository;
         private readonly IImageRepository _imageRepository = imageRepository;
-        private readonly IFileBlobRepository _ifileBlobRepository = fileBlobRepository;
+        private readonly IFileBlobRepository _fileBlobRepository = fileBlobRepository;
 
         public ThemeCreatePayload Execute(ThemeCreateInput input)
         {
@@ -25,7 +25,7 @@ namespace TeacherWorkout.Domain.Themes
 
             if (!string.IsNullOrEmpty(input.FileBlobId))
             {
-                var fileBlob = _ifileBlobRepository.Find(input.FileBlobId) ?? throw new ValidationException("FileBlob ID not found");
+                var fileBlob = _fileBlobRepository.Find(input.FileBlobId) ?? throw new ValidationException("FileBlob ID not found");
                 var thumbnail = new Image
                 {
                     Description = fileBlob.Description,

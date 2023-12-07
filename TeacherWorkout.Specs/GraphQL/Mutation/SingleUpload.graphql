@@ -1,0 +1,5 @@
+mutation SingleUpload($file: Upload!) {
+  singleUpload(file: $file) {
+    fileBlobId
+  }
+}

@@ -11,9 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
+using TeacherWorkout.Api.Jobs;
+using TeacherWorkout.Api.Jobs.Config;
+using TeacherWorkout.Api.Jobs.Interfaces;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
-using TeacherWorkout.Domain.FileBlobs;
 
 namespace TeacherWorkout.Api
 {
@@ -67,6 +69,9 @@ namespace TeacherWorkout.Api
                     c.UseNpgsqlConnection(Configuration.GetConnectionString("TeacherWorkoutContext")));
             });
             services.AddHangfireServer(config => config.WorkerCount = 1);
+
+            services.Configure<DeleteOldFileBlobsConfig>(Configuration.GetSection("TeacherWorkout:RecurringJobs:DeleteOldFileBlobs"));
+            services.AddScoped<IDeleteOldFileBlobsJob, DeleteOldFileBlobsJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,9 +95,17 @@ namespace TeacherWorkout.Api
                 .UseGraphQL<ISchema>();
             app.UseGraphQLGraphiQL();
 
-            var fileBlobRepository = serviceProvider.GetRequiredService<IFileBlobRepository>();
-            RecurringJob.AddOrUpdate("DeleteOldFileBlobs",
-                () => fileBlobRepository.DeleteOldEntries(), Cron.Daily);
+            var deleteOldFileBlobsConfig = Configuration.GetSection("TeacherWorkout:RecurringJobs:DeleteOldFileBlobs")
+                .Get<DeleteOldFileBlobsConfig>();
+            if (deleteOldFileBlobsConfig.IsEnabled)
+            {
+                RecurringJob.AddOrUpdate<IDeleteOldFileBlobsJob>(
+                    nameof(DeleteOldFileBlobsJob),
+                    job => job.Run(),
+                    deleteOldFileBlobsConfig.CronExpression,
+                    new RecurringJobOptions { TimeZone = TimeZoneInfo.Utc }
+                );
+            }
         }
 
         private static void AddOperations(IServiceCollection services)

@@ -33,9 +33,9 @@ namespace TeacherWorkout.Data.Repositories
                 .ToList();
         }
 
-        public void DeleteOldEntries()
+        public void DeleteOldEntries(int daysInThePast)
         {
-            var cutoffDate = DateTime.Now.AddDays(-1).ToUniversalTime();
+            var cutoffDate = DateTime.Now.AddDays(-daysInThePast).ToUniversalTime();
             var oldEntries = _context.FileBlobs
                 .Where(fb => fb.CreatedAt < cutoffDate && !_context.Images.Any(i => i.FileBlobId == fb.Id));
             _logger.LogInformation("Deleting {EntryCount} old file blobs", oldEntries.Count());

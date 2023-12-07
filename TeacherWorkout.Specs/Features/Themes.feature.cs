@@ -102,7 +102,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("Ion is an admin", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
- testRunner.When("Ion creates a theme", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Ion creates a theme with image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 8
  testRunner.Then("the theme was created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -136,7 +136,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("Vasile is an anonymous user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 13
- testRunner.And("Ion creates a theme", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Ion creates a theme with image", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 14
  testRunner.When("Vasile requests themes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
