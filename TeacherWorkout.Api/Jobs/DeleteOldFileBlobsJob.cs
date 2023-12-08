@@ -1,7 +1,7 @@
-using DeUrgenta.RecurringJobs.Jobs.Config;
 using Microsoft.Extensions.Options;
 using TeacherWorkout.Api.Jobs.Interfaces;
 using TeacherWorkout.Domain.FileBlobs;
+using TeacherWorkout.Api.Jobs.Config;
 
 namespace TeacherWorkout.Api.Jobs
 {
