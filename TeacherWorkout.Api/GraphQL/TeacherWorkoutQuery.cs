@@ -1,7 +1,9 @@
+using GraphQL;
 using GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Types;
 using TeacherWorkout.Api.GraphQL.Utils;
 using TeacherWorkout.Domain.Common;
+using TeacherWorkout.Domain.FileBlobs;
 using TeacherWorkout.Domain.Lessons;
 using TeacherWorkout.Domain.Themes;
 
@@ -12,7 +14,8 @@ namespace TeacherWorkout.Api.GraphQL
         public TeacherWorkoutQuery(GetThemes getThemes, 
             GetLessons getLessons,
             GetLessonStatuses getLessonStatuses,
-            GetStep getStep)
+            GetStep getStep,
+            GetFileBlobs getFileBlobs)
         {
             Name = "Query";
          
@@ -35,6 +38,10 @@ namespace TeacherWorkout.Api.GraphQL
             Field<ListGraphType<NonNullGraphType<LessonStatusType>>>("lessonStatuses")
                 .Argument<NonNullGraphType<ListGraphType<NonNullGraphType<IdGraphType>>>>(Name = "lessonIds", Description = "Id's of leassons")
                 .Resolve(context => getLessonStatuses.Execute(context.ToInput<LessonStatusFilter>()));
+
+            Field<ListGraphType<NonNullGraphType<FileBlobType>>>("recentImageUploads")
+                .Argument<NonNullGraphType<IntGraphType>>("limit", "The number of recent images to return.")
+                .Resolve(context => getFileBlobs.Execute(context.GetArgument<int>("limit")));
         }
     }
 }

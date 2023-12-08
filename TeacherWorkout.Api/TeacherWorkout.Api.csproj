@@ -7,6 +7,9 @@
   <ItemGroup>
     <PackageReference Include="GraphQL.Server.All" Version="7.6.0" />
     <PackageReference Include="GraphQL.Server.Ui.Graphiql" Version="7.6.0" />
+    <PackageReference Include="GraphQL.Upload.AspNetCore" Version="3.0.3" />
+    <PackageReference Include="Hangfire" Version="1.8.6" />
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.20.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,3 +1,4 @@
+using System.IO;
 using TeacherWorkout.Domain.Common;
 
 namespace TeacherWorkout.Domain.Models
@@ -9,5 +10,8 @@ namespace TeacherWorkout.Domain.Models
         public string Description { get; set; }
 
         public string Url { get; set; }
+        
+        public string FileBlobId { get; set; }
+        public FileBlob FileBlob { get; set; }
     }
 }

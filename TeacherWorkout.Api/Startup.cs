@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using GraphQL;
 using GraphQL.Types;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeacherWorkout.Api.GraphQL;
+using TeacherWorkout.Api.Jobs;
+using TeacherWorkout.Api.Jobs.Config;
+using TeacherWorkout.Api.Jobs.Interfaces;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
 
@@ -41,18 +46,36 @@ namespace TeacherWorkout.Api
             AddOperations(services);
             AddRepositories(services, "TeacherWorkout.Data");
 
+            services.AddControllers();
             services.AddHttpContextAccessor();
-            services.AddGraphQL(b => b
-                .AddErrorInfoProvider(opt => opt.ExposeExceptionDetails = true)
-                .AddGraphTypes()
-                .AddSystemTextJson());
+            services
+                .AddGraphQLUpload()
+                .AddGraphQL(b => b
+                    .AddErrorInfoProvider(opt => opt.ExposeExceptionDetails = true)
+                    .AddGraphTypes()
+                    .AddSystemTextJson());
 
             services.AddDbContext<TeacherWorkoutContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TeacherWorkoutContext")));
+            
+            services.AddHangfire(configuration =>
+            {
+                configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170);
+                configuration.UseSimpleAssemblyNameTypeSerializer();
+                configuration.UseRecommendedSerializerSettings();
+
+                // Initialize JobStorage
+                configuration.UsePostgreSqlStorage(c =>
+                    c.UseNpgsqlConnection(Configuration.GetConnectionString("TeacherWorkoutContext")));
+            });
+            services.AddHangfireServer(config => config.WorkerCount = 1);
+
+            services.Configure<DeleteOldFileBlobsConfig>(Configuration.GetSection("TeacherWorkout:RecurringJobs:DeleteOldFileBlobs"));
+            services.AddScoped<IDeleteOldFileBlobsJob, DeleteOldFileBlobsJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TeacherWorkoutContext db, IServiceProvider serviceProvider)
         {
             app.UseCors();
 
@@ -66,9 +89,23 @@ namespace TeacherWorkout.Api
             }
 
             app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-            app.UseGraphQL<ISchema>();
+            app.UseGraphQLUpload<ISchema>()
+                .UseGraphQL<ISchema>();
             app.UseGraphQLGraphiQL();
+
+            var deleteOldFileBlobsConfig = Configuration.GetSection("TeacherWorkout:RecurringJobs:DeleteOldFileBlobs")
+                .Get<DeleteOldFileBlobsConfig>();
+            if (deleteOldFileBlobsConfig.IsEnabled)
+            {
+                RecurringJob.AddOrUpdate<IDeleteOldFileBlobsJob>(
+                    nameof(DeleteOldFileBlobsJob),
+                    job => job.Run(),
+                    deleteOldFileBlobsConfig.CronExpression,
+                    new RecurringJobOptions { TimeZone = TimeZoneInfo.Utc }
+                );
+            }
         }
 
         private static void AddOperations(IServiceCollection services)
