@@ -4,42 +4,28 @@ using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Domain.Models.Inputs;
 using TeacherWorkout.Domain.Models.Payloads;
 
-namespace TeacherWorkout.Api.GraphQL.Resolvers
+namespace TeacherWorkout.Api.GraphQL.Resolvers;
 
+public class LessonSaveResolver(IContext context, ILessonStatusRepository lessonStatusRepository, ILessonRepository lessonRepository) : IOperation<LessonSaveInput, LessonSavePayload>
 {
-    public class LessonSaveResolver : IOperation<LessonSaveInput, LessonSavePayload>
+    private readonly IContext _context = context;
+    private readonly ILessonStatusRepository _lessonStatusRepository = lessonStatusRepository;
+    private readonly ILessonRepository _lessonRepository = lessonRepository;
+
+    public LessonSavePayload Execute(LessonSaveInput input)
     {
+        Lesson lesson = _lessonRepository.Find(input.LessonId);
 
-        private IContext _context;
-        private ILessonStatusRepository _lessonStatusRepository;
-        private ILessonRepository _lessonRepository;
-        
-        public LessonSaveResolver (IContext context, ILessonStatusRepository lessonStatusRepository, ILessonRepository lessonRepository)
+        _lessonStatusRepository.Insert(new LessonStatus()
         {
-            _context = context;
-            _lessonStatusRepository = lessonStatusRepository;
-            _lessonRepository = lessonRepository;
+            Lesson = lesson,
+            PercentCompleted = 0,
+            User = _context.CurentUser
+        });
 
-        }
-        
-        public LessonSavePayload Execute(LessonSaveInput input)
+        return new LessonSavePayload()
         {
-            Lesson lesson = _lessonRepository.Find(input.LessonId);
-
-            _lessonStatusRepository.Insert(new LessonStatus()
-            {
-                Lesson = lesson,
-                PercentCompleted = 0,
-                User = _context.CurentUser
-            });
-
-            return new LessonSavePayload()
-            {
-                Lesson = lesson
-            };
-        }
-
-       
-
-    }
+            Lesson = lesson
+        };
+    }    
 }

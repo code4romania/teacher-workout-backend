@@ -35,7 +35,7 @@ namespace TeacherWorkout.Data
                 .HasValueGenerator<StringValueGenerator>();
 
             modelBuilder.Entity<Lesson>()
-                .HasIndex(new [] { "ThemeId", "State" });
+                .HasIndex(["ThemeId", "State"]);
 
             modelBuilder.Entity<Theme>()
                 .Property(l => l.Id)

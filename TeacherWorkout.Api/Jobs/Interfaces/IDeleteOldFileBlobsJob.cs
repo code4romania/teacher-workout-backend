@@ -1,10 +1,6 @@
-using System.Threading;
-using System.Threading.Tasks;
+namespace TeacherWorkout.Api.Jobs.Interfaces;
 
-namespace TeacherWorkout.Api.Jobs.Interfaces
+public interface IDeleteOldFileBlobsJob
 {
-    public interface IDeleteOldFileBlobsJob
-    {
-        void Run();
-    }
+    void Run();
 }

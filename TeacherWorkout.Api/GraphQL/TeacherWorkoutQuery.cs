@@ -45,4 +45,3 @@ namespace TeacherWorkout.Api.GraphQL
         }
     }
 }
-
