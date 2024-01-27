@@ -1,29 +1,23 @@
-using TechTalk.SpecFlow;
+namespace TeacherWorkout.Specs.Steps;
 
-namespace TeacherWorkout.Specs.Steps
+[Binding]
+public class UserStepDefinitions(ScenarioContext scenarioContext, GraphQLServer server)
 {
-    [Binding]
-    public class UserStepDefinitions
+    [Given(@"Ion is an admin")]
+    public void GivenIonIsAnAdmin()
     {
-        private readonly ScenarioContext _scenarioContext;
-        private readonly GraphQLServer _server;
+        scenarioContext["Ion"] = new TeacherWorkoutApiClient(server.Client);
+    }
 
-        public UserStepDefinitions(ScenarioContext scenarioContext, GraphQLServer server)
-        {
-            _scenarioContext = scenarioContext;
-            _server = server;
-        }
-        
-        [Given(@"Ion is an admin")]
-        public void GivenIonIsAnAdmin()
-        {
-            _scenarioContext["Ion"] = new TeacherWorkoutApiClient(_server.Client);
-        }
+    [Given(@"Daniel is a user")]
+    public void GivenDanielIsAUser()
+    {
+        scenarioContext["Daniel"] = new TeacherWorkoutApiClient(server.Client);
+    }
 
-        [Given(@"Vasile is an anonymous user")]
-        public void GivenVasileIsAnAnonymousUser()
-        {
-            _scenarioContext["Vasile"] = new TeacherWorkoutApiClient(_server.Client);
-        }
+    [Given(@"Vasile is an anonymous user")]
+    public void GivenVasileIsAnAnonymousUser()
+    {
+        scenarioContext["Vasile"] = new TeacherWorkoutApiClient(server.Client);
     }
 }

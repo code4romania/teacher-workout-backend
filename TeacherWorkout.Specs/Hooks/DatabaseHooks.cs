@@ -1,36 +1,25 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using TeacherWorkout.Data;
-using TechTalk.SpecFlow;
 
-namespace TeacherWorkout.Specs.Hooks
+namespace TeacherWorkout.Specs.Hooks;
+
+[Binding]
+public class DatabaseHooks(ScenarioContext scenarioContext, GraphQLServer server)
 {
-    [Binding]
-    public class DatabaseHooks
+    [BeforeScenario]
+    public void BeforeScenario()
     {
-        private ScenarioContext _scenarioContext;
-        private readonly GraphQLServer _server;
+        var dbContext = server.Factory.Services.GetService<TeacherWorkoutContext>();
+        var transaction = dbContext.Database.BeginTransaction();
 
-        public DatabaseHooks(ScenarioContext scenarioContext, GraphQLServer server)
-        {
-            _scenarioContext = scenarioContext;
-            _server = server;
-        }
+        scenarioContext["transaction"] = transaction;
+        scenarioContext["dbContext"] = dbContext;
+    }
 
-        [BeforeScenario]
-        public void BeforeScenario()
-        {
-            var dbContext = _server.Factory.Services.GetService<TeacherWorkoutContext>();
-            var transaction = dbContext.Database.BeginTransaction();
-
-            _scenarioContext["transaction"] = transaction;
-            _scenarioContext["dbContext"] = dbContext;
-        }
-
-        [AfterScenario]
-        public void AfterScenario()
-        {
-            ((IDbContextTransaction)_scenarioContext["transaction"]).Rollback();
-        }
+    [AfterScenario]
+    public void AfterScenario()
+    {
+        ((IDbContextTransaction)scenarioContext["transaction"]).Rollback();
     }
 }

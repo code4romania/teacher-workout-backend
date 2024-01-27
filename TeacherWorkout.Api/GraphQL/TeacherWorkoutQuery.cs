@@ -28,6 +28,7 @@ namespace TeacherWorkout.Api.GraphQL
                 .Name("lessons")
                 .Argument<IdGraphType>("themeId", "The id of the theme. Keep it null to ignore filtering.")
                 .Argument<LessonStateEnum>("state", "The state of the lesson. Keep it null to ignore filtering.")
+                .Argument<StringGraphType>("term", "Filters on the title. Keep it null to ignore filtering.")
                 .ReturnAll()
                 .Resolve(context => getLessons.Execute(context.ToInput<LessonFilter>()).ToConnection());
 

@@ -1,8 +1,5 @@
-using System;
+namespace TeacherWorkout.Specs.Drivers;
 
-namespace TeacherWorkout.Specs.Drivers
+public class Driver
 {
-    public class Driver
-    {
-    }
 }

@@ -7,5 +7,6 @@ namespace TeacherWorkout.Domain.Lessons
     {
         public string ThemeId { get; set; }
         public LessonState? State { get; set; }
+        public string Term { get; set; }
     }
 }

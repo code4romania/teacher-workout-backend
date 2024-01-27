@@ -1,0 +1,7 @@
+query Lessons {
+    lessons {
+        items {
+            title
+        }
+    }
+}
