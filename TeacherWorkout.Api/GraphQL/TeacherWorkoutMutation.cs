@@ -32,7 +32,8 @@ namespace TeacherWorkout.Api.GraphQL
                 .Resolve(context =>
                 {
                     var lessonSave = context.GetArgument<LessonSaveInput>("input");
-                    return LessonSaveResolver.Resolve(lessonSave);
+
+                    return lessonSaveResolver.Execute(lessonSave);
                 });
 
             Field<StepCompletePayloadType>("stepComplete")
