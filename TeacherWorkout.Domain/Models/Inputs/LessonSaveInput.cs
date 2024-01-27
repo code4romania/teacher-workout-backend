@@ -1,7 +1,6 @@
-namespace TeacherWorkout.Domain.Models.Inputs
+namespace TeacherWorkout.Domain.Models.Inputs;
+
+public class LessonSaveInput
 {
-    public class LessonSaveInput
-    {
-        public string LessonId { get; set; }
-    }
+    public string LessonId { get; set; }
 }

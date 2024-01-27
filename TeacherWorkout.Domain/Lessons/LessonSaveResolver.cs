@@ -6,7 +6,7 @@ using TeacherWorkout.Domain.Models.Payloads;
 
 namespace TeacherWorkout.Api.GraphQL.Resolvers;
 
-public class LessonSaveResolver(IContext context, ILessonStatusRepository lessonStatusRepository, ILessonRepository lessonRepository) : IOperation<LessonSaveInput, LessonSavePayload>
+public class LessonSave(IContext context, ILessonStatusRepository lessonStatusRepository, ILessonRepository lessonRepository) : IOperation<LessonSaveInput, LessonSavePayload>
 {
     private readonly IContext _context = context;
     private readonly ILessonStatusRepository _lessonStatusRepository = lessonStatusRepository;

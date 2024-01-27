@@ -18,7 +18,7 @@ namespace TeacherWorkout.Api.GraphQL;
 public class TeacherWorkoutMutation : ObjectGraphType<object>
 {
     public TeacherWorkoutMutation(CompleteStep completeStep,
-        LessonSaveResolver lessonSaveResolver,
+        LessonSave lessonSave,
         CreateTheme createTheme,
         UpdateTheme updateTheme,
         SingleUpload singleUpload,
@@ -26,12 +26,12 @@ public class TeacherWorkoutMutation : ObjectGraphType<object>
     {
         Name = "Mutation";
 
-        Field<NonNullGraphType<LessonSavePayloadType>>("lessonSave")
+        base.Field<NonNullGraphType<LessonSavePayloadType>>("lessonSave")
             .Argument<NonNullGraphType<LessonSaveInputType>>(Name = "input")
             .Resolve(context =>
             {
-                var lessonSave = context.GetArgument<LessonSaveInput>("input");
-                return lessonSaveResolver.Execute(lessonSave);
+                var input = context.GetArgument<LessonSaveInput>("input");
+                return lessonSave.Execute(input);
             });
 
         Field<StepCompletePayloadType>("stepComplete")
@@ -57,7 +57,6 @@ public class TeacherWorkoutMutation : ObjectGraphType<object>
                 var input = context.GetArgument<ThemeUpdateInput>("input");
                 return updateTheme.Execute(input);
             });
-
 
         Field<SingleUploadPayloadType>("singleUpload")
             .Argument<NonNullGraphType<UploadGraphType>>(Name = "file")

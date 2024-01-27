@@ -1,14 +1,11 @@
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Models;
 
-namespace TeacherWorkout.Domain.Lessons
+namespace TeacherWorkout.Domain.Lessons;
+
+public interface ILessonRepository
 {
-    public interface ILessonRepository
-    {
-        PaginatedResult<Lesson> PaginatedList(LessonFilter filter);
+    PaginatedResult<Lesson> PaginatedList(LessonFilter filter);
 
-        Lesson Find(string ID);
-
-    }
-
+    Lesson Find(string ID);
 }

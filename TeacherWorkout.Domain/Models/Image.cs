@@ -1,4 +1,3 @@
-using System.IO;
 using TeacherWorkout.Domain.Common;
 
 namespace TeacherWorkout.Domain.Models

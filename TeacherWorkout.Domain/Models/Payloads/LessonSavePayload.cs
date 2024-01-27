@@ -1,7 +1,6 @@
-namespace TeacherWorkout.Domain.Models.Payloads
+namespace TeacherWorkout.Domain.Models.Payloads;
+
+public class LessonSavePayload
 {
-    public class LessonSavePayload
-    {
-        public Lesson Lesson { get; set; }
-    }
+    public Lesson Lesson { get; set; }
 }

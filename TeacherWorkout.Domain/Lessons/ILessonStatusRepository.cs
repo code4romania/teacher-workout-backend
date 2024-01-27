@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using TeacherWorkout.Domain.Models;
 
-namespace TeacherWorkout.Domain.Lessons
+namespace TeacherWorkout.Domain.Lessons;
+
+public interface ILessonStatusRepository
 {
-    public interface ILessonStatusRepository
-    {
-        IEnumerable<LessonStatus> List(LessonStatusFilter filter);
-        LessonStatus Insert(LessonStatus lessonStatus);
-    }
+    IEnumerable<LessonStatus> List(LessonStatusFilter filter);
+    LessonStatus Insert(LessonStatus lessonStatus);
 }
