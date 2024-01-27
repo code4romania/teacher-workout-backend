@@ -7,5 +7,7 @@ namespace TeacherWorkout.Domain.Models
         public int PercentCompleted { get; set; }
 
         public ILessonStep CurrentLessonStep { get; set; }
+
+        public User User { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using TeacherWorkout.Api.Jobs.Config;
 using TeacherWorkout.Api.Jobs.Interfaces;
 using TeacherWorkout.Data;
 using TeacherWorkout.Domain.Common;
+using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Api
 {
@@ -72,6 +73,8 @@ namespace TeacherWorkout.Api
 
             services.Configure<DeleteOldFileBlobsConfig>(Configuration.GetSection("TeacherWorkout:RecurringJobs:DeleteOldFileBlobs"));
             services.AddScoped<IDeleteOldFileBlobsJob, DeleteOldFileBlobsJob>();
+
+            services.AddSingleton<IContext>(new Context() { CurentUser = new User() { Id = "1", Name = "Test user" }});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

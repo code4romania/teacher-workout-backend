@@ -1,20 +1,14 @@
 using TeacherWorkout.Domain.Common;
 using TeacherWorkout.Domain.Models;
 
-namespace TeacherWorkout.Domain.Lessons
-{
-    public class GetStep : IOperation<StepFindInput, ILessonStep>
-    {
-        private readonly IStepRepository _repository;
+namespace TeacherWorkout.Domain.Lessons;
 
-        public GetStep(IStepRepository repository)
-        {
-            _repository = repository;
-        }
-        
-        public ILessonStep Execute(StepFindInput filter)
-        {
-            return _repository.Find(filter.Id);
-        }
+public class GetStep(IStepRepository repository) : IOperation<StepFindInput, ILessonStep>
+{
+    private readonly IStepRepository _repository = repository;
+
+    public ILessonStep Execute(StepFindInput filter)
+    {
+        return _repository.Find(filter.Id);
     }
 }

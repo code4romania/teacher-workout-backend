@@ -1,7 +1,6 @@
-namespace TeacherWorkout.Domain.Lessons
+namespace TeacherWorkout.Domain.Lessons;
+
+public class StepFindInput
 {
-    public class StepFindInput
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

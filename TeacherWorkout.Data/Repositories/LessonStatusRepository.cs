@@ -5,13 +5,13 @@ using TeacherWorkout.Domain.Models;
 
 namespace TeacherWorkout.Data.Repositories
 {
-    public class LessonStatusRepository : ILessonStatusRepository
+    public class LessonStatusRepository(TeacherWorkoutContext context) : ILessonStatusRepository
     {
-        private readonly TeacherWorkoutContext _context;
+        private readonly TeacherWorkoutContext _context = context;
 
-        public LessonStatusRepository(TeacherWorkoutContext context)
+        public LessonStatus Insert(LessonStatus lessonStatus)
         {
-            _context = context;
+            return lessonStatus;
         }
 
         public IEnumerable<LessonStatus> List(LessonStatusFilter filter)

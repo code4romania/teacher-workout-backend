@@ -2,11 +2,9 @@ using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
-using SpecFlow.Internal.Json;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Specs.Extensions;
 using TechTalk.SpecFlow;
-using Xunit.Abstractions;
 
 namespace TeacherWorkout.Specs.Steps
 {

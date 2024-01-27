@@ -7,84 +7,90 @@ using System.Threading.Tasks;
 using TeacherWorkout.Domain.Models;
 using TeacherWorkout.Specs.Extensions;
 
-namespace TeacherWorkout.Specs
+namespace TeacherWorkout.Specs;
+
+public class TeacherWorkoutApiClient(HttpClient client)
 {
-    public class TeacherWorkoutApiClient
+    enum Queries
     {
-        enum Queries
+        Themes
+    }
+
+    enum Mutations
+    {
+        ThemeCreate,
+        LessonSave,
+        SingleUpload
+    }
+    
+    private readonly HttpClient _client = client;
+
+    public async Task<string> UploadImage(FileBlob imageFile)
+    {
+
+        var operations = new StringContent(new {query = GraphQL("Mutation", "SingleUpload"), variables = new {file = (string)null}}.ToJson(), Encoding.UTF8, "application/json");
+        var map = new StringContent("{\"0\": [\"variables.file\"]}", Encoding.UTF8, "application/json");
+        var imageBytes = new ByteArrayContent(imageFile.Content);
+        imageBytes.Headers.Add("Content-Type", imageFile.Mimetype);
+
+        var multipartContent = new MultipartFormDataContent("Upload----" + DateTime.Now.ToString(CultureInfo.InvariantCulture))
         {
-            Themes
-        }
+            { operations, "operations" },
+            { map, "map" },
+            { imageBytes, "0", imageFile.Description }
+        };
+        var response = await _client.PostAsync("http://localhost:5040/graphql", multipartContent);
 
-        enum Mutations
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<string> ThemesAsync()
+    {
+        return await SendRequest(QueryFor(Queries.Themes), new {});
+    }
+
+    public async Task<string> ThemeCreateAsync(string fileBlobId = default)
+    {
+        return await SendRequest(MutationFor(Mutations.ThemeCreate), new
         {
-            ThemeCreate,
-            SingleUpload
-        }
-        
-        private readonly HttpClient _client;
-
-        public TeacherWorkoutApiClient(HttpClient client)
-        {
-            _client = client;
-        }
-
-        public async Task<string> UploadImage(FileBlob imageFile)
-        {
-
-            var operations = new StringContent(new {query = GraphQL("Mutation", "SingleUpload"), variables = new {file = (string)null}}.ToJson(), Encoding.UTF8, "application/json");
-            var map = new StringContent("{\"0\": [\"variables.file\"]}", Encoding.UTF8, "application/json");
-            var imageBytes = new ByteArrayContent(imageFile.Content);
-            imageBytes.Headers.Add("Content-Type", imageFile.Mimetype);
-
-            var multipartContent = new MultipartFormDataContent("Upload----" + DateTime.Now.ToString(CultureInfo.InvariantCulture))
+            input = new
             {
-                { operations, "operations" },
-                { map, "map" },
-                { imageBytes, "0", imageFile.Description }
-            };
-            var response = await _client.PostAsync("http://localhost/graphql", multipartContent);
+                title = "foo",
+                fileBlobId,
+            }
+        });
+    }
 
-            return await response.Content.ReadAsStringAsync();
-        }
-
-        public async Task<string> ThemesAsync()
+    public async Task<string> LessonSaveAsync()
+    {
+        return await SendRequest(MutationFor(Mutations.LessonSave), new
         {
-            return await SendRequest(QueryFor(Queries.Themes), new {});
-        }
-
-        public async Task<string> ThemeCreateAsync(string fileBlobId)
-        {
-            return await SendRequest(MutationFor(Mutations.ThemeCreate), new
+            input = new
             {
-                input = new
-                {
-                    title = "foo",
-                    fileBlobId,
-                }
-            });
-        }
+                title = "foo",
+            }
+        });
+    }
 
-        private string QueryFor(Queries query)
-        {
-            return GraphQL("Query", query.ToString());
-        }
+    private string QueryFor(Queries query)
+    {
+        return GraphQL("Query", query.ToString());
+    }
 
-        private string MutationFor(Mutations mutation)
-        {
-            return GraphQL("Mutation", mutation.ToString());
-        }
+    private string MutationFor(Mutations mutation)
+    {
+        return GraphQL("Mutation", mutation.ToString());
+    }
 
-        private string GraphQL(string category, string name)
-        {
-            return File.ReadAllText($"GraphQL/{category}/{name}.graphql");
-        }
+    private string GraphQL(string category, string name)
+    {
+        return File.ReadAllText($"GraphQL/{category}/{name}.graphql");
+    }
 
-        private async Task<string> SendRequest(string query, object variables)
-        {
-            var content = new StringContent(new {query, variables}.ToJson(), Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("http://localhost/graphql", content);
-            return await response.Content.ReadAsStringAsync();
-        }
+    private async Task<string> SendRequest(string query, object variables)
+    {
+        var content = new StringContent(new {query, variables}.ToJson(), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("http://localhost/graphql", content);
+        return await response.Content.ReadAsStringAsync();
     }
 }

@@ -1,15 +1,14 @@
 using GraphQL.Types;
 using TeacherWorkout.Domain.Models.Payloads;
 
-namespace TeacherWorkout.Api.GraphQL.Types.Payloads
+namespace TeacherWorkout.Api.GraphQL.Types.Payloads;
+
+public class LessonSavePayloadType : ObjectGraphType<LessonSavePayload>
 {
-    public class LessonSavePayloadType : ObjectGraphType<LessonSavePayload>
+    public LessonSavePayloadType()
     {
-        public LessonSavePayloadType()
-        {
-            Name = "LessonSavePayload";
-            
-            Field(x => x.Lesson).Description("The newly created lesson.");
-        }
+        Name = "LessonSavePayload";
+        
+        Field(x => x.Lesson).Description("The saved lesson.");
     }
 }
